@@ -529,7 +529,7 @@ Para este ejemplo de Haswell, elegimos el SMBIOS iMac15,1. Estas son las otras o
 | :--- | :--- |
 | iMac14,4 | Haswell con sólo iGPU |
 | iMac15,1 | Haswell con GPU dedicada |
-| iMac16,1 | Broadwell |
+| iMac16,2 | Broadwell |
 
 Ejecuta GenSMBIOS, elije la opción 1 para descargar MacSerial y la Opción 3 para seleccionar la SMBIOS que deseas. Esto nos dará una salida similar a la siguiente:
 
