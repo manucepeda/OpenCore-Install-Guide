@@ -15,9 +15,9 @@ Desde una computadora con macOS que cumple los requerimientos de la versión del
 
 Para las computadoras que necesiten una versión específica de macOS o que no tengan acceso a el AppStore para descargar la versión deseada, pueden usar la herramienta GibMacOS
 
-Ahora, obtén [GibMacOS](https://github.com/corpnewt/gibMacOS) y descomprímelo a un directorio local. 
+Ahora, obtén [gibgacOS](https://github.com/corpnewt/gibMacOS) y descomprímelo a un directorio local. 
 
-Luego, corre el archivo `gibMacOS.command`:
+Luego, corre el archivo `gibmacOS.command`:
 
 ![](../images/installer-guide/mac-install-md/gib.png)
 

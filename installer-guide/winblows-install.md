@@ -7,7 +7,7 @@ Si bien no necesitas una nueva instalación de macOS para usar OpenCore, algunos
 Para comenzar necesitarás lo siguiente:
 
 * Un USB de 4GB (o más)
-* [GibMacOS](https://github.com/corpnewt/gibMacOS)
+* [gibmacOS](https://github.com/corpnewt/gibMacOS)
 
 ## Descargando macOS: Moderno
 
