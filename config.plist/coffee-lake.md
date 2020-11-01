@@ -258,10 +258,13 @@ Ajustes relacionados a el kernel, en nuestro caso habilitaremos lo siguiente:
 ::: details Información más detallada
 
 * **AppleCpuPmCfgLock**: YES
-  * Solo es necesario cuando CFG-Lock no se puede deshabilitar en BIOS, la contraparte de Clover sería AppleIntelCPUPM.
-  **Por favor verifica si puedes deshabilitar CFG-Lock, la mayoría de los sistemas no arrancarán con él, por lo que requieren el uso de este quirk**
+  * Esto sólo es necesario cuando CFG-Lock no puede ser desactivado en la BIOS, la contraparte de Clover sería AppleIntelCPUPM
+  * Esto únicamente en aplicable par Ivy Bridge y anterior
+    * Nota: Broadwell y anterior necesitan esto si corren 10.10 y anterior
 * **AppleXcpmCfgLock**: YES
-  * Solo es necesario cuando CFG-Lock no se puede deshabilitar en BIOS, la contraparte de Clover sería KernelPM. **Por favor verifica si puedes deshabilitar CFG-Lock, la mayoría de los sistemas no arrancarán con él, por lo que requieren el uso de este quirk**
+  * Únicamente necesario cuando CFG-Lock no puede ser deshabilitado en la BIOS, la contraparte de Clover sería KernelPM
+  * Únicamente aplicable para Haswell y posterior
+    * Nota: Ivy Bridge-E también está incluido ya que es compatible con XCPM
 * **CustomSMBIOSGuid**: NO
   * Hace parches de GUID para el modo `Custom` de UpdateSMBIOSMode. Usualmente relevante para laptops Dell
   * La habilitación de este quirk con el modo `Custom` de UpdateSMBIOSMode también puede deshabilitar la inyección de SMBIOS en sistemas operativos que no son de Apple, aunque no recomendamos esto ya que rompe la compatibilildad con BootCamp. Úsalo bajo tu propio riesgo; debe ser utilizado en conjunto con `PlatformInfo -> UpdateSMBIOSMode -> Custom`

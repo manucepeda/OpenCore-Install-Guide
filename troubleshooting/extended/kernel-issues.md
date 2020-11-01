@@ -222,9 +222,24 @@ diskutil list
    6:              APFS Snapshot ⁨com.apple.os.update-...⁩ 16.2 GB    disk5s5s
 # Ahora monta el volumen Preboot
 diskutil mount disk5s2
-# Luego copia nuestros archivos de arranque seguro
-sudo cp -a /usr/standalone/i386/. /Volumes/Preboot
-```
+# Utiliza CD para llegar a tu volumen Preboot
+# Ten en cuenta que el volumen en sí se encunetra en /System/Volumes/Preboot
+cd /System/Volumes/Preboot
+# Agarra tu UUID
+ls
+ 46923F6E-968E-46E9-AC6D-9E6141DF52FD
+ CD844C38-1A25-48D5-9388-5D62AA46CFB8
+# Si aparecen más de nua (por ejemplo si arrancas varias versiones de macOS) tendrás que:
+# determinar cual UUID es la correcta.
+# La manera más fácil de determinar esto es imprimiendo el valor de .disk_label.contentDetails
+# de cada volumen.
+cat ./46923F6E-968E-46E9-AC6D-9E6141DF52FD/System/Library/CoreServices/.disk_label.contentDetails
+ Big Sur HD%
+cat ./CD844C38-1A25-48D5-9388-5D62AA46CFB8/System/Library/CoreServices/.disk_label.contentDetails
+ Catalina HD%
+# Reemplaza CD844C38-1A25-48D5-9388-5D62AA46CFB8 con tu valor de UUID
+cd ~
+sudo cp -a /usr/standalone/i386/. /System/Volumes/Preboot/CD844C38-1A25-48D5-9388-5D62AA46CFB8/System/Library/CoreServices
 
 ## Trancado en `OCABC: Memory pool allocation failure - Not Found`
 

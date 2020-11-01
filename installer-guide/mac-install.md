@@ -51,7 +51,7 @@ Mueve esta aplicación a la carpeta de Aplicaciones, esto nos será útil para l
 
 Este método nos permite descargar instaladores completos de Apple, aunque está limitado a 10.10, Yosemite, por lo que versiones más antiguas tendrán que ser obtenidas mediante el "Método online" mencionado abajo.
 
-Para comenzar, dirígete a alguno de los siguientes links (información en inglés)To start, head to one of the following links:
+Para comenzar, dirígete a alguno de los siguientes links (información en inglés):
 
 * [Cómo actualizar a OS X Yosemite](https://support.apple.com/es-es/HT210717)
 * [Cómo actualizar a OS X El Capitan](https://support.apple.com/es-es/HT206886)
@@ -180,6 +180,8 @@ Desde aquí, puedes saltearte el resto e ir a [Configurando el entorno de OpenCo
 ::: details macOS Legacy: Imágenes de discos (10.4-10.6 Soportados)
 
 ### macOS Legacy: Imágenes de discos
+
+Los instaladores de abajo fueron extraidos de discos de restauración de Macs geniunas con su bloqueo de SMBIOS desactivado, el contenido de OS X en sí no ha sido modificado de ninguna manera.
 
 Este método en realidad depende de las imágenes alojadas por Acidanthera o Apple, y la restauración de estas a tu disco.
 
@@ -332,4 +334,4 @@ Te darás cuenta que cuando abrimos la partición EFI, esta está vacía. Aquí 
 
 ![Partición EFI vacía](../images/installer-guide/mac-install-md/base-efi.png)
 
-# Ahora, con todo esto hecho dirígete a [Configurando la EFI](/installer-guide/opencore-efi.md) para terminar tu trabajo.
+# Ahora, con todo esto hecho dirígete a [Configurando la EFI](./opencore-efi.md) para terminar tu trabajo.

@@ -53,7 +53,7 @@ Aquellos que deseen una explicación más profunda de cómo hacer un dump de su 
 
 ::: tip Info
 
-Esto bloquea la carga de ciertas tablas ACPI, la principal razón de esto es que el XCPM de Apple en nuestro caso esto es muy importante, la principal razón es que el XCPM de Apple no soporta Ivy Bridge muy bien y puede causar kernel panics con AppleIntelCPUPowerManagement al bootear. Para evitar esto necesitamos hacer nuestro propio SSDT de PM en [Post-Instalación](https://dortania.github.io/OpenCore-Post-Install/) y eliminar las tablas enteriores:
+Esto bloquea la carga de ciertas tablas ACPI, la principal razón de esto es que el XCPM de Apple en nuestro caso esto es muy importante, la principal razón es que el XCPM de Apple no soporta Ivy Bridge muy bien y puede causar kernel panics con AppleIntelCPUPowerManagement al bootear. Para evitar esto necesitamos hacer nuestro propio SSDT de PM en [Post-Instalación](https://dortania.github.io/OpenCore-Post-Install/) y eliminar las tablas enteriores (Ten en cuenta que esto es temporal hasta que hagamos nuestro SSDT-PM, rehabilitaremos estas tablas luego):
 
 Eliminando CpuPm:
 
@@ -253,7 +253,6 @@ Configuraciones relacionadas con el kernel, en nuestro caso habilitaremos lo sig
 | Quirk | Habilitado | Comentario |
 | :--- | :--- | :--- |
 | AppleCpuPmCfgLock | YES | No es necesario si `CFG-Lock` está desactivado en el BIOS|
-| AppleXcpmCfgLock | YES | No es necesario si `CFG-Lock` está desactivado en el BIOS |
 | DisableIOMapper | YES | No es necesario si `VT-D` está deshabilitado en el BIOS |
 | LapicKernelPanic | NO | Las máquinas HP requerirán este quirk |
 | PanicNoKextDump | YES | |
@@ -265,10 +264,13 @@ Configuraciones relacionadas con el kernel, en nuestro caso habilitaremos lo sig
 ::: details Información más detallada
 
 * **AppleCpuPmCfgLock**: YES
-  * Solo es necesario cuando CFG-Lock no se puede deshabilitar en BIOS, la contraparte de Clover sería AppleIntelCPUPM.
-  **Por favor verifica si puedes deshabilitar CFG-Lock, la mayoría de los sistemas no arrancarán con él, por lo que requieren el uso de este quirk**
-* **AppleXcpmCfgLock**: YES
-  * Solo es necesario cuando CFG-Lock no se puede deshabilitar en BIOS, la contraparte de Clover sería KernelPM. **Por favor verifica si puedes deshabilitar CFG-Lock, la mayoría de los sistemas no arrancarán con él, por lo que requieren el uso de este quirk**
+  * Esto sólo es necesario cuando CFG-Lock no puede ser desactivado en la BIOS, la contraparte de Clover sería AppleIntelCPUPM
+  * Esto únicamente en aplicable par Ivy Bridge y anterior
+    * Nota: Broadwell y anterior necesitan esto si corren 10.10 y anterior
+* **AppleXcpmCfgLock**: NO
+  * Únicamente necesario cuando CFG-Lock no puede ser deshabilitado en la BIOS, la contraparte de Clover sería KernelPM
+  * Únicamente aplicable para Haswell y posterior
+    * Nota: Ivy Bridge-E también está incluido ya que es compatible con XCPM
 * **CustomSMBIOSGuid**: NO
   * Hace parches de GUID para el modo `Custom` de UpdateSMBIOSMode. Usualmente relevante para laptops Dell
   * La habilitación de este quirk con el modo `Custom` de UpdateSMBIOSMode también puede deshabilitar la inyección de SMBIOS en sistemas operativos que no son de Apple, aunque no recomendamos esto ya que rompe la compatibilildad con BootCamp. Úsalo bajo tu propio riesgo; debe ser utilizado en conjunto con `PlatformInfo -> UpdateSMBIOSMode -> Custom`
@@ -715,7 +717,7 @@ Ten en cuenta que esta herramienta no está hecha ni mantenida por Dortania, tod
 * Thunderbolt(Para la instalación inicial, ya que Thunderbolt puede causar problemas si no se configura correctamente)
 * Intel SGX
 * Intel Platform Trust
-* CFG Lock (Protección contra escritura MSR 0xE2) (**Esto debe estar desactivado, si no puedes encontrar la opción, habilita tanto `AppleCpuPmCfgLock` como `AppleXcpmCfgLock` en Kernel -> Quirks. Tu hack no se iniciará con CFG-Lock habilitado** )
+* CFG Lock (Protección contra escritura MSR 0xE2) (**Esto debe estar desactivado, si no puedes encontrar la opción, habilita `AppleCpuPmCfgLock` en Kernel -> Quirks. Tu hack no se iniciará con CFG-Lock habilitado** )
 
 ### Habilitar
 
