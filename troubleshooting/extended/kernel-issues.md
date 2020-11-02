@@ -87,13 +87,17 @@ Esta sección será dividida entre usuarios de Intel y AMD:
 #### Usuarios de AMD
 
 * Faltan los [parches del kernel](https://github.com/AMD-OSX/AMD_Vanilla/tree/opencore) (esto sólo aplica para CPUs de AMD, asegúrate de que son parches de OpenCore y no de Clover. Clover usa `MatchOS` mientras que OpenCore tiene `MinKernel` y `Maxkernel`)
-  * Ten en cuenta que si estás utilizando versiones viejas de los parches del kernel probablemente tengas el mismo problema, por lo que debes asegurarte de que estás usando los más nuevos de AMD OS X 
+  * Ten en cuenta que si estás utilizando versiones viejas de los parches del kernel probablemente tengas el mismo problema, por lo que debes asegurarte de que estás usando los más nuevos de AMD OS X
 
 #### Usuarios de Intel
 
 * **AppleXcpmCfgLock** y **AppleCpuPmCfgLock**
   * Faltan parches de CFG o XCPM, por favor habilita `AppleXcpmCfgLock` y `AppleCpuPmCfgLock`
   * Alternativamente puedes deshabilitar CFG-Lock correctamente: [Fixing CFG Lock](https://dortania.github.io/OpenCore-Post-Install/misc/msr-lock.html)
+    * Haswell y posterior sólo necesitan AppleXcpmCfgLock
+    * Ivy Bridge y anterior sólo necesitan AppleCpuPmCfgLock
+      * Broadwell y anterior necesitan AppleCpuPmCfgLock si están corriendo 10.10 o anterior
+
 * **AppleXcpmExtraMsrs**
   * Esto podría llegar a ser requerido, aunque está pensado para Pentiums, HEDT u otros sistemas que no tienen soporte nativo en macOS.
 
@@ -400,6 +404,7 @@ Para usuarios Navi MSI, necesitarán aplicar el parche mencionado aquí: [Instal
 Específicamente, agregando lo siguiente debajo de `Kernel -> Patch`:
 
 ```
+
 Base:
 Comment: Navi VBIOS Bug Patch
 Count: 1
@@ -413,6 +418,7 @@ MaxKernel:
 Replace: 414D442C526F6D2300
 ReplaceMask:
 Skip: 0
+
 ```
 
 ## Kernel Panic `Cannot perform kext summary`
