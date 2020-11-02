@@ -109,14 +109,23 @@ También agregaremos tres propiedades más, `framebuffer-patch-enable`, `framebu
 
 * **Nota**: Los framebuffers "headless" (donde dGPU es lo que da la imagen) no necesitan `framebuffer-patch-enable`,`framebuffer-stolenmem` y `framebuffer-fbmem`
 
+Cabe mencionar que en el caso de que tengas una iGPU P530, esta no está soportada nativamente, por lo que tendrás que agregar la siguiente propiedad:
+
+ | Key | Type | Value |
+ | :--- | :--- | :--- |
+ | device-id | Data | 1B190000 |
+
+ Una vez que hagas esto, deberías tener algo similar a esto:
+
 | Key | Type | Value |
 | :--- | :--- | :--- |
 | AAPL,ig-platform-id | Data | 00001219 |
 | framebuffer-patch-enable | Data | 01000000 |
 | framebuffer-stolenmem | Data | 00003001 |
 | framebuffer-fbmem | Data | 00009000 |
+| device-id | Data | 1B190000 |
 
-(Este es un ejemplo para un HD 530 de escritorio sin una GPU dedicada y sin opciones en la BIOS para la memoria del iGPU)
+(Este es un ejemplo para un HD P530 de escritorio sin una GPU dedicada y sin opciones en la BIOS para la memoria del iGPU)
 
 :::
 
@@ -222,7 +231,6 @@ Ajustes relacionados al kernel, en nuestro caso cambiaremos lo siguiente:
 
 | Quirk | Habilitado | Comentario |
 | :--- | :--- | :--- |
-| AppleCpuPmCfgLock | YES | No es necesario si `CFG-Lock` está desactivado en el BIOS|
 | AppleXcpmCfgLock | YES | No es necesario si `CFG-Lock` está desactivado en el BIOS |
 | DisableIOMapper | YES | No es necesario si `VT-D` está deshabilitado en el BIOS |
 | LapicKernelPanic | NO | Las máquinas HP requerirán este quirk |
@@ -234,7 +242,7 @@ Ajustes relacionados al kernel, en nuestro caso cambiaremos lo siguiente:
 
 ::: details Información más detallada
 
-* **AppleCpuPmCfgLock**: YES
+* **AppleCpuPmCfgLock**: NO
   * Esto sólo es necesario cuando CFG-Lock no puede ser desactivado en la BIOS, la contraparte de Clover sería AppleIntelCPUPM
   * Esto únicamente en aplicable par Ivy Bridge y anterior
     * Nota: Broadwell y anterior necesitan esto si corren 10.10 y anterior
@@ -677,7 +685,7 @@ Ten en cuenta que esta herramienta no está hecha ni mantenida por Dortania, tod
 * Thunderbolt(Para la instalación inicial, ya que Thunderbolt puede causar problemas si no se configura correctamente)
 * Intel SGX
 * Intel Platform Trust
-* CFG Lock (Protección contra escritura MSR 0xE2) (**Esto debe estar desactivado, si no puedes encontrar la opción, habilita tanto `AppleCpuPmCfgLock` como `AppleXcpmCfgLock` en Kernel -> Quirks. Tu hack no se iniciará con CFG-Lock habilitado** )
+* CFG Lock (Protección contra escritura MSR 0xE2) (**Esto debe estar desactivado, si no puedes encontrar la opción, habilita `AppleXcpmCfgLock` en Kernel -> Quirks. Tu hack no se iniciará con CFG-Lock habilitado** )
 
 ### Habilitar
 

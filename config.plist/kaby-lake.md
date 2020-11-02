@@ -222,7 +222,6 @@ Ajustes relacionados a el kernel, en nuestro caso habilitaremos lo siguiente:
 
 | Quirk | Habilitado | Comentario |
 | :--- | :--- | :--- |
-| AppleCpuPmCfgLock | YES | No es necesario si `CFG-Lock` está desactivado en el BIOS|
 | AppleXcpmCfgLock | YES | No es necesario si `CFG-Lock` está desactivado en el BIOS |
 | DisableIOMapper | YES | No es necesario si `VT-D` está deshabilitado en el BIOS |
 | LapicKernelPanic | NO | Las máquinas HP requerirán este quirk |
@@ -234,7 +233,7 @@ Ajustes relacionados a el kernel, en nuestro caso habilitaremos lo siguiente:
 
 ::: details Información más detallada
 
-* **AppleCpuPmCfgLock**: YES
+* **AppleCpuPmCfgLock**: NO
   * Esto sólo es necesario cuando CFG-Lock no puede ser desactivado en la BIOS, la contraparte de Clover sería AppleIntelCPUPM
   * Esto únicamente en aplicable par Ivy Bridge y anterior
     * Nota: Broadwell y anterior necesitan esto si corren 10.10 y anterior
@@ -680,7 +679,7 @@ Ten en cuenta que esta herramienta no está hecha ni mantenida por Dortania, tod
 * Thunderbolt(Para la instalación inicial, ya que Thunderbolt puede causar problemas si no se configura correctamente)
 * Intel SGX
 * Intel Platform Trust
-* CFG Lock (Protección contra escritura MSR 0xE2) (**Esto debe estar desactivado, si no puedes encontrar la opción, habilita tanto `AppleCpuPmCfgLock` como `AppleXcpmCfgLock` en Kernel -> Quirks. Tu hack no se iniciará con CFG-Lock habilitado** )
+* CFG Lock (Protección contra escritura MSR 0xE2) (**Esto debe estar desactivado, si no puedes encontrar la opción, habilita `AppleXcpmCfgLock` en Kernel -> Quirks. Tu hack no se iniciará con CFG-Lock habilitado** )
 
 ### Habilitar
 

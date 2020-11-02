@@ -127,13 +127,18 @@ Esta sección se configura a través de la [Guía de parcheo de Framebuffers](ht
 
 El `AAPL,ig-platform-id` que utilizamos es el siguiente:
 
-* `0A006601` - este es el hexadecimal estándar para el ig-platform-id
+| AAPL,ig-platform-id | Comentario |
+| :--- | :--- |
+| 0A006601 | Utilizado cuando el iGPU es utilizado para manejar un monitor |
+| 07006201 | Usado cuando el iGPU es únicamente utilizado para tareas computacionales y no maneja un monitor |
 
-| Key | Type | Value |
-| :--- | :--- | :--- |
-| AAPL,ig-platform-id | Data | 0A006601 |
+Ejemplo:
 
-(Este es un ejemplo para una computadora de escritorio con un HD 4000)
+ | Key | Type | Value |
+ | :--- | :--- | :--- |
+ | AAPL,ig-platform-id | Data | 0A006601 |
+
+(Este es un ejemplo para una computadora de escritorio con un HD 4000 sin una GPU dedicada)
 
 :::
 

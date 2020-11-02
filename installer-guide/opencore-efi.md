@@ -41,8 +41,10 @@ Algo que te darás cuenta es que esta carpeta viene con varios archivos en las s
     * Se utiliza para Haswell y versiones anteriores cuando no hay un controlador NVMe integrado en el firmware
   * XhciDxe.efi
     * Se usa para Sandy Bridge y versiones anteriores cuando no hay un controlador XHCI integrado en el firmware
+      * Sólo es necesario si estás usando una tarjeta de expansión de USB 3.0 en una computadora vieja
   * HiiDatabase.efi
     * Se usa para arreglar el soporte de GUI como OpenShell.efi en Sandy Bridge y versiones anteriores
+      * No es necesario para arrancar
   * OpenCanopy.efi
     * Testa es la GUI opcional de OpenCore, veremos cómo configurar esto en [Post Instalación](https://dortania.github.io/OpenCore-Post-Install/cosmetic/gui.html), así que elimina esto por ahora
   * Ps2KeyboardDxe.efi + Ps2MouseDxe.efi
