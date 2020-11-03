@@ -2,7 +2,7 @@
 
 Esta sección es principalmente una mini guía de cómo encontrar qué hardware estás corriendo; lo que es principalmente relevante para laptops y computadoras pre-armadas debido a que las características de su hardware puede ser más difícil de obtener. Puedes saltearte esta página y dirigirte a [Creating the USB](./installer-guide/) si ya sabes qué hardware tienes.
 
-Para esto, asumiremos que tienes Windows o Linux instalado. 
+Para esto, asumiremos que tienes Windows o Linux instalado.
 
 * [Encontrando hardware usando Windows](#encontrando-hardware-usando-windows)
 * [Encontrando hardware usando Linux](#encontrando-hardware-usando-linux)
@@ -34,15 +34,15 @@ Debido a la interfaz más facil de utilizar, recomendamos que descargues AIDA64 
 | :--- | :--- |
 | ![](./images/finding-hardware-md/chipset-model-aida64.png) | ![](./images/finding-hardware-md/chipset-model-devicemanager.png) |
 
-* Nota: Las CPUs Intel basadas en SOC tendrán el chipset y otras características en su dado/pastilla en vez de estar en chips dedicados, lo cual significa que encontrar el chipset exacto puede ser un poco más dificil. 
+* Nota: Las CPUs Intel basadas en SOC tendrán el chipset y otras características en su dado/pastilla en vez de estar en chips dedicados, lo cual significa que encontrar el chipset exacto puede ser un poco más dificil.
 
-### Tipo de conección en tu teclado, trackpad y pantalla táctil.
+### Tipo de conección en tu teclado, trackpad y pantalla táctil
 
 | Administrador de dispositivos |
 | :--- |
 | ![](./images/finding-hardware-md/trackpad-model-devicemanager.png) |
 
-Desafortunadamente, AIDA64 no provee información útil sobre estos dispositivos, por lo que recomendamos que uses el Administrador de Dispositivos para esto. 
+Desafortunadamente, AIDA64 no provee información útil sobre estos dispositivos, por lo que recomendamos que uses el Administrador de Dispositivos para esto.
 
 * Puedes encontrar You can find these devices under the following:
   * `Dispositivos de interfaz de usuario (Human Interface Devices o HID en inglés)`
@@ -53,7 +53,7 @@ Desafortunadamente, AIDA64 no provee información útil sobre estos dispositivos
 
 #### Casos extremos
 
-Dependiendo del dispositivo, podría mostrarse debajo de múltiples nombres y conecciones. Las principales a tener en cuenta son: 
+Dependiendo del dispositivo, podría mostrarse debajo de múltiples nombres y conecciones. Las principales a tener en cuenta son:
 
 * SMBus
   * Estas aparecerán debajo de ambos PS2, como `Synaptics PS2 device` y PCI, como `Synaptic SMBus Driver`
@@ -63,11 +63,11 @@ Dependiendo del dispositivo, podría mostrarse debajo de múltiples nombres y co
 * Tipo de conección I2C
   * Actualmente hay varios tipos de touchpads I2C, así que encontrar tu tipo de conección exacto puede ser un poco complicado.
   
-::: details Ejemplo de SMBus 
+::: details Ejemplo de SMBus
 
 ![](./images/finding-hardware-md/Windows-SMBus-Device.png)
 
-Como puedes ver, vemos 2 dispositivos Synaptics en la imagen de la izquierda. Sin embargo, si miramos con atención podemos ver que el dispositivo de arriva es PS2, mientras que el de abajo es SMBus. Mientras que sí puedes usar tu trackpad en cualquiera de los dos modos, SMBus provee más funcionalidad y precisión con [VoodooRMI](https://github.com/VoodooSMBus/VoodooRMI). 
+Como puedes ver, vemos 2 dispositivos Synaptics en la imagen de la izquierda. Sin embargo, si miramos con atención podemos ver que el dispositivo de arriva es PS2, mientras que el de abajo es SMBus. Mientras que sí puedes usar tu trackpad en cualquiera de los dos modos, SMBus provee más funcionalidad y precisión con [VoodooRMI](https://github.com/VoodooSMBus/VoodooRMI).
 
 * Ten en cuenta que no todos los dispositivos Synaptics soportan SMBus.
 
@@ -110,7 +110,7 @@ Para determinar qué plugin usar, recomendamos la siguiente estrategia:
 | :--- | :--- |
 | ![](./images/finding-hardware-md/audio-controller-aida64.png) | ![](./images/finding-hardware-md/audio-controller-aida64.png.png) |
 
-Debido a como ciertos fabricantes presentan el nombre de los dispositivos, la información más precisa que puedes tener con el administrador de dispositivos es el PCI ID (como PCI 14F1,50F4). Esto significa que tendrás que buscar en Google el ID para poder descifrar el device id. Sin embargo, AIDA64 puede presentar el nombre correcto, lo que es bastante más fácil para el usuario final. 
+Debido a como ciertos fabricantes presentan el nombre de los dispositivos, la información más precisa que puedes tener con el administrador de dispositivos es el PCI ID (como PCI 14F1,50F4). Esto significa que tendrás que buscar en Google el ID para poder descifrar el device id. Sin embargo, AIDA64 puede presentar el nombre correcto, lo que es bastante más fácil para el usuario final.
 
 ### Modelos de controladores de Red
 
@@ -118,7 +118,7 @@ Debido a como ciertos fabricantes presentan el nombre de los dispositivos, la in
 | :--- | :--- |
 | ![](./images/finding-hardware-md/nic-model-aida64.png) | ![](./images/finding-hardware-md/nic-model-devicemanager.png) |
 
-Debido a como ciertos fabricantes presentan el nombre de los dispositivos, la información más precisa que puedes tener con el administrador de dispositivos es el PCI ID (ej. `PCI\VEN_14E4&DEV_43A0` corresponde al vendor ID de `14E4`, y el device ID es `43A0`). Esto significa que tendrás que Googlear el ID y descifrar el device ID exacto; sin embargo, AIDA64 puede presentar el nombre exacto lo que puede facilitar las cosas. 
+Debido a como ciertos fabricantes presentan el nombre de los dispositivos, la información más precisa que puedes tener con el administrador de dispositivos es el PCI ID (ej. `PCI\VEN_14E4&DEV_43A0` corresponde al vendor ID de `14E4`, y el device ID es `43A0`). Esto significa que tendrás que Googlear el ID y descifrar el device ID exacto; sin embargo, AIDA64 puede presentar el nombre exacto lo que puede facilitar las cosas.
 
 ### Modelo de disco
 

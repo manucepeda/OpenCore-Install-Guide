@@ -5,15 +5,19 @@
 
 Esta sección es un breve resumen de por qué la comunidad ha estado haciendo la transición a OpenCore. Aquellos que solo quieren una máquina con macOS pueden omitir esta página.
 
-* [¿Por qué OpenCore encima de clover y otros?](#por-que-opencore-encima-de-clover-y-otros)
-  * Características de OpenCore
-  * Soporte de software
-  * Inyección de kexts
-* [Mitos comunes](#mitos-comunes)
-  * OpenCore no es estable debido a que está en beta
-  * OpenCore siempre inyecta datos de SMBIOS y ACPI a otros sistemas operativos
-  * OpenCore requiere de una instalación limpia
-  * OpenCore sólo soporta determinadas versiones de macOS
+- [¿Por qué OpenCore encima de Clover y otros?](#por-qué-opencore-encima-de-clover-y-otros)
+  - [Características de OpenCore](#características-de-opencore)
+  - [Soporte de Software](#soporte-de-software)
+  - [Inyección de Kexts](#inyección-de-kexts)
+- [Mitos comunes](#mitos-comunes)
+  - [OpenCore no es estable debido a que está en beta](#opencore-no-es-estable-debido-a-que-está-en-beta)
+  - [OpenCore siempre inyecta datos de SMBIOS y ACPI a otros sistemas operativos](#opencore-siempre-inyecta-datos-de-smbios-y-acpi-a-otros-sistemas-operativos)
+  - [OpenCore requiere de una instalación limpia](#opencore-requiere-de-una-instalación-limpia)
+  - [Does OpenCore only support limited versions of macOS](#does-opencore-only-support-limited-versions-of-macos)
+  - [¿OpenCore soporta hardware antiguo?](#opencore-soporta-hardware-antiguo)
+  - [¿OpenCore soporta el arranque de Windows/Linux?](#opencore-soporta-el-arranque-de-windowslinux)
+  - [La legalidad de hackintoshing](#la-legalidad-de-hackintoshing)
+  - [¿macOS soporta GPUs de Nvidia?](#macos-soporta-gpus-de-nvidia)
 
 ## Características de OpenCore
 

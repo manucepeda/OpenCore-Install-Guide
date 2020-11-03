@@ -10,7 +10,7 @@ Ahora que has terminado de configurar OpenCore, finalmente puedes iniciar, lo m�
   * Puede ayudar a aquellos que están instalando por primera vez a comprender mejor dónde pueden estar atascados
 * Un montón de paciencia
 
-## Verificando tu trabajo
+## Double checking your work
 
 One last thing we should go over before booting is how your EFI is setup:
 
@@ -30,7 +30,7 @@ Acuérdate de que el sanity checker es tu amigo:
 
 * [**Sanity Checker**](https://opencore.slowgeek.com)
 
-## Arrancando el USB de OpenCore
+## Booting the OpenCore USB
 
 
 Entonces, ahora estás listo para finalmente colocar el USB en tu computadora y arrancarla, recuerda que tu PC seguirá utilizando la unidad interna con el SO que estás usando por defecto, por lo que tendrás que ingresar a la BIOS o al menú de arranque y seleccionar el USB. Tendrás que consultar el manual de usuario o buscar en Google para averiguar que tecla Fn accede a la BIOS y al menú de arranque (Esc, F2, F10, F12, etc.)

@@ -188,6 +188,7 @@ diskutil mount disk5s2
 
 # Luego corre updatePreboot en el volumen Preboot
 diskutil apfs updatePreboot /volume/disk5s2
+
 ```
 
 Luego finalmente reinicia, aunque podrías tener que deshabilitar JumpstartHotplug para arrancar normalmente de nuevo.
@@ -244,6 +245,8 @@ cat ./CD844C38-1A25-48D5-9388-5D62AA46CFB8/System/Library/CoreServices/.disk_lab
 # Reemplaza CD844C38-1A25-48D5-9388-5D62AA46CFB8 con tu valor de UUID
 cd ~
 sudo cp -a /usr/standalone/i386/. /System/Volumes/Preboot/CD844C38-1A25-48D5-9388-5D62AA46CFB8/System/Library/CoreServices
+
+```
 
 ## Trancado en `OCABC: Memory pool allocation failure - Not Found`
 
