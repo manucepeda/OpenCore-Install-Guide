@@ -113,7 +113,7 @@ Nota para usuarios de Clover: Reestablece tu NVRAM al hacer una instalación con
 
 ## Does OpenCore only support limited versions of macOS
 
-Desde 0.6.3, ahora puedes arrancar **todas** las versiones de Intel de macOS partiendo de 10.4! El soporte adecuado depende de tu hardware, así que verifícalo por ti mismo: [Limitaciones de Hardware](macos-limits.md)
+Desde 0.6.2, ahora puedes arrancar **todas** las versiones de Intel de macOS partiendo de 10.4! El soporte adecuado depende de tu hardware, así que verifícalo por ti mismo: [Limitaciones de Hardware](macos-limits.md)
 
 ::: details Galería de instalación de macOS
 
