@@ -4,12 +4,12 @@
    "description": "Guide to put macOS on unsupported devices",
    "main": "",
    "author": {
-      "name": "Dortania",
-      "url": "https://github.com/dortania"
+      "name": "InyextcionES",
+      "url": "https://github.com/InyextcionES"
    },
    "repository": {
       "type": "git",
-      "url": "git+https://github.com/dortania/OpenCore-Install-Guide.git"
+      "url": "git+https://github.com/InyextcionES/OpenCore-Install-Guide.git"
    },
    "scripts": {
       "dev": "vuepress dev",
