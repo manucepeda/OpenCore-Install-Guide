@@ -7,7 +7,7 @@ Si bien no necesitas una nueva instalación de macOS para usar OpenCore, algunos
 Para comenzar necesitarás lo siguiente:
 
 * Un USB de 4GB
-* [GibMacOS](https://github.com/corpnewt/gibMacOS)
+* [gibmacOS](https://github.com/corpnewt/gibMacOS)
 
 ## Descargando macOS
 
@@ -155,4 +155,4 @@ En la terminal:
       * Esto llevará un tiempo. Y aún más si estás usando un USB lento.
       ![](../images/installer-guide/linux-install-md/unknown-21.png)
 
-## Ahora con todo esto hecho, dirígete a [Configurando tu EFI](../installer-guide/opencore-efi.md) para terminar tu trabajo
+## Ahora con todo esto hecho, dirígete a [Configurando tu EFI](./opencore-efi.md) para terminar tu trabajo

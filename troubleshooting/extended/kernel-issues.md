@@ -87,13 +87,17 @@ Esta sección será dividida entre usuarios de Intel y AMD:
 #### Usuarios de AMD
 
 * Faltan los [parches del kernel](https://github.com/AMD-OSX/AMD_Vanilla/tree/opencore) (esto sólo aplica para CPUs de AMD, asegúrate de que son parches de OpenCore y no de Clover. Clover usa `MatchOS` mientras que OpenCore tiene `MinKernel` y `Maxkernel`)
-  * Ten en cuenta que si estás utilizando versiones viejas de los parches del kernel probablemente tengas el mismo problema, por lo que debes asegurarte de que estás usando los más nuevos de AMD OS X 
+  * Ten en cuenta que si estás utilizando versiones viejas de los parches del kernel probablemente tengas el mismo problema, por lo que debes asegurarte de que estás usando los más nuevos de AMD OS X
 
 #### Usuarios de Intel
 
 * **AppleXcpmCfgLock** y **AppleCpuPmCfgLock**
   * Faltan parches de CFG o XCPM, por favor habilita `AppleXcpmCfgLock` y `AppleCpuPmCfgLock`
   * Alternativamente puedes deshabilitar CFG-Lock correctamente: [Fixing CFG Lock](https://dortania.github.io/OpenCore-Post-Install/misc/msr-lock.html)
+    * Haswell y posterior sólo necesitan AppleXcpmCfgLock
+    * Ivy Bridge y anterior sólo necesitan AppleCpuPmCfgLock
+      * Broadwell y anterior necesitan AppleCpuPmCfgLock si están corriendo 10.10 o anterior
+
 * **AppleXcpmExtraMsrs**
   * Esto podría llegar a ser requerido, aunque está pensado para Pentiums, HEDT u otros sistemas que no tienen soporte nativo en macOS.
 
@@ -222,9 +226,24 @@ diskutil list
    6:              APFS Snapshot ⁨com.apple.os.update-...⁩ 16.2 GB    disk5s5s
 # Ahora monta el volumen Preboot
 diskutil mount disk5s2
-# Luego copia nuestros archivos de arranque seguro
-sudo cp -a /usr/standalone/i386/. /Volumes/Preboot
-```
+# Utiliza CD para llegar a tu volumen Preboot
+# Ten en cuenta que el volumen en sí se encunetra en /System/Volumes/Preboot
+cd /System/Volumes/Preboot
+# Agarra tu UUID
+ls
+ 46923F6E-968E-46E9-AC6D-9E6141DF52FD
+ CD844C38-1A25-48D5-9388-5D62AA46CFB8
+# Si aparecen más de nua (por ejemplo si arrancas varias versiones de macOS) tendrás que:
+# determinar cual UUID es la correcta.
+# La manera más fácil de determinar esto es imprimiendo el valor de .disk_label.contentDetails
+# de cada volumen.
+cat ./46923F6E-968E-46E9-AC6D-9E6141DF52FD/System/Library/CoreServices/.disk_label.contentDetails
+ Big Sur HD%
+cat ./CD844C38-1A25-48D5-9388-5D62AA46CFB8/System/Library/CoreServices/.disk_label.contentDetails
+ Catalina HD%
+# Reemplaza CD844C38-1A25-48D5-9388-5D62AA46CFB8 con tu valor de UUID
+cd ~
+sudo cp -a /usr/standalone/i386/. /System/Volumes/Preboot/CD844C38-1A25-48D5-9388-5D62AA46CFB8/System/Library/CoreServices
 
 ## Trancado en `OCABC: Memory pool allocation failure - Not Found`
 
@@ -385,6 +404,7 @@ Para usuarios Navi MSI, necesitarán aplicar el parche mencionado aquí: [Instal
 Específicamente, agregando lo siguiente debajo de `Kernel -> Patch`:
 
 ```
+
 Base:
 Comment: Navi VBIOS Bug Patch
 Count: 1
@@ -398,6 +418,7 @@ MaxKernel:
 Replace: 414D442C526F6D2300
 ReplaceMask:
 Skip: 0
+
 ```
 
 ## Kernel Panic `Cannot perform kext summary`

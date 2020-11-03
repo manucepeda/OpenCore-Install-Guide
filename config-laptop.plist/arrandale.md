@@ -1,10 +1,11 @@
-# Laptop Coffee Lake Plus and Comet Lake
+# Laptop Clarksfield and Arrandale
 
 | Support | Version |
 | :--- | :--- |
 | Supported OpenCore version | 0.6.2 |
-| Initial macOS Support([CFL](https://en.wikipedia.org/wiki/Coffee_Lake)) | macOS 10.13, High Sierra |
-| Initial macOS Support([CML](https://en.wikipedia.org/wiki/Comet_Lake_(microprocessor))) | macOS 10.15, Catalina |
+| Initial macOS Support | OS X 10.6.3, Snow Leopard |
+| Note 1 | Arrandale's iGPU is only officially supported up-to macOS 10.13 |
+| Note 2 | Most Clarksfield and Arrandale boards do not support UEFI |
 
 ## Starting Point
 
@@ -27,7 +28,7 @@ Now with all that, a quick reminder of the tools we need
 
 ## ACPI
 
-![ACPI](../images/config/config-laptop.plist/coffeelake-plus/acpi.png)
+![](../images/config/config-legacy/acpi-arrendale.png)
 
 ### Add
 
@@ -39,12 +40,9 @@ For us we'll need a couple of SSDTs to bring back functionality that Clover prov
 
 | Required_SSDTs | Description |
 | :--- | :--- |
-| **[SSDT-PLUG](https://dortania.github.io/Getting-Started-With-ACPI/)** | Allows for native CPU power management on Haswell and newer, see [Getting Started With ACPI Guide](https://dortania.github.io/Getting-Started-With-ACPI/) for more details. |
-| **[SSDT-EC-USBX](https://dortania.github.io/Getting-Started-With-ACPI/)** | Fixes both the embedded controller and USB power, see [Getting Started With ACPI Guide](https://dortania.github.io/Getting-Started-With-ACPI/) for more details. |
-| **[SSDT-GPIO](https://github.com/dortania/Getting-Started-With-ACPI/blob/master/extra-files/decompiled/SSDT-GPI0.dsl)** | Creates a stub so VoodooI2C can connect, for those having troubles getting VoodooI2C working can try [SSDT-XOSI](https://github.com/dortania/Getting-Started-With-ACPI/blob/master/extra-files/compiled/SSDT-XOSI.aml) instead. Note that Intel NUCs do not need this |
-| **[SSDT-PNLF-CFL](https://dortania.github.io/Getting-Started-With-ACPI/)** | Fixes brightness control, see [Getting Started With ACPI Guide](https://dortania.github.io/Getting-Started-With-ACPI/) for more details. Note that Intel NUCs do not need this |
-| **[SSDT-AWAC](https://dortania.github.io/Getting-Started-With-ACPI/)** | This is the [300 series RTC patch](https://www.hackintosh-forum.de/forum/thread/39846-asrock-z390-taichi-ultimate/?pageNo=2), required for most B360, B365, H310, H370, Z390 and some Z370 boards which prevent systems from booting macOS. The alternative is [SSDT-RTC0](https://dortania.github.io/Getting-Started-With-ACPI/) for when AWAC SSDT is incompatible due to missing the Legacy RTC clock, to check whether you need it and which to use please see [Getting started with ACPI](https://dortania.github.io/Getting-Started-With-ACPI/) page. |
-| **[SSDT-PMC](https://dortania.github.io/Getting-Started-With-ACPI/)** | So true 300 series motherboards(non-Z370) don't declare the FW chip as MMIO in ACPI and so XNU ignores the MMIO region declared by the UEFI memory map. This SSDT brings back NVRAM support. **Note that 10th gen CPUs do not need this**. See [Getting Started With ACPI Guide](https://dortania.github.io/Getting-Started-With-ACPI/) for more details. |
+| **[SSDT-EC](https://dortania.github.io/Getting-Started-With-ACPI/)** | Fixes the embedded controller, see [Getting Started With ACPI Guide](https://dortania.github.io/Getting-Started-With-ACPI/) for more details. |
+| **[SSDT-XOSI](https://github.com/dortania/Getting-Started-With-ACPI/blob/master/extra-files/compiled/SSDT-XOSI.aml)** | Makes all _OSI calls specific to Windows work for macOS (Darwin) Identifier. This may help enabling some features like XHCI and others. |
+| **[SSDT-PNLF](https://dortania.github.io/Getting-Started-With-ACPI/)** | Fixes brightness control, see [Getting Started With ACPI Guide](https://dortania.github.io/Getting-Started-With-ACPI/) for more details. Note that Intel NUCs do not need this |
 
 Note that you **should not** add your generated `DSDT.aml` here, it is already in your firmware. So if present, remove the entry for it in your `config.plist` and under EFI/OC/ACPI.
 
@@ -63,7 +61,7 @@ This blocks certain ACPI tables from loading, for us we can ignore this.
 This section allows us to dynamically modify parts of the ACPI (DSDT, SSDT, etc.) via OpenCore. For us, we'll need the following:
 
 * OSI rename
-  * This is required when using SSDT-XOSI as we redirect all OSI calls to this SSDT, **this is not needed if you're using SSDT-GPIO**
+  * This is required when using SSDT-XOSI as we redirect all OSI calls to this SSDT
 
 | Comment | String | Change _OSI to XOSI |
 | :--- | :--- | :--- |
@@ -81,52 +79,60 @@ Settings relating to ACPI, leave everything here as default as we have no use fo
 
 ## Booter
 
-![Booter](../images/config/config-universal/hedt-booter.png)
+| Legacy | UEFI
+| :--- | :--- |
+| ![](../images/config/config-legacy/booter-duetpkg.png) | ![](../images/config/config-universal/aptio-iv-booter-sl.png) |
 
 This section is dedicated to quirks relating to boot.efi patching with OpenRuntime, the replacement for AptioMemoryFix.efi
 
 ### MmioWhitelist
 
-This section is allowing devices to be pass-through to macOS that are generally ignored, for us we can ignore this section.
+This section is allowing spaces to be passthrough to macOS that are generally ignored, useful when paired with `DevirtualiseMmio`
 
 ### Quirks
 
 ::: tip Info
-Settings relating to boot.efi patching and firmware fixes, for us, we need to change the following:
+Settings relating to boot.efi patching and firmware fixes, depending where your board has UEFI, you have 2 options depending what your motherboard supports:
 
-| Quirk | Enabled |
-| :--- | :--- |
-| DevirtualiseMmio | YES |
-| EnableWriteUnprotector | NO |
-| ProtectUefiServices | YES |
-| RebuildAppleMemoryMap | YES |
-| SyncRuntimePermissions | YES |
+#### Legacy Settings
+
+| Quirk | Enabled | Comment |
+| :--- | :--- | :--- |
+| AvoidRuntimeDefrag | No | Big Sur may require this quirk enabled |
+| EnableSafeModeSlide | No | |
+| EnableWriteUnprotector | No | |
+| ProvideCustomSlide | No | |
+| RebuildAppleMemoryMap | Yes | This is required to boot OS X 10.4 through 10.6 |
+| SetupVirtualMap | No | |
+
+#### UEFI Settings
+
+| Quirk | Enabled | Comment |
+| :--- | :--- | :--- |
+| RebuildAppleMemoryMap | Yes | This is required to boot OS X 10.4 through 10.6 |
+
 :::
-
 ::: details More in-depth Info
 
-* **AvoidRuntimeDefrag**: YES
-  * Fixes UEFI runtime services like date, time, NVRAM, power control, etc
-* **DevirtualiseMmio**: YES
-  * Reduces Stolen Memory Footprint, expands options for `slide=N` values and very helpful with fixing Memory Allocation issues on Z390. Requires `ProtectUefiServices` as well on IceLake and Z390 Coffee Lake
+* **AvoidRuntimeDefrag**: NO
+  * Fixes UEFI runtime services like date, time, NVRAM, power control on UEFI Boards
+  * macOS Big Sur however requires the APIC table present, otherwise causing early kernel panics so this quirk is recommended for those users.
+* **EnableSafeModeSlide**: NO
+  * Enables slide variables to be used in safe mode, however this quirk is only applicable to UEFI platforms
 * **EnableWriteUnprotector**: NO
-  * This quirk and RebuildAppleMemoryMap can commonly conflict, recommended to enable the latter on newer platforms and disable this entry.
-  * However, due to issues with OEMs not using the latest EDKII builds you may find that the above combo will result in early boot failures. This is due to missing the `MEMORY_ATTRIBUTE_TABLE` and such we recommend disabling RebuildAppleMemoryMap and enabling EnableWriteUnprotector. More info on this is covered in the [troubleshooting section](/troubleshooting/extended/kernel-issues.md#stuck-on-eb-log-exitbs-start)
-* **ProtectUefiServices**: NO
-  * Protects UEFI services from being overridden by the firmware, mainly relevant for VMs, Icelake and Z390 systems'
-  * If on Z390, **enable this quirk**
+  * Needed to remove write protection from CR0 register on UEFI platforms
+* **ProvideCustomSlide**: NO
+  * Used for Slide variable calculation on UEFI platforms
 * **RebuildAppleMemoryMap**: YES
-  * Generates Memory Map compatible with macOS, can break on some laptop OEM firmwares so if you receive early boot failures disable this
+  * Resolves early memory kernel panics on 10.6 and below
 * **SetupVirtualMap**: YES
-  * Fixes SetVirtualAddresses calls to virtual addresses, shouldn't be needed on Skylake and newer. Some firmware like Gigabyte may still require it, and will kernel panic without this
-* **SyncRuntimePermissions**: YES
-  * Fixes alignment with MAT tables and required to boot Windows and Linux with MAT tables, also recommended for macOS. Mainly relevant for RebuildAppleMemoryMap users
+  * Fixes SetVirtualAddresses calls to virtual addresses on UEFI boards
 
 :::
 
 ## DeviceProperties
 
-![DeviceProperties](../images/config/config-laptop.plist/coffeelake-plus/DeviceProperties.png)
+![](../images/config/config-legacy/igpu-arrendale.png)
 
 ### Add
 
@@ -136,47 +142,14 @@ Sets device properties from a map.
 
 This section is set up via WhateverGreen's [Framebuffer Patching Guide](https://github.com/acidanthera/WhateverGreen/blob/master/Manual/FAQ.IntelHD.en.md) and is used for setting important iGPU properties.
 
-When setting up your iGPU, the table below should help with finding the right values to set. Here is an explanation of some values:
+When setting up your iGPU, simply add the vales below to the `PciRoot(0x0)/Pci(0x2,0x0)` entry:
 
-* **AAPL,ig-platform-id**
-  * This is used internally for setting up the iGPU
-* **Type**
-  * Whether the entry is recommended for laptops(ie. with built-in displays) or for Intel NUCs(ie. stand alone boxes)
-
-Generally follow these steps when setting up your iGPU properties. Follow the configuration notes below the table if they say anything different:
-
-1. When initially setting up your config.plist, only set AAPL,ig-platform-id - this is normally enough
-2. If you boot and you get no graphics acceleration (7MB VRAM and solid background for dock), then you likely need to try different `AAPL,ig-platform-id` values, add stolenmem patches, or even add a `device-id` property.
-
-| AAPL,ig-platform-id | Type | Comment |
-| ------------------- | ---- | ------- |
-| **0900A53E** | Laptop | Recommended value for UHD630 |
-| **00009B3E** | Laptop | Recommended value for UHD620 |
-| **07009B3E** | NUC | Recommended value for UHD 620/630 |
-| **0000A53E** | NUC | Recommended value for UHD 655 |
-
-#### Configuration Notes
-
-* For `UHD630` you likely do not need to fake the `device-id` as it is already `0x3E9B`. If it's anything else, you may use `device-id`=`9B3E0000`:
-  * You can check under Device Manager in Windows by bring up the iGPU, opening properties, selecting details, and clicking Hardware IDs.
-
-| Key | Type | Value |
-| :--- | :--- | :--- |
-| device-id | Data | 9B3E0000 |
-  
-* An `UHD620` in a Comet Lake CPU **requires** `device-id`=`9B3E0000`:
-
-| Key | Type | Value |
-| :--- | :--- | :--- |
-| device-id | Data | 9B3E0000 |
-
-* In some cases where you cannot set the DVMT-prealloc of these cards to 64MB higher in your UEFI Setup, you may get a kernel panic. Usually they're configured for 32MB of DVMT-prealloc, in that case these values are added to your iGPU Properties
-
-| Key | Type | Value |
+| Property | Type | Value |
 | :--- | :--- | :--- |
 | framebuffer-patch-enable | Data | 01000000 |
-| framebuffer-stolenmem | Data | 00003001 |
-| framebuffer-fbmem | Data | 00009000 |
+| framebuffer-singlelink | Data | 01000000 |
+
+* **Note**: Apple's Iron Lake drivers only support LVDS displays and **not** eDP
 
 :::
 
@@ -197,7 +170,7 @@ Removes device properties from the map, for us we can ignore this
 
 ## Kernel
 
-![Kernel](../images/config/config-universal/kernel-modern-XCPM.png)
+![Kernel](../images/config/config-universal/kernel-sandy-usb.png)
 
 ### Add
 
@@ -283,22 +256,22 @@ Settings relating to the kernel, for us we'll be enabling the following:
 
 | Quirk | Enabled | Comment |
 | :--- | :--- | :--- |
-| AppleXcpmCfgLock | YES | Not needed if `CFG-Lock` is disabled in the BIOS |
+| AppleCpuPmCfgLock | YES | Not needed if `CFG-Lock` is disabled in the BIOS |
 | DisableIOMapper | YES | Not needed if `VT-D` is disabled in the BIOS |
 | LapicKernelPanic | NO | HP Machines will require this quirk |
 | PanicNoKextDump | YES | |
 | PowerTimeoutKernelPanic | YES | |
-| XhciPortLimit | YES | |
+| XhciPortLimit | YES | If your board does not have USB 3.0, you can disable |
 
 :::
 
 ::: details More in-depth Info
 
-* **AppleCpuPmCfgLock**: NO
+* **AppleCpuPmCfgLock**: YES
   * Only needed when CFG-Lock can't be disabled in BIOS
   * Only applicable for Ivy Bridge and older
     * Note: Broadwell and older require this when running 10.10 or older
-* **AppleXcpmCfgLock**: YES
+* **AppleXcpmCfgLock**: NO
   * Only needed when CFG-Lock can't be disabled in BIOS
   * Only applicable for Haswell and newer
     * Note: Ivy Bridge-E is also included as it's XCPM capable
@@ -545,39 +518,31 @@ Forcibly rewrites NVRAM variables, do note that `Add` **will not overwrite** val
 
 ## PlatformInfo
 
-![PlatformInfo](../images/config/config-laptop.plist/coffeelake/smbios.png)
+![PlatformInfo](../images/config/config-laptop.plist/ivy-bridge/smbios.png)
 
 ::: tip Info
 
 For setting up the SMBIOS info, we'll use CorpNewt's [GenSMBIOS](https://github.com/corpnewt/GenSMBIOS) application.
 
-For this Coffee Lake Plus example, we'll chose the MacBookPro16,1 SMBIOS - this is done intentionally for compatibility's sake. The breakdown is as follows(note that the below SMBIOS require macOS 10.15, Catalina):
+For this Sandy Bridge example, we'll chose the MacBookPro6,1 SMBIOS - this is done intentionally for compatibility's sake. The typical breakdown is as follows:
 
-| SMBIOS | CPU Type | GPU Type | Display Size | Touch ID |
-| :--- | :--- | :--- | :--- | :--- |
-| MacBookPro16,1 | Hexa/Octa Core 45w | iGPU: UHD 630 + dGPU: 5300/5500M | 15" | Yes |
-| MacBookPro16,3 | Quad Core 15w | iGPU: Iris 645 | 13" | Yes |
-| MacBookPro16,4 | Hexa/Octa Core 45w | iGPU: UHD 630 + dGPU: 5600M | 15" | Yes |
-| Macmini8,1 | NUC Systems | HD 6000/Iris Pro 6200 |  N/A | No |
+| SMBIOS | CPU Type | Display Size |
+| :--- | :--- | :--- | :--- |
+| MacBookPro6,1 | Quad Core 45w(High End) | 17" |
+| MacBookPro6,2 | Quad Core 45w(Low End) | 15" |
 
 Run GenSMBIOS, pick option 1 for downloading MacSerial and Option 3 for selecting out SMBIOS.  This will give us an output similar to the following:
 
 ```sh
   #######################################################
- #               MacBookPro16,1 SMBIOS Info            #
+ #                MacBookPro8,2 SMBIOS Info            #
 #######################################################
 
-Type:         MacBookPro16,1
-Serial:       C02XG0FDH7JY
-Board Serial: C02839303QXH69FJA
-SmUUID:       DBB364D6-44B2-4A02-B922-AB4396F16DA8
+Type:         MacBookPro8,2
+Serial:       C02KCYZLDNCW
+Board Serial: C02309301QXF2FRJC
+SmUUID:       A154B586-874B-4E57-A1FF-9D6E503E4580
 ```
-
-* **Note**: GenSMBIOS has not been updated to reflect the new repo of MacSerial, to resolve issues with generating iMac20,x, you'll need to do the following:
-  * Downloaded the latest release of [OpenCorePkg](https://github.com/acidanthera/OpenCorePkg/releases/)
-  * Navigate to `Utiltiies/macserial/` folder and grab either the macserial or macserial.exe file(.exe is for Windows)
-  * Run `chmod +x /path/to/macserial` if you're in a Unix environment, otherwise GenSMBIOS will throw a permissions error
-  * Place this macserial executable under GenSMBIOS's Scripts folder
 
 The `Type` part gets copied to Generic -> SystemProductName.
 
@@ -632,7 +597,7 @@ We set Generic -> ROM to either an Apple ROM (dumped from a real Mac), your NIC 
 
 ## UEFI
 
-![UEFI](../images/config/config-universal/aptio-v-uefi-laptop.png)
+![](../images/config/config-legacy/uefi-legacy-laptop.png)
 
 **ConnectDrivers**: YES
 
@@ -644,8 +609,9 @@ Add your .efi drivers here.
 
 Only drivers present here should be:
 
-* HfsPlus.efi
+* HfsPlusLegacy.efi
 * OpenRuntime.efi
+* OpenUsbKbDxe.efi(If your firmware does not support UEFI)
 
 ### APFS
 
@@ -659,7 +625,15 @@ Related to AudioDxe settings, for us we'll be ignoring(leave as default). This i
 
 ### Input
 
-Related to boot.efi keyboard passthrough used for FileVault and Hotkey support, leave everything here as default as we have no use for these quirks. See here for more details: [Security and FileVault](https://dortania.github.io/OpenCore-Post-Install/)
+::: tip Info
+
+Related to boot.efi keyboard passthrough used for FileVault and Hotkey support, leave everything here as default besides:
+
+| Quirk | Value | Comment |
+| :--- | :--- | :--- |
+| KeySupport | NO | Enable if your BIOS supports UEFI |
+
+:::
 
 ### Output
 
@@ -676,6 +650,7 @@ Relating to quirks with the UEFI environment, for us we'll be changing the follo
 
 | Quirk | Enabled | Comment |
 | :--- | :--- | :--- |
+| IgnoreInvalidFlexRatio | YES | |
 | ReleaseUsbOwnership | YES | |
 | UnblockFsConnect | NO | Needed mainly by HP motherboards |
 
@@ -686,6 +661,8 @@ Relating to quirks with the UEFI environment, for us we'll be changing the follo
 * **DeduplicateBootOrder**: YES
   * Request fallback of some Boot prefixed variables from `OC_VENDOR_VARIABLE_GUID` to `EFI_GLOBAL_VARIABLE_GUID`. Used for fixing boot options.
 
+* **IgnoreInvalidFlexRatio**: YES
+  * Fix for when MSR_FLEX_RATIO (0x194) can't be disabled in the BIOS, required for all pre-Skylake based systems
 * **ReleaseUsbOwnership**: YES
   * Releases USB controller from firmware driver, needed for when your firmware doesn't support EHCI/XHCI Handoff. Most laptops have garbage firmwares so we'll need this as well
 * **RequestBootVarRouting**: YES
@@ -721,16 +698,11 @@ So thanks to the efforts of Ramus, we also have an amazing tool to help verify y
   * You will get a kernel panic on LAPIC otherwise
 * UEFI -> Quirks -> UnblockFsConnect -> True
 
-**Dell Users**:
-
- For Skylake and newer:
-
-* Kernel -> Quirk -> CustomSMBIOSGuid -> True
-* PlatformInfo -> UpdateSMBIOSMode -> Custom
-
 ## Intel BIOS settings
 
 * Note: Most of these options may not be present in your firmware, we recommend matching up as closely as possible but don't be too concerned if many of these options are not available in your BIOS
+
+These are the main options to check for, if you can't find it or an equivalent for it, just skip it.
 
 ### Disable
 
@@ -739,21 +711,21 @@ So thanks to the efforts of Ramus, we also have an amazing tool to help verify y
 * Serial/COM Port
 * Parallel Port
 * VT-d (can be enabled if you set `DisableIoMapper` to YES)
-* CSM
-* Thunderbolt(For initial install, as Thunderbolt can cause issues if not setup correctly)
+* CSM (or Legacy Support, or Hybrid Boot)
+* Thunderbolt (For initial install, as Thunderbolt can cause issues if not setup correctly, if available)
 * Intel SGX
 * Intel Platform Trust
-* CFG Lock (MSR 0xE2 write protection)(**This must be off, if you can't find the option then enable `AppleXcpmCfgLock` under Kernel -> Quirks. Your hack will not boot with CFG-Lock enabled**)
+* CFG Lock (MSR 0xE2 write protection)(**This must be off, if you can't find the option then enable `AppleCpuPmCfgLock` under Kernel -> Quirks. Your hack will not boot with CFG-Lock enabled**)
 
 ### Enable
 
-* VT-x
+* VT-x (Virtualization Support)
 * Above 4G decoding
 * Hyper-Threading
 * Execute Disable Bit
 * EHCI/XHCI Hand-off
 * OS type: Windows 8.1/10 UEFI Mode
-* DVMT Pre-Allocated(iGPU Memory): 64MB
+* DVMT Pre-Allocated(iGPU Memory): 32MB
 * SATA Mode: AHCI
 
 ## Now with all this done, head to the [Installation Page](../installation/installation-process.md)
