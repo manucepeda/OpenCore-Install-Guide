@@ -18,7 +18,7 @@ Luego, muévelo a la partición EFI de tu USB (se llamará BOOT en Windows) en `
 
 ## Agregando tus SSDTs, kexts y Drivers del Firmware
 
-Para el resto de esta guía, necesitarás alguna forma de editar plists. En nuestro caso utilizaremos las herramientas Propertree y GenSMBIOS hechas por [CorpNewt](https://github.com/corpnewt) para automatizar parte del trabajo tedioso. 
+Para el resto de esta guía, necesitarás alguna forma de editar plists. En nuestro caso utilizaremos las herramientas Propertree y GenSMBIOS hechas por [CorpNewt](https://github.com/corpnewt) para automatizar parte del trabajo tedioso.
 
 * [ProperTree](https://github.com/corpnewt/ProperTree)
   * Editor de plists
@@ -52,8 +52,9 @@ Si deseas limpiar un poco el archivo, puedes eliminar las entradas `# WARNING`. 
 
 Ahora viene la parte importante, seleccionar la ruta a seguir para configurar tu config.plist. Cada plataforma tiene sus propias peculiaridades que debes tener en cuenta, por lo que conocer tu hardware es muy importante. Ve a continuación lo que debes seguir:
 
-
 ### PC de escritorio Intel
+
+* Nota: Las series NUC de Intel son consideradas hardware móvil, así que si tienes este tipo de hardware te recomendamos que sigas la [Sección de laptops para Intel (no disponible aún)](#intel-laptop)
 
 | Nombre clave | Series | Época |
 | :--- | :--- | :--- |
@@ -67,7 +68,7 @@ Ahora viene la parte importante, seleccionar la ruta a seguir para configurar tu
 | [Coffee Lake](/config.plist/coffee-lake.md) | 8XXX-9XXX | 2017-2019 |
 | [Comet Lake](/config.plist/comet-lake.md) | 10XXX | 2020 |
 
-### AMD 
+### AMD
 
 | Nombre clave | Series | Época |
 | :--- | :--- | :--- |
