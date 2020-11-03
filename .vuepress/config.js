@@ -240,8 +240,6 @@ module.exports = {
             title: 'Extras',
             collapsable: true,
             children: [
-                '/extras/kaslr-fix',
-                '/extras/spoof',
                 ['https://github.com/inyextciones/OpenCore-Install-Guide/tree/master/clover-conversion', 'Conversión de Clover (en inglés)'],
 		'/extras/smbios-support.md',
             ]
@@ -250,7 +248,7 @@ module.exports = {
             title: 'Otros',
             collapsable: false,
             children: [
-                'CONTRIBUTING',
+                'Contribuyendo',
                 '/misc/credit',
             ]
         },
