@@ -1,6 +1,6 @@
 # Converting common properties from Clover to OpenCore
 
-* Supported version: 0.5.9
+* Supported version: 0.6.3
 
 So this little(well not so little as I reread this...) page is for users who are having issues migrating from Clover to OpenCore as some of their legacy quirks are required or the Configuration.pdf isn't well suited for laptop users.  
 
@@ -183,7 +183,7 @@ So with the transition from Clover to OpenCore we should start removing unneeded
 
 **Type**:
 
-* `PlatformInfo -> SMBIOS -> ProcessorType`
+* `PlatformInfo -> Generic -> ProcessorType`
 * See [AppleSmBios.h](https://github.com/acidanthera/OpenCorePkg/blob/master/Include/Apple/IndustryStandard/AppleSmBios.h) for all supported values
 
 **HWPEnable**: Better alternative is to properly manage `MSR 0x770` with [HWPEnable](https://github.com/headkaze/HWPEnable)
@@ -281,9 +281,7 @@ Just don't add your drivers to `UEFI -> Drivers`
 
 **InjectIntel**:
 
-* `DeviceProperties -> Add -> PciRoot(0x0)/Pci(0x2,0x0) -> device-id`
-  * ie. `66010003` for the HD 4000
-* `DeviceProperties -> Add -> PciRoot(0x0)/Pci(0x2,0x0) -> vendor-id -> <86800000>`
+* [GMA Patching](https://dortania.github.io/OpenCore-Post-Install/gpu-patching/)
 
 **InjectAti**:
 
@@ -305,8 +303,7 @@ DUMMY                   <01 00 00 00>
 
 **InjectNvidia**:
 
-* `DeviceProperties -> Add -> PciRoot... -> device-id`
-* `DeviceProperties -> Add -> PciRoot... -> Family`
+* [Nvidia Patching](https://dortania.github.io/OpenCore-Post-Install/gpu-patching/)
 
 **FakeIntel**:
 
@@ -340,8 +337,7 @@ For others like InjectAti, see the [Sample.dsl](https://github.com/acidanthera/W
 
 **NVCAP**
 
-* `DeviceProperties -> Add -> PciRoot... -> NVCAP`
-* See [NVCAP-settings](https://github.com/dortania/OpenCore-Install-Guide/blob/master/extra-files/NVCAP-settings.png) for more details, image courtesy of Clover manual
+* [Nvidia Patching](https://dortania.github.io/OpenCore-Post-Install/gpu-patching/)
 
 **display-cfg**:
 
@@ -376,7 +372,7 @@ For others like InjectAti, see the [Sample.dsl](https://github.com/acidanthera/W
 **RadeonDeInit**:
 
 * [Radeon-Denit-SSDT](https://github.com/dortania/OpenCore-Install-Guide/blob/master/extra-files/Radeon-Deinit-SSDT.dsl)
-* Do note that this is meant for GFX0, adjust for your system
+  * Do note that this is meant for GFX0, adjust for your system
 
 # Kernel and Kext Patches
 
@@ -408,8 +404,7 @@ An odd quirk for Dell systems running APTIO V(or just Skylake, Slice doesn't rea
 
 **ForceKextsToLoad**:
 
-* Not a great solution but injecting the kext "works"
-* See here for more info: [Add ForceKextsToLoad feature to OpenCore #681](https://github.com/acidanthera/bugtracker/issues/681)
+* `Kernel -> Force`
 
 **Kernel LAPIC**:
 
@@ -523,7 +518,9 @@ Note: Finding CPUID's for Intel can be a bit harder than looking at Intel ARK, e
 
 **Memory**:
 
-* No way to currently map memory slots
+* `PlatformInfo -> CustomMemory -> True`
+* `PlatformInfo -> Memory`
+  * See [Configuration.pdf](https://github.com/acidanthera/OpenCorePkg/blob/master/Docs/Configuration.pdf) for more info
 
 **Slots AAPL Injection**:
 
@@ -570,6 +567,7 @@ Note: Finding CPUID's for Intel can be a bit harder than looking at Intel ARK, e
 
 * Boot Graphics
 * Disable Drivers
+* KernelAndKextPatches
 * RTVariables
 * SMBIOS
 * SystemParameters
@@ -579,8 +577,7 @@ Note: Finding CPUID's for Intel can be a bit harder than looking at Intel ARK, e
 * Acpi
 * Boot
 * CPU
-* Devices
-* KernelAndKextPatches
+* Device
 
 **Section missing**:
 
