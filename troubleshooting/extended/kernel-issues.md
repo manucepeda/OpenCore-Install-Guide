@@ -1,6 +1,6 @@
 # Problemas del kernel
 
-* Versión soportada: 0.6.2
+* Versión soportada: 0.6.3
 
 Aquí se cubre todo lo que puede pasar luego de que seleccionas a macOS en el menú de OpenCore hasta justo antes de que aparezca el logo de Apple y cargue la GUI
 

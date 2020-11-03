@@ -1,6 +1,6 @@
 # Recolectando archivos
 
-* Versión soportada: 0.6.2
+* Versión soportada: 0.6.3
 
 Esta sección es para obtener otros archivos necesarios para arrancar macOS, esperamos que conozcas bien tu hardware  antes de comenzar y que hayas hecho un hackintosh antes, ya que no entraremos en detalle aquí. 
 

@@ -1,6 +1,6 @@
 # Creando el instalador en Linux
 
-* Versión soportada: 0.6.2
+* Versión soportada: 0.6.3
 
 Si bien no necesitas una nueva instalación de macOS para usar OpenCore, algunos usuarios prefieren tener una nueva instalación con sus actualizaciones del gestor de arranque.
 

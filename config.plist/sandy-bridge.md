@@ -2,7 +2,7 @@
 
 | Soporte | Versión |
 | :--- | :--- |
-| Versión de OpenCore Soportada | 0.6.2 |
+| Versión de OpenCore Soportada | 0.6.3 |
 | Soporte inicial de macOS | OS X 10.6.7, Snow Leopard |
 | Nota 1 | Las iGPUs Sandy Bridge son oficialmente soportadas hasta macOS 10.13 |
 | Nota 2 | La mayoría de las placas madre Sandy Bridge no soportan UEFI |

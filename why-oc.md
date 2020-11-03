@@ -1,7 +1,7 @@
 
 # ¿Por qué OpenCore encima de Clover y otros?
 
-* Versión soportada 0.6.2
+* Versión soportada 0.6.3
 
 Esta sección es un breve resumen de por qué la comunidad ha estado haciendo la transición a OpenCore. Aquellos que solo quieren una máquina con macOS pueden omitir esta página.
 
@@ -113,7 +113,7 @@ Nota para usuarios de Clover: Reestablece tu NVRAM al hacer una instalación con
 
 ## Does OpenCore only support limited versions of macOS
 
-Desde 0.6.2, ahora puedes arrancar **todas** las versiones de Intel de macOS partiendo de 10.4! El soporte adecuado depende de tu hardware, así que verifícalo por ti mismo: [Limitaciones de Hardware](macos-limits.md)
+Desde 0.6.3, ahora puedes arrancar **todas** las versiones de Intel de macOS partiendo de 10.4! El soporte adecuado depende de tu hardware, así que verifícalo por ti mismo: [Limitaciones de Hardware](macos-limits.md)
 
 ::: details Galería de instalación de macOS
 

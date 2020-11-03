@@ -1,6 +1,6 @@
 # Problemas del espacio de ususario
 
-* Versión soportada: 0.6.2
+* Versión soportada: 0.6.3
 
 * [Instalador de macOS en ruso](#instalador-de-macos-en-ruso)
 * [Instalador de macOS dañado](#instalador-de-macos-dañado)
