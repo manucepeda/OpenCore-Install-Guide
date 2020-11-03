@@ -55,8 +55,6 @@ Ahora viene la parte importante, seleccionar la ruta a seguir para configurar tu
 
 ### PC de escritorio Intel
 
-* Nota: Las series NUC de Intel son consideradas hardware móvil, así que si tienes este tipo de hardware te recomendamos que sigas la [Sección de laptops para Intel (no disponible aún)](#intel-laptop)
-
 | Nombre clave | Series | Época |
 | :--- | :--- | :--- |
 | [Yonah, Conroe and Penryn (no disponible aún)](../config.plist/penryn.md) | E8XXX, Q9XXX, [etc 1](https://en.wikipedia.org/wiki/Yonah_(microprocessor)), [etc 2](https://en.wikipedia.org/wiki/Penryn_(microarchitecture)) | 2006-2009 |

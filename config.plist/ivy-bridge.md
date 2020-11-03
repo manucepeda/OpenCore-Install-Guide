@@ -2,7 +2,7 @@
 
 | Soporte | Versión |
 | :--- | :--- |
-| Versión de OpenCore Soportada | 0.6.3 |
+| Versión de OpenCore Soportada | 0.6.2 |
 | Soporte inicial de macOS | OS X 10.7, Lion |
 | Notas | Las iGPUs de Ivy Bridge sólo son compatibles oficialmente hasta macOS 10.15 |
 
@@ -53,7 +53,7 @@ Aquellos que deseen una explicación más profunda de cómo hacer un dump de su 
 
 ::: tip Info
 
-Esto bloquea la carga de ciertas tablas ACPI, la principal razón de esto es que el XCPM de Apple en nuestro caso esto es muy importante, la principal razón es que el XCPM de Apple no soporta Ivy Bridge muy bien y puede causar kernel panics con AppleIntelCPUPowerManagement al bootear. Para evitar esto necesitamos hacer nuestro propio SSDT de PM en [Post-Instalación](https://dortania.github.io/OpenCore-Post-Install/) y eliminar las tablas enteriores (Ten en cuenta que esto es temporal hasta que hagamos nuestro SSDT-PM, rehabilitaremos estas tablas luego):
+Esto bloquea la carga de ciertas tablas ACPI, la principal razón de esto es que el XCPM de Apple en nuestro caso esto es muy importante, la principal razón es que el XCPM de Apple no soporta Ivy Bridge muy bien y puede causar kernel panics con AppleIntelCPUPowerManagement al bootear. Para evitar esto necesitamos hacer nuestro propio SSDT de PM en [Post-Instalación](https://dortania.github.io/OpenCore-Post-Install/) y eliminar las tablas enteriores:
 
 Eliminando CpuPm:
 
@@ -127,18 +127,13 @@ Esta sección se configura a través de la [Guía de parcheo de Framebuffers](ht
 
 El `AAPL,ig-platform-id` que utilizamos es el siguiente:
 
-| AAPL,ig-platform-id | Comentario |
-| :--- | :--- |
-| 0A006601 | Utilizado cuando el iGPU es utilizado para manejar un monitor |
-| 07006201 | Usado cuando el iGPU es únicamente utilizado para tareas computacionales y no maneja un monitor |
+* `0A006601` - este es el hexadecimal estándar para el ig-platform-id
 
-Ejemplo:
+| Key | Type | Value |
+| :--- | :--- | :--- |
+| AAPL,ig-platform-id | Data | 0A006601 |
 
- | Key | Type | Value |
- | :--- | :--- | :--- |
- | AAPL,ig-platform-id | Data | 0A006601 |
-
-(Este es un ejemplo para una computadora de escritorio con un HD 4000 sin una GPU dedicada)
+(Este es un ejemplo para una computadora de escritorio con un HD 4000)
 
 :::
 
@@ -212,19 +207,19 @@ Un dato a tener en cuenta es que los usuarios de [ProperTree](https://github.com
 
 | Versión de OS X | MinKernel | MaxKernel |
 | :--- | :--- | :--- |
-| 10.4 | 8.0.0 | 8.99.99 |
-| 10.5 | 9.0.0 | 9.99.99 |
-| 10.6 | 10.0.0 | 10.99.99 |
-| 10.7 | 11.0.0 | 11.99.99 |
-| 10.8 | 12.0.0 | 12.99.99 |
-| 10.9 | 13.0.0 | 13.99.99 |
-| 10.10 | 14.0.0 | 14.99.99 |
-| 10.11 | 15.0.0 | 15.99.99 |
-| 10.12 | 16.0.0 | 16.99.99 |
-| 10.13 | 17.0.0 | 17.99.99 |
-| 10.14 | 18.0.0 | 18.99.99 |
-| 10.15 | 19.0.0 | 19.99.99 |
-| 11 | 20.0.0 | 20.99.99 |
+| 10.4 | 8.00.00 | 8.99.99 |
+| 10.5 | 9.00.00 | 9.99.99 |
+| 10.6 | 10.00.00 | 10.99.99 |
+| 10.7 | 11.00.00 | 11.99.99 |
+| 10.8 | 12.00.00 | 12.99.99 |
+| 10.9 | 13.00.00 | 13.99.99 |
+| 10.10 | 14.00.00 | 14.99.99 |
+| 10.11 | 15.00.00 | 15.99.99 |
+| 10.12 | 16.00.00 | 16.99.99 |
+| 10.13 | 17.00.00 | 17.99.99 |
+| 10.14 | 18.00.00 | 18.99.99 |
+| 10.15 | 19.00.00 | 19.99.99 |
+| 11 | 20.00.00 | 20.99.99 |
 
 :::
 
@@ -258,6 +253,7 @@ Configuraciones relacionadas con el kernel, en nuestro caso habilitaremos lo sig
 | Quirk | Habilitado | Comentario |
 | :--- | :--- | :--- |
 | AppleCpuPmCfgLock | YES | No es necesario si `CFG-Lock` está desactivado en el BIOS|
+| AppleXcpmCfgLock | YES | No es necesario si `CFG-Lock` está desactivado en el BIOS |
 | DisableIOMapper | YES | No es necesario si `VT-D` está deshabilitado en el BIOS |
 | LapicKernelPanic | NO | Las máquinas HP requerirán este quirk |
 | PanicNoKextDump | YES | |
@@ -269,28 +265,21 @@ Configuraciones relacionadas con el kernel, en nuestro caso habilitaremos lo sig
 ::: details Información más detallada
 
 * **AppleCpuPmCfgLock**: YES
-  * Esto sólo es necesario cuando CFG-Lock no puede ser desactivado en la BIOS, la contraparte de Clover sería AppleIntelCPUPM
-  * Esto únicamente en aplicable par Ivy Bridge y anterior
-    * Nota: Broadwell y anterior necesitan esto si corren 10.10 y anterior
-* **AppleXcpmCfgLock**: NO
-  * Únicamente necesario cuando CFG-Lock no puede ser deshabilitado en la BIOS, la contraparte de Clover sería KernelPM
-  * Únicamente aplicable para Haswell y posterior
-    * Nota: Ivy Bridge-E también está incluido ya que es compatible con XCPM
+  * Solo es necesario cuando CFG-Lock no se puede deshabilitar en BIOS, la contraparte de Clover sería AppleIntelCPUPM.
+  **Por favor verifica si puedes deshabilitar CFG-Lock, la mayoría de los sistemas no arrancarán con él, por lo que requieren el uso de este quirk**
+* **AppleXcpmCfgLock**: YES
+  * Solo es necesario cuando CFG-Lock no se puede deshabilitar en BIOS, la contraparte de Clover sería KernelPM. **Por favor verifica si puedes deshabilitar CFG-Lock, la mayoría de los sistemas no arrancarán con él, por lo que requieren el uso de este quirk**
 * **CustomSMBIOSGuid**: NO
   * Hace parches de GUID para el modo `Custom` de UpdateSMBIOSMode. Usualmente relevante para laptops Dell
   * La habilitación de este quirk con el modo `Custom` de UpdateSMBIOSMode también puede deshabilitar la inyección de SMBIOS en sistemas operativos que no son de Apple, aunque no recomendamos esto ya que rompe la compatibilildad con BootCamp. Úsalo bajo tu propio riesgo; debe ser utilizado en conjunto con `PlatformInfo -> UpdateSMBIOSMode -> Custom`
 * **DisableIoMapper**: YES
   * Necesario para encontrar la vuelta a VT-D si no puedes desactivarlo desde la BIOS o si lo necesitas para otro SO. Esto es una mejor alternativa a `dart=0` ya que el SIP puede quedarse en Catalina
 * **DisableLinkeditJettison**: YES
-  * Permite que Lilu y otros tengan rendimiento más estable sin el quirk `keepsyms=1`
+  * Permite que Lilu y otros tengan rendimiento estable en macOS 11, Big Sur, sin el quirk keepsyms=1
 * **DisableRtcChecksum**: NO
   * Impide que AppleRTC escriba en la suma de comprobación primaria (0x58-0x59), necesaria para los usuarios que reciben el reinicio del BIOS o son enviados al modo seguro después del reinicio/apagado
-* **ExtendBTFeatureFlags** NO
-  * Útil para aquellos que tengan problemas con continuity con tarjetas que no sean de Apple/Fenvi
 * **LapicKernelPanic**: NO
   * Inhabilita el kernel panic en la interrupción del kernel de AP, generalmente necesaria para los sistemas HP. El equivalente de Clover es `Kernel LAPIC`
-* **LegacyCommpage**: NO
-  * Resuelve el requerimiento de SSS3 para CPUS de 64 bits en macOS, por lo que es principalmente relevanete para CPUs como Pentium 4 de 64 bits (como Prescott)
 * **PanicNoKextDump**: YES
   * Permite leer los registros de kernel panics cuando éstos ocurren
 * **PowerTimeoutKernelPanic**: YES
@@ -410,7 +399,7 @@ Security se explica por sí sola, **no te lo saltes**. Vamos a cambiar lo siguie
   * `0` te permite ver todas las unidades disponibles, consulta la sección [Seguridad](https://dortania.github.io/OpenCore-Post-Install/universal/security.html) para obtener más detalles. **No arrancará dispositivos USB con este ajuste predeterminado**
 * **SecureBootModel**: Default
   * Habilita la funcionalidad del arranque seguro de Apple en macOS, por favor refiérete a [Seguridad](https://inyextciones.github.io/OpenCore-Post-Install/universal/security.html) para más información.
-   * Nota: Los usuarios pueden encontrar fallas de arranque cuando actualizen OpenCore en un sistema que ya contenga una instalación. Para resolver esto, dirígete aquí: [Trancado en OCB: LoadImage failed - Security Violation](/troubleshooting/extended/kernel-issues.md#trancado-en-ocb-loadimage-failed-security-violation)
+   * Nota: Los usuarios pueden encontrar fallas de arranque cuando actualizen OpenCore en un sistema que ya contenga una instalación. Para resolver esto, dirígete aquí: [Trancado en OCB: LoadImage failed - Security Violation](/troubleshooting/troubleshooting.md#trancado-en-ocb-loadimage-failed-security-violation)
 
 :::
 
@@ -452,7 +441,7 @@ Ruta del Booter, utilizada principalmente para escalar la interfaz de usuario
 
 ::: tip 4D1FDA02-38C7-4A6A-9CC6-4BCCA8B30102
 
-GUID de NVRAM de OpenCore, principalmente relevante para usuarios de RTCMemoryFixup
+El GUID NVRAM DE OpenCore, esto es principalmente relevante para la ruta de arranque y
 
 :::
 
@@ -488,7 +477,7 @@ Máscara de bits de Protección de integridad del sistema
 * **csr-active-config**: `00000000` 
 
   * Configuración de la 'Protección de integridad del sistema' (SIP). En general, se recomienda cambiar esto con `csrutil` a través de la partición de recuperación.  
-  * csr-active-config de forma predeterminada se establece en `00000000` que habilita la Protección de integridad del sistema. Puedes elegir una cantidad de valores diferentes, pero en general recomendamos mantener esto habilitado para tener mayor seguridad. Puedes encontrar más información en nuestra página de solución de problemas: [Desactivar el SIP](../troubleshooting/extended/post-issues.md#deshabilitando-el-sip)
+  * csr-active-config de forma predeterminada se establece en `00000000` que habilita la Protección de integridad del sistema. Puedes elegir una cantidad de valores diferentes, pero en general recomendamos mantener esto habilitado para tener mayor seguridad. Puedes encontrar más información en nuestra página de solución de problemas: [Desactivar el SIP](http://inyextciones.github.io/OpenCore-Install-Guide/troubleshooting/troubleshooting.html#deshabilitando-el-sip)
 
 * **run-efi-updater**: `No`
   * Esto es utilizado para prevenir la instalación de los paquetes de firmware de Apple. Esto es especialmente importante para hardware de PCs de escritorio debido a que estas actualizaciones de firmware se crashearán en las actualizaciones.
@@ -590,25 +579,24 @@ Configuramos Generic -> ROM a una ROM de Apple (extraída de una Mac real), la d
 
 ::: details Información más detallada
 
-* **AdviseWindows**: NO
-  * Se usa cuando la partición EFI no es la primera en la unidad de Windows
-
-* **SystemMemoryStatus**: Auto
-  * Establece si la memoria está soldada o no en la información del SMBIOS, esto es puramente cosmético, por lo que recomendamos "Auto"
-
-* **ProcessorType**: `0`
-  * Ponlo en `0` para la detección automática del tipo de procesador. Sin embargo, este valor puede ser cambiado si lo deseas. Mira [AppleSmBios.h](https://github.com/acidanthera/OpenCorePkg/blob/master/Include/Apple/IndustryStandard/AppleSmBios.h) para ver valores posibles.
-
 * **SpoofVendor**: YES
+  
   * Intercambia el campo del proveedor por Acidanthera. Generalmente no es seguro usar Apple como proveedor.
 
+* **AdviseWindows**: NO
+  
+  * Se usa cuando la partición EFI no es la primera en la unidad de Windows
+
 * **UpdateDataHub**: YES
+
   * Actualiza campos de Data Hub
 
 * **UpdateNVRAM**: YES
+
   * Actualiza campos de NVRAM
 
 * **UpdateSMBIOS**: YES
+
   * Actualiza campos SMBIOS
 
 * **UpdateSMBIOSMode**: Create
@@ -677,7 +665,7 @@ En relación con los quirks con el entorno UEFI, cambiaremos lo siguiente:
   * Solución para cuando MSR\_FLEX \_RATIO (0x194) no se puede deshabilitar en la BIOS, requerido para todos los sistemas basados antes que Skylake.
 
 * **RequestBootVarRouting**: YES
-  * Redirige AptioMemoryFix desde `EFI_GLOBAL_VARIABLE_GUID` a `OC_VENDOR_VARIABLE_GUID`. Necesario para cuando el firmware intenta eliminar las entradas de arranque y se recomienda que esté habilitado en todos los sistemas para la instalación correcta de las actualizaciones, el funcionamiento del panel de control del disco de inicio, etc.
+  * Redirige AptioMemoryFix desde `EFI_GLOBAL_VARIABLE_GUID` a `OC\_VENDOR\_VARIABLE\_GUID`. Necesario para cuando el firmware intenta eliminar las entradas de arranque y se recomienda que esté habilitado en todos los sistemas para la instalación correcta de las actualizaciones, el funcionamiento del panel de control del disco de inicio, etc.
 
 * **UnblockFsConnect**: NO
   * Algunos firmwares bloquean a las llamadas "partition handles" abriéndolas en modo de controlador, lo que hace que los protocolos del sistema de archivos no puedan instalarse. Principalmente relevante para sistemas HP cuando no se ven discos enumerados
@@ -709,8 +697,6 @@ Ten en cuenta que esta herramienta no está hecha ni mantenida por Dortania, tod
 
 ## Configuración de BIOS de Intel
 
-* Nota: La mayoría de las opciones pueden no llegar a estar presentes en tu firmware. Recomendamos que lo hagas coincidir lo más que puedas, pero no te preocupes demasiado si hay opciones que no están disponibles en tu BIOS.
-
 ### Deshabilitar
 
 * Fast Boot
@@ -722,7 +708,7 @@ Ten en cuenta que esta herramienta no está hecha ni mantenida por Dortania, tod
 * Thunderbolt(Para la instalación inicial, ya que Thunderbolt puede causar problemas si no se configura correctamente)
 * Intel SGX
 * Intel Platform Trust
-* CFG Lock (Protección contra escritura MSR 0xE2) (**Esto debe estar desactivado, si no puedes encontrar la opción, habilita `AppleCpuPmCfgLock` en Kernel -> Quirks. Tu hack no se iniciará con CFG-Lock habilitado** )
+* CFG Lock (Protección contra escritura MSR 0xE2) (**Esto debe estar desactivado, si no puedes encontrar la opción, habilita tanto `AppleCpuPmCfgLock` como `AppleXcpmCfgLock` en Kernel -> Quirks. Tu hack no se iniciará con CFG-Lock habilitado** )
 
 ### Habilitar
 
