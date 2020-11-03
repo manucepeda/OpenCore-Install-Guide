@@ -1,12 +1,13 @@
 # Skylake-X/W and Cascade Lake-X/W
 
-* Supported version: 0.5.9
-
-<extoc></extoc>
+| Support | Version |
+| :--- | :--- |
+| Supported OpenCore version | 0.6.2 |
+| Initial macOS Support | macOS 10.13, High Sierra |
 
 ## Starting Point
 
-So making a config.plist may seem hard, its not. It just takes some time but this guide will tell you how to configure everything, you won't be left in the cold. This also means if you have issues, review your config settings to make sure they're correct. Main things to note with OpenCore:
+So making a config.plist may seem hard, it's not. It just takes some time but this guide will tell you how to configure everything, you won't be left in the cold. This also means if you have issues, review your config settings to make sure they're correct. Main things to note with OpenCore:
 
 * **All properties must be defined**, there are no default OpenCore will fall back on so **do not delete sections unless told explicitly so**. If the guide doesn't mention the option, leave it at default.
 * **The Sample.plist cannot be used As-Is**, you must configure it to your system
@@ -25,21 +26,21 @@ Now with all that, a quick reminder of the tools we need
 
 ## ACPI
 
-![ACPI](../images/config/config-universal/aptio-v-acpi.png)
+![ACPI](../images/config/config-universal/x299-acpi.png)
 
 ### Add
 
 ::: tip Info
 
-This is where you'll add SSDTs for your system, these are very important to **booting macOS** and have many uses like [USB maps](https://dortania.github.io/OpenCore-Post-Install/usb/), [disabling unsupported GPUs](../extras/spoof.md) and such. And with our system, **its even required to boot**. Guide on making them found here: [**Getting started with ACPI**](https://dortania.github.io/Getting-Started-With-ACPI/)
+This is where you'll add SSDTs for your system, these are very important to **booting macOS** and have many uses like [USB maps](https://dortania.github.io/OpenCore-Post-Install/usb/), [disabling unsupported GPUs](../extras/spoof.md) and such. And with our system, **it's even required to boot**. Guide on making them found here: [**Getting started with ACPI**](https://dortania.github.io/Getting-Started-With-ACPI/)
 
 For us we'll need a couple of SSDTs to bring back functionality that Clover provided:
 
 | Required_SSDTs | Description |
 | :--- | :--- |
 | **[SSDT-PLUG](https://dortania.github.io/Getting-Started-With-ACPI/)** | Allows for native CPU power management on Haswell and newer, see [Getting Started With ACPI Guide](https://dortania.github.io/Getting-Started-With-ACPI/) for more details. |
-| **[SSDT-EC-USBX](https://dortania.github.io/Getting-Started-With-ACPI/)** | * Fixes both the embedded controller and USB power, see [Getting Started With ACPI Guide](https://dortania.github.io/Getting-Started-With-ACPI/) for more details. |
-| **[SSDT-AWAC](https://dortania.github.io/Getting-Started-With-ACPI/)** | This is the [300 series RTC patch](https://www.hackintosh-forum.de/forum/thread/39846-asrock-z390-taichi-ultimate/?pageNo=2), required for most B360, B365, H310, H370, Z390 and some Z370 boards which prevent systems from booting macOS. The alternative is [SSDT-RTC0](https://dortania.github.io/Getting-Started-With-ACPI/) for when AWAC SSDT is incompatible due to missing the Legacy RTC clock, to check whether you need it and which to use please see [Getting started with ACPI](https://dortania.github.io/Getting-Started-With-ACPI/) page. |
+| **[SSDT-EC-USBX](https://dortania.github.io/Getting-Started-With-ACPI/)** | Fixes both the embedded controller and USB power, see [Getting Started With ACPI Guide](https://dortania.github.io/Getting-Started-With-ACPI/) for more details. |
+| **[SSDT-RTC0-RANGE](https://dortania.github.io/Getting-Started-With-ACPI/)** | Required for enabling the legacy RTC clock in macOS, this is also required for all Big Sur users to ensure their RTC device is compatible. See [Getting Started With ACPI Guide](https://dortania.github.io/Getting-Started-With-ACPI/) for more details. |
 
 Note that you **should not** add your generated `DSDT.aml` here, it is already in your firmware. So if present, remove the entry for it in your `config.plist` and under EFI/OC/ACPI.
 
@@ -74,12 +75,13 @@ This section is allowing devices to be passthrough to macOS that are generally i
 ::: tip Info
 Settings relating to boot.efi patching and firmware fixes, for us, we need to change the following:
 
-| Quirk | Enabled |
-| :--- | :--- |
-| DevirtualiseMmio | YES |
-| EnableWriteUnprotector | NO |
-| RebuildAppleMemoryMap | YES |
-| SyncRuntimePermissions | YES |
+| Quirk | Enabled | Comment |
+| :--- | :--- | :--- |
+| DevirtualiseMmio | YES | |
+| EnableWriteUnprotector | NO | |
+| RebuildAppleMemoryMap | YES | |
+| SetupVirtualMap | YES | Note newer Asus BIOS(v3006+) will not boot with this quirk enabled |
+| SyncRuntimePermissions | YES | |
 :::
 
 ::: details More in-depth Info
@@ -90,12 +92,14 @@ Settings relating to boot.efi patching and firmware fixes, for us, we need to ch
   * Reduces Stolen Memory Footprint, expands options for `slide=N` values and very helpful with fixing Memory Allocation issues on Z390. Requires `ProtectUefiServices` as well on IceLake and Z390 Coffee Lake
 * **EnableWriteUnprotector**: NO
   * This quirk and RebuildAppleMemoryMap can commonly conflict, recommended to enable the latter on newer platforms and disable this entry.
+  * However, due to issues with OEMs not using the latest EDKII builds you may find that the above combo will result in early boot failures. This is due to missing the `MEMORY_ATTRIBUTE_TABLE` and such we recommend disabling RebuildAppleMemoryMap and enabling EnableWriteUnprotector. More info on this is covered in the [troubleshooting section](/troubleshooting/extended/kernel-issues.md#stuck-on-eb-log-exitbs-start)
 * **RebuildAppleMemoryMap**: YES
   * Generates Memory Map compatible with macOS, can break on some laptop OEM firmwares so if you receive early boot failures disable this
 * **SetupVirtualMap**: YES
   * Fixes SetVirtualAddresses calls to virtual addresses, shouldn't be needed on Skylake and newer. Some firmware like Gigabyte may still require it, and will kernel panic without this
+  * Note newer Asus BIOS(v3006+) will not boot with this quirk enabled
 * **SyncRuntimePermissions**: YES
-  * Fixes alignment with MAT tables and required to boot Windows and Linux with MAT tables, also recommended for macOS. Mainly relevant for Skylake and newer
+  * Fixes alignment with MAT tables and required to boot Windows and Linux with MAT tables, also recommended for macOS. Mainly relevant for RebuildAppleMemoryMap users
 
 :::
 
@@ -117,12 +121,25 @@ Removes device properties from the map, for us we can ignore this
 
 ## Kernel
 
-![Kernel](../images/config/config-universal/kernel.png)
+![Kernel](../images/config/config-universal/kernel-modern-XCPM.png)
 
 ### Add
 
-Here's where you specify which kexts to load, order matters here so make sure Lilu.kext is always first! Other higher priority kexts come after Lilu such as VirtualSMC, AppleALC, WhateverGreen, etc. A reminder that [ProperTree](https://github.com/corpnewt/ProperTree) users can run **Cmd/Ctrl + Shift + R** to add all their kexts in the correct order without manually typing each kext out.
+Here's where we specify which kexts to load, in what specific order to load, and what architectures each kext is meant for. By default we recommend leaving what ProperTree has done, however for 32-bit CPUs please see below:
 
+::: details More in-depth Info
+
+The main thing you need to keep in mind is:
+
+* Load order
+  * Remember that any plugins should load *after* its dependencies
+  * This means kexts like Lilu **must** come before VirtualSMC, AppleALC, WhateverGreen, etc
+
+A reminder that [ProperTree](https://github.com/corpnewt/ProperTree) users can run **Cmd/Ctrl + Shift + R** to add all their kexts in the correct order without manually typing each kext out.
+
+* **Arch**
+  * Architectures supported by this kext
+  * Currently supported values are `Any`, `i386` (32-bit), and `x86_64` (64-bit)
 * **BundlePath**
   * Name of the kext
   * ex: `Lilu.kext`
@@ -131,13 +148,45 @@ Here's where you specify which kexts to load, order matters here so make sure Li
 * **ExecutablePath**
   * Path to the actual executable is hidden within the kext, you can see what path your kext has by right-clicking and selecting `Show Package Contents`. Generally, they'll be `Contents/MacOS/Kext` but some have kexts hidden within under `Plugin` folder. Do note that plist only kexts do not need this filled in.
   * ex: `Contents/MacOS/Lilu`
+* **MinKernel**
+  * Lowest kernel version your kext will be injected into, see below table for possible values
+  * ex. `12.00.00` for OS X 10.8
+* **MaxKernel**
+  * Highest kernel version your kext will be injected into, see below table for possible values
+  * ex. `11.99.99` for OS X 10.7
 * **PlistPath**
   * Path to the `info.plist` hidden within the kext
   * ex: `Contents/Info.plist`
+  
+::: details Kernel Support Table
+
+| OS X Version | MinKernel | MaxKernel |
+| :--- | :--- | :--- |
+| 10.4 | 8.0.0 | 8.99.99 |
+| 10.5 | 9.0.0 | 9.99.99 |
+| 10.6 | 10.0.0 | 10.99.99 |
+| 10.7 | 11.0.0 | 11.99.99 |
+| 10.8 | 12.0.0 | 12.99.99 |
+| 10.9 | 13.0.0 | 13.99.99 |
+| 10.10 | 14.0.0 | 14.99.99 |
+| 10.11 | 15.0.0 | 15.99.99 |
+| 10.12 | 16.0.0 | 16.99.99 |
+| 10.13 | 17.0.0 | 17.99.99 |
+| 10.14 | 18.0.0 | 18.99.99 |
+| 10.15 | 19.0.0 | 19.99.99 |
+| 11 | 20.0.0 | 20.99.99 |
+
+:::
 
 ### Emulate
 
 Needed for spoofing unsupported CPUs, thankfully both Skylake-X and Cascade Lake-X have the same CPU ID as Xeon W chips which ship in the iMac Pro. So here we'll leave it blank
+
+### Force
+
+Used for loading kexts off system volume, only relevant for older operating systems where certain kexts are not present in the cache(ie. IONetworkingFamily in 10.6).
+
+For us, we can ignore.
 
 ### Block
 
@@ -155,7 +204,6 @@ Settings relating to the kernel, for us we'll be enabling the following:
 
 | Quirk | Enabled | Comment |
 | :--- | :--- | :--- |
-| AppleCpuPmCfgLock | YES | Not needed if `CFG-Lock` is disabled in the BIOS|
 | AppleXcpmCfgLock | YES | Not needed if `CFG-Lock` is disabled in the BIOS |
 | DisableIOMapper | YES | Not needed if `VT-D` is disabled in the BIOS |
 | LapicKernelPanic | NO | HP Machines will require this quirk |
@@ -167,18 +215,29 @@ Settings relating to the kernel, for us we'll be enabling the following:
 
 ::: details More in-depth Info
 
-* **AppleCpuPmCfgLock**: YES
-  * Only needed when CFG-Lock can't be disabled in BIOS, Clover counterpart would be AppleIntelCPUPM. **Please verify you can disable CFG-Lock, most systems won't boot with it on so requiring use of this quirk**
+* **AppleCpuPmCfgLock**: NO
+  * Only needed when CFG-Lock can't be disabled in BIOS
+  * Only applicable for Ivy Bridge and older
+    * Note: Broadwell and older require this when running 10.10 or older
 * **AppleXcpmCfgLock**: YES
-  * Only needed when CFG-Lock can't be disabled in BIOS, Clover counterpart would be KernelPM. **Please verify you can disable CFG-Lock, most systems won't boot with it on so requiring use of this quirk**
+  * Only needed when CFG-Lock can't be disabled in BIOS
+  * Only applicable for Haswell and newer
+    * Note: Ivy Bridge-E is also included as it's XCPM capable
 * **CustomSMBIOSGuid**: NO
-  * Performs GUID patching for UpdateSMBIOSMode Custom mode. Usually relevant for Dell laptops
+  * Performs GUID patching for UpdateSMBIOSMode set to `Custom`. Usually relevant for Dell laptops
+  * Enabling this quirk with UpdateSMBIOSMode Custom mode can also disable SMBIOS injection into "non-Apple" OSes however we do not endorse this method as it breaks Bootcamp compatibility. Use at your own risk
 * **DisableIoMapper**: YES
   * Needed to get around VT-D if either unable to disable in BIOS or needed for other operating systems, much better alternative to `dart=0` as SIP can stay on in Catalina
+* **DisableLinkeditJettison**: YES
+  * Allows Lilu and others to have more reliable performance without `keepsyms=1`
 * **DisableRtcChecksum**: NO
   * Prevents AppleRTC from writing to primary checksum (0x58-0x59), required for users who either receive BIOS reset or are sent into Safe mode after reboot/shutdown
+* **ExtendBTFeatureFlags** NO
+  * Helpful for those having continuity issues with non-Apple/non-Fenvi cards
 * **LapicKernelPanic**: NO
   * Disables kernel panic on AP core lapic interrupt, generally needed for HP systems. Clover equivalent is `Kernel LAPIC`
+* **LegacyCommpage**: NO
+  * Resolves SSSE3 requirement for 64 Bit CPUs in macOS, mainly relevant for 64-Bit Pentium 4 CPUs(ie. Prescott)
 * **PanicNoKextDump**: YES
   * Allows for reading kernel panics logs when kernel panics occur
 * **PowerTimeoutKernelPanic**: YES
@@ -187,6 +246,29 @@ Settings relating to the kernel, for us we'll be enabling the following:
   * This is actually the 15 port limit patch, don't rely on it as it's not a guaranteed solution for fixing USB. Please create a [USB map](https://dortania.github.io/OpenCore-Post-Install/usb/) when possible.
 
 The reason being is that UsbInjectAll reimplements builtin macOS functionality without proper current tuning. It is much cleaner to just describe your ports in a single plist-only kext, which will not waste runtime memory and such
+
+:::
+
+### Scheme
+
+Settings related to legacy booting(ie. 10.4-10.6), for majority you can skip however for those planning to boot legacy OSes you can see below:
+
+::: details More in-depth Info
+
+* **FuzzyMatch**: True
+  * Used for ignoring checksums with kernelcache, instead opting for the latest cache available. Can help improve boot performance on many machines in 10.6
+* **KernelArch**: x86_64
+  * Set the kernel's arch type, you can choose between `Auto`, `i386` (32-bit), and `x86_64` (64-bit).
+  * If you're booting older OSes which require a 32-bit kernel(ie. 10.4 and 10.5) we recommend to set this to `Auto` and let macOS decide based on your SMBIOS. See below table for supported values:
+    * 10.4-10.5 — `x86_64`, `i386` or `i386-user32`
+      * `i386-user32` refers 32-bit userspace, so 32-bit CPUs must use this(or CPUs missing SSSE3)
+      * `x86_64` will still have a 32-bit kernelspace however will ensure 64-bit userspace in 10.4/5
+    * 10.6 — `i386`, `i386-user32`, or `x86_64`
+    * 10.7 — `i386` or `x86_64`
+    * 10.8 or newer — `x86_64`
+
+* **KernelCache**: Auto
+  * Set kernel cache type, mainly useful for debugging and so we recommend `Auto` for best support
 
 :::
 
@@ -221,10 +303,15 @@ Helpful for debugging OpenCore boot issues(We'll be changing everything *but* `D
   * Attempts to log kernel panics to disk
 * **DisableWatchDog**: YES
   * Disables the UEFI watchdog, can help with early boot issues
-* **Target**: `67`
-  * Shows more debug information, requires debug version of OpenCore
 * **DisplayLevel**: `2147483650`
   * Shows even more debug information, requires debug version of OpenCore
+* **SerialInit**: NO
+  * Needed for setting up serial output with OpenCore
+* **SysReport**: NO
+  * Helpful for debugging such as dumping ACPI tables
+  * Note that this is limited to DEBUG versions of OpenCore
+* **Target**: `67`
+  * Shows more debug information, requires debug version of OpenCore
 
 These values are based of those calculated in [OpenCore debugging](../troubleshooting/debug.md)
 
@@ -240,8 +327,9 @@ Security is pretty self-explanatory, **do not skip**. We'll be changing the foll
 | :--- | :--- | :--- |
 | AllowNvramReset | YES | |
 | AllowSetDefault | YES | |
-| Vault | Optional | This is a word, it is not optional to omit this setting. You will regret it if you don't set it to Optional, note that it is case-sensitive |
 | ScanPolicy | 0 | |
+| SecureBootModel | Default |  This is a word and is case-sensitive, set to `Disabled` if you do not want secure boot(ie. you require Nvidia's Web Drivers) |
+| Vault | Optional | This is a word, it is not optional to omit this setting. You will regret it if you don't set it to Optional, note that it is case-sensitive |
 
 :::
 
@@ -251,12 +339,14 @@ Security is pretty self-explanatory, **do not skip**. We'll be changing the foll
   * Allows for NVRAM reset both in the boot picker and when pressing `Cmd+Opt+P+R`
 * **AllowSetDefault**: YES
   * Allow `CTRL+Enter` and `CTRL+Index` to set default boot device in the picker
+* **ApECID**: 0
+  * Used for netting personalized secure-boot identifiers, currently this quirk is unreliable due to a bug in the macOS installer so we highly encourage you to leave this as default.
 * **AuthRestart**: NO
   * Enables Authenticated restart for FileVault 2 so password is not required on reboot. Can be considered a security risk so optional
-* **BlacklistAppleUpdate**: True
-  * Ignores Apple's firmware updater, recommended to enable as to avoid issues with installs and updates
-* **BootProtect**: None
-  * Allows the use of Bootstrap.efi inside EFI/OC/Bootstrap instead of BOOTx64.efi, useful for those wanting to either boot with rEFInd or avoid BOOTx64.efi overwrites from Windows. Proper use of this quirks is not be covered in this guide
+* **BootProtect**: Bootstrap
+  * Allows the use of Bootstrap.efi inside EFI/OC/Bootstrap instead of BOOTx64.efi, useful for those wanting to either boot with rEFInd or avoid BOOTx64.efi overwrites from Windows. Proper use of this quirks is covered here: [Using Bootstrap.efi](https://dortania.github.io/OpenCore-Post-Install/multiboot/bootstrap.html#preparation)
+* **DmgLoading**: Signed
+  * Ensures only signed DMGs load
 * **ExposeSensitiveData**: `6`
   * Shows more debug information, requires debug version of OpenCore
 * **Vault**: `Optional`
@@ -264,6 +354,9 @@ Security is pretty self-explanatory, **do not skip**. We'll be changing the foll
   * This is a word, it is not optional to omit this setting. You will regret it if you don't set it to `Optional`, note that it is case-sensitive
 * **ScanPolicy**: `0`
   * `0` allows you to see all drives available, please refer to [Security](https://dortania.github.io/OpenCore-Post-Install/universal/security.html) section for further details. **Will not boot USB devices with this set to default**
+* **SecureBootModel**: Default
+  * Enables Apple's secure boot functionality in macOS, please refer to [Security](https://dortania.github.io/OpenCore-Post-Install/universal/security.html) section for further details.
+  * Note: Users may find upgrading OpenCore on an already installed system can result in early boot failures. To resolve this, see here: [Stuck on OCB: LoadImage failed - Security Violation](/troubleshooting/extended/kernel-issues.md#stuck-on-ocb-loadimage-failed-security-violation)
 
 :::
 
@@ -303,6 +396,20 @@ Booter Path, mainly used for UI Scaling
 
 :::
 
+::: tip 4D1FDA02-38C7-4A6A-9CC6-4BCCA8B30102
+
+OpenCore's NVRAM GUID, mainly relevant for RTCMemoryFixup users
+
+:::
+
+::: details More in-depth Info
+
+* **rtc-blacklist**: <>
+  * To be used in conjunction with RTCMemoryFixup, see here for more info: [Fixing RTC write issues](https://dortania.github.io/OpenCore-Post-Install/misc/rtc.html#finding-our-bad-rtc-region)
+  * Most users can ignore this section
+
+:::
+
 ::: tip 7C436110-AB2A-4BBB-A880-FE41995C9F82
 
 System Integrity Protection bitmask
@@ -323,9 +430,12 @@ System Integrity Protection bitmask
 | **agdpmod=pikera** | Used for disabling boardID on Navi GPUs(RX 5000 series), without this you'll get a black screen. **Don't use if you don't have Navi**(ie. Polaris and Vega cards shouldn't use this) |
 | **nvda_drv_vrl=1** | Used for enabling Nvidia's Web Drivers on Maxwell and Pascal cards in Sierra and HighSierra |
 
-* **csr-active-config**: Settings for 'System Integrity Protection' (SIP). It is generally recommended to change this with `csrutil` via the recovery partition.
+* **csr-active-config**: `00000000`
+  * Settings for 'System Integrity Protection' (SIP). It is generally recommended to change this with `csrutil` via the recovery partition.
+  * csr-active-config by default is set to `00000000` which enables System Integrity Protection. You can choose a number of different values but overall we recommend keeping this enabled for best security practices. More info can be found in our troubleshooting page: [Disabling SIP](../troubleshooting/extended/post-issues.md#disabling-sip)
 
-csr-active-config by default is set to `00000000` which enables System Integrity Protection. You can choose a number of different values but overall we recommend keeping this enabled for best security practices. More info can be found in our troubleshooting page: [Disabling SIP](../troubleshooting/troubleshooting.md#disabling-sip)
+* **run-efi-updater**: `No`
+  * This is used to prevent Apple's firmware update packages from installing and breaking boot order; this is important as these firmware updates (meant for Macs) will not work.
 
 * **prev-lang:kbd**: <>
   * Needed for non-latin keyboards in the format of `lang-COUNTRY:keyboard`, recommended to keep blank though you can specify it(**Default in Sample config is Russian**):
@@ -379,7 +489,7 @@ For this Skylake-X example, we'll choose the iMacPro1,1 SMBIOS.
 
 Run GenSMBIOS, pick option 1 for downloading MacSerial and Option 3 for selecting out SMBIOS.  This will give us an output similar to the following:
 
-```
+```sh
   #######################################################
  #              iMacPro1,1 SMBIOS Info                 #
 #######################################################
@@ -414,11 +524,17 @@ We set Generic -> ROM to either an Apple ROM (dumped from a real Mac), your NIC 
 
 ::: details More in-depth Info
 
-* **SpoofVendor**: YES
-  * Swaps vendor field for Acidanthera, generally not safe to use Apple as a vendor in most case
-
 * **AdviseWindows**: NO
   * Used for when the EFI partition isn't first on the Windows drive
+
+* **SystemMemoryStatus**: Auto
+  * Sets whether memory is soldered or not in SMBIOS info, purely cosmetic and so we recommend `Auto`
+  
+* **ProcessorType**: `0`
+  * Set to `0` for automatic type detection, however this value can be overridden if desired. See [AppleSmBios.h](https://github.com/acidanthera/OpenCorePkg/blob/master/Include/Apple/IndustryStandard/AppleSmBios.h) for possible values
+
+* **SpoofVendor**: YES
+  * Swaps vendor field for Acidanthera, generally not safe to use Apple as a vendor in most case
 
 * **UpdateDataHub**: YES
   * Update Data Hub fields
@@ -430,7 +546,8 @@ We set Generic -> ROM to either an Apple ROM (dumped from a real Mac), your NIC 
   * Updates SMBIOS fields
 
 * **UpdateSMBIOSMode**: Create
-  * Replace the tables with newly allocated EfiReservedMemoryType, use Custom on Dell laptops requiring CustomSMBIOSGuid quirk
+  * Replace the tables with newly allocated EfiReservedMemoryType, use `Custom` on Dell laptops requiring `CustomSMBIOSGuid` quirk
+  * Setting to `Custom` with `CustomSMBIOSGuid` quirk enabled can also disable SMBIOS injection into "non-Apple" OSes however we do not endorse this method as it breaks Bootcamp compatibility. Use at your own risk
 
 :::
 
@@ -490,7 +607,7 @@ Relating to quirks with the UEFI environment, for us we'll be changing the follo
   * Request fallback of some Boot prefixed variables from `OC_VENDOR_VARIABLE_GUID` to `EFI_GLOBAL_VARIABLE_GUID`. Used for fixing boot options.
 
 * **RequestBootVarRouting**: YES
-  * Redirects AptioMemoryFix from `EFI_GLOBAL_VARIABLE_GUID` to `OC\_VENDOR\_VARIABLE\_GUID`. Needed for when firmware tries to delete boot entries and is recommended to be enabled on all systems for correct update installation, Startup Disk control panel functioning, etc.
+  * Redirects AptioMemoryFix from `EFI_GLOBAL_VARIABLE_GUID` to `OC_VENDOR_VARIABLE_GUID`. Needed for when firmware tries to delete boot entries and is recommended to be enabled on all systems for correct update installation, Startup Disk control panel functioning, etc.
 
 * **UnblockFsConnect**: NO
   * Some firmware block partition handles by opening them in By Driver mode, which results in File System protocols being unable to install. Mainly relevant for HP systems when no drives are listed
@@ -520,16 +637,20 @@ Note that this tool is neither made nor maintained by Dortania, any and all issu
 
 ## Intel BIOS settings
 
+* Note: Most of these options may not be present in your firmware, we recommend matching up as closely as possible but don't be too concerned if many of these options are not available in your BIOS
+
 ### Disable
 
 * Fast Boot
 * Secure Boot
+* Serial/COM Port
+* Parallel Port
 * VT-d (can be enabled if you set `DisableIoMapper` to YES)
 * CSM
 * Thunderbolt(For initial install, as Thunderbolt can cause issues if not setup correctly)
 * Intel SGX
 * Intel Platform Trust
-* CFG Lock (MSR 0xE2 write protection)(**This must be off, if you can't find the option then enable both `AppleCpuPmCfgLock` and `AppleXcpmCfgLock` under Kernel -> Quirks. Your hack will not boot with CFG-Lock enabled**)
+* CFG Lock (MSR 0xE2 write protection)(**This must be off, if you can't find the option then enable `AppleXcpmCfgLock` under Kernel -> Quirks. Your hack will not boot with CFG-Lock enabled**)
 
 ### Enable
 

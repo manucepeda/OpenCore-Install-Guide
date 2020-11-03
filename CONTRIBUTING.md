@@ -2,13 +2,15 @@
 
 **Nota**: Esta es una guía de la comunidad que no está respaldada oficialmente por Acidanthera. Por favor no molesten a Acidanthera con problemas de esta guía.
 
-¿Quieres ayudar a apoyar la guía? Bueno, hay algunas maneras en que puedes ayudar!
+¿Quieres ayudar a apoyar la guía? Bueno, hay algunas maneras en las que puedes ayudar!
 
-* [Contribuir via problmeas](#contributing-via-issues)
-* [Contribuir via Pull Requests](#contributing-via-prs)
-* [Contribuir via Traducciones](#contributing-via-translations)
+* [Contribuir via problmeas](#contribuir-via-problemas-issues)
+* [Contribuir via Pull Requests](#contribuir-via-pull-requests)
+* [Contribuir via Traducciones](#contribuir-via-traducciones)
 
 Nota: Para aquellos que quieran contribuir financieramente, lo apreciamos mucho, pero somos una organización sin fines de lucro. Hacemos esto para enseñar, no para ganar dinero. Si te sobra dinero, te recomendamos que lo dones a una organización benéfica. [Crohn's and Colitis Canada](https://crohnsandcolitis.donorportal.ca/Donation/DonationDetails.aspx?L=en-CA&G=159&F=1097&T=GENER) es una que recomendamos si no tienes ninguna en mente.
+
+## Contribuir via problemas (issues)
 
 Contribuir a través de problemas es bastante simple pero hay ciertas reglas:
 
@@ -17,7 +19,7 @@ Contribuir a través de problemas es bastante simple pero hay ciertas reglas:
 
 Puedes encontrar el bugtracker aquí: [Bugtracker](https://github.com/dortania/bugtracker)
 
-## Contribuyendo via pull requests
+## Contribuir via pull requests
 
 Algunas pautas al contribuir a través de PRs:
 
@@ -67,17 +69,15 @@ Algunas herramientas que facilitan la contribución:
 
 Aunque las guías de Dortania están basadas principalmente en inglés, sabemos que hay muchos otros idiomas en el mundo y que no todos hablan inglés con fluidez. Si quieres ayudar a traducir nuestras guías a idiomas diferentes, estamos más que felices de apoyarte.
 
-Main things to keep in mind:
-
 Cosas principales a tener en cuenta:
 
 * Las traducciones deben ser un fork dedicado que no formará parte o se fusionará con las guías de Dortania
 * Los forks deben indicar que son traducciones de Dortania y que no son oficiales
 * Los forks también deben cumplir con nuestra [Licencia](LICENSE.md)
 
-Si se cumple lo anterior, ¡estás libre a host tu traducción sin problema! Los sitios de Dortania son construidos con [VuePress] (https://vuepress.vuejs.org) usando [Travis-CI] (https://travis-ci.org) y finalmente alojados en [Github Pages] (https://pages.github.com), así que no hay nigún costo por alojar tu propia traducción.
+Si se cumple lo anterior, ¡estás libre a hostear tu traducción sin problema! Los sitios de Dortania son construidos con [VuePress] (https://vuepress.vuejs.org) usando [Travis-CI] (https://travis-ci.org) y finalmente alojados en [Github Pages] (https://pages.github.com), así que no hay nigún costo por alojar tu propia traducción.
 
-Si tienes alguna pregunta o inquietud con las traducciones o el alojamiento, no dudes en comunicarte con nuestro [Bugtracker](https://github.com/dortania/bugtracker).
+Si tienes alguna pregunta o inquietud con las traducciones o el alojamiento, no dudes en comunicarte con nosotros mediante nuestro [Bugtracker](https://github.com/dortania/bugtracker).
 
 Traducciones conocidas actualmente:
 

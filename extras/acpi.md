@@ -1,9 +1,11 @@
-# Getting started with ACPI
+# Comenzando con ACPI
 
-* Supported version: 0.5.9
+* Supported version: 0.6.2
 
-This section is dedicated to the process of both dumping and making ACPI tables. Due to the many different types of SSDT possible, the guide has been spun out into it's own.
+Esta sección está dedicada al proceso del volcado y creación de tablas ACPI. Debido a la gran cantidad de SSDTs posibles, esta guía ha sido puesta en una página por separado.
 
-Guide has been move here:
+* Nota: Esta guía no ha sido adaptada al español aún, por lo que la misma está en inglés
+
+La guía se encuentra aquí:
 
 * [Getting Started With ACPI](https://dortania.github.io/Getting-Started-With-ACPI/)

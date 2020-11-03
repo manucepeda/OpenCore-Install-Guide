@@ -15,6 +15,7 @@ AppleDebugLog
 AppleEvent
 AppleImageConversion
 AppleKeyMap
+ApplePanic
 AppleRtcRam
 AppleSmcIo
 AppleUserInterfaceTheme
@@ -40,6 +41,7 @@ BoardRevision
 BoardSerialNumber
 BoardType
 BoardVersion
+Boot1f32
 BootProtect
 Booter
 BundlePath
@@ -95,6 +97,7 @@ IgnoreTextInGraphics
 IncreasePciBarSize
 InitialTSC
 JumpstartHotPlug
+JumpstartHotplug
 KeyFiltering
 KeyForgetThreshold
 KeyMergeThreshold
@@ -105,6 +108,7 @@ LapicKernelPanic
 LegacyEnable
 LegacyOverwrite
 LegacySchema
+Lifewire
 MLB
 MaxKernel
 MemoryFormFactor
@@ -153,6 +157,7 @@ Resolution
 SMBIOS
 SanitiseClearScreen
 ScanPolicy
+SerialInit
 SetupVirtualMap
 ShowPicker
 SignalAppleOS
@@ -163,8 +168,10 @@ SmcVersion
 SpoofVendor
 StartupPowerEvents
 SyncRuntimePermissions
+SysReport
 SystemFamily
 SystemManufacturer
+SystemMemoryStatus
 SystemProductName
 SystemSKUNumber
 SystemSerialNumber
@@ -189,3 +196,7 @@ Vault
 VolumeAmplifier
 WriteFlash
 XhciPortLimit
+boot0
+bootia32
+bootx64
+snapshotted
