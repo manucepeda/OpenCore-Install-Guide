@@ -248,7 +248,7 @@ module.exports = {
             title: 'Otros',
             collapsable: false,
             children: [
-                'CONTRIBUTING',
+                'Contribuyendo',
                 '/misc/credit',
             ]
         },
