@@ -1,90 +1,88 @@
-# Understanding the macOS Boot Process
+# Proceso de arranque
 
-* Supported version: 0.5.9
+* Versión soportada: 0.6.3
 
-<extoc></extoc>
+A la hora de solucionar los problemas de tu hackintosh, puede llegar a ser dificil entender *dónde* te estás quedando trancado ya que la palabra(s) en la que estás trancado puede no llegar a tener un resultado que te sirva en Google. Por más que esta página no solucionará todos tus problemas, seguramente te ayude a entender mejor dónde te estás quedando trancado en el proceso de arranque de macOS.
 
-So with troubleshooting a hackintosh, it can be a bit difficult to really understand *where* you're getting stuck as the exact keyword you're trying to search for may not match anything on google. While this page won't solve all your issues, it should at least help better understand where in the macOS boot-process you're getting stuck and hopefully give some ideas as to why you're stuck.
+## Arranque de OpenCore
 
-## OpenCore Booting
+Esta sección será corta, ya que los problemas de arranque de OpenCore son bastante raros y usualmente son simples errores del usuario. 
 
-This section will be brief, as OpenCore boot issues are fairly rare and usually simple user error:
+* El sistema se prende y busca dispositivos de arranque
+* El sistema localiza BOOTx64.efi en tu USB de OpenCore en EFI/BOOT/
+* BOOTx64.efi es cargado lo que genera la carga de OpenCore.efi en EFI/OC/
+* Son aplicadas las propiedades NVRAM
+* Se cargan los drivers EFI desde EFI/OC/Drivers
+* Se instala el GOP (Graphics Output Protocol)
+* Se cargan las tablas ACPI desde EFI/OC/ACPI
+* Los datos de SMBIOS son aplicados
+* OpenCore carga y muestra todas las opciones de arranque posibles
+* Luego arrancas al instalador de macOS
 
-* System powers on and searches for boot devices
-* System locates BOOTx64.efi on your OpenCore USB under EFI/BOOT/
-* BOOTx64.efi is loaded which then chain-loads OpenCore.efi from EFI/OC/
-* NVRAM Properties are applied
-* EFI drivers are loaded from EFI/OC/Drivers
-* Graphics Output Protocol(GOP) is installed
-* ACPI Tables are loaded from EFI/OC/ACPI
-* SMBIOS Data is applied
-* OpenCore loads and shows you all possible boot options
-* You now boot your macOS installer
+Si estás teniendo problemas de arranque en este punto, estos son algunos de los problemas a los que te podrías estar enfrentando:
 
-If you're having issues booting at this point, main things to check for:
+* [Trancado en `no vault provided!`](./extended/opencore-issues.md#trancado-en-no-vault-provided)
+* [No puedo ver particiones de macOS](./extended/opencore-issues.md#no-puedo-ver-particiones-de-macos)
+* [Pantalla negra luego del menú](./extended/opencore-issues.md#pantalla-negra-luego-del-menu)
+* [Arrancar OpenCore reinicia a la BIOS](./extended/opencore-issues.md#arrancar-opencore-reinicia-a-la-bios)
 
-* [Stuck on `no vault provided!`](../troubleshooting/troubleshooting.md#stuck-on-no-vault-provided)
-* [Can't see macOS partitions](../troubleshooting/troubleshooting.md#cant-see-macos-partitions)
-* [Black screen after picker](../troubleshooting/troubleshooting.md#black-screen-after-picker)
-* [Booting OpenCore reboots to BIOS](../troubleshooting/troubleshooting.md#booting-opencore-reboots-to-bios)
+Para ver el resto de posibilidades, mira aquí:
 
-For the rest of the possible issues, see here:
+* [OpenCore booting issues](./extended/opencore-issues.md)
 
-* [OpenCore booting issues](../troubleshooting/troubleshooting.md#opencore-booting)
-
-## boot.efi Handoff
+## Transferencia de boot.efi
 
 ![](../images/troubleshooting/boot-md/1-boot-efi.png)
 
-This is where macOS's bootloader(boot.efi) comes onto the scene, specifically what it does is prep the environment for the kernel to load and where OpenCore injects kexts. If you're getting stuck at this point, there's likely an issue with loading the kernel, main culprits:
+Aquí es cuando el bootloader de macOS (boot.efi) entra en acción. Lo que hace específicamente es preparar el ambiente para que cargue el kernel, a donde OpenCore inyecta kexts. Si te estás quedando trancado en este punto, seguramente sea un problema relacionado a la carga de el kernel. Los principales culpables de esto son los siguientes:
 
-* [Stuck on EndRandomSeed](../troubleshooting/troubleshooting.md#stuck-on-endrandomseed)
-* [Stuck on `[EB|#LOG:EXITBS:START]`](../troubleshooting/troubleshooting.md#stuck-on-eblogexitbsstart)
-* [`Couldn't allocate runtime area` errors](../troubleshooting/troubleshooting.md#couldnt-allocate-runtime-area-errors)
+* [Trancado en EndRandomSeed](./extended/kernel-issues.md#trancado-en-endrandomseed)
+* [Trancado en `[EB|#LOG:EXITBS:START]`](./extended/kernel-issues.md#trancado-en-eblogexitbsstart)
+* [Errores `Couldn't allocate runtime area`](./extended/kernel-issues.md#errores-couldnt-allocate-runtime-area)
 
-For the rest of the possible issues, see here:
+Para ver el resto de problemas posibles, dirígete aquí:
 
-* [OpenCore booting issues](../troubleshooting/troubleshooting.md#opencore-booting)
+* [Problemas de kernel](./extended/kernel-issues.md)
 
-**Note**: In macOS 10.15.4, Apple changed the boot.efi debugging protocol, so things will look quite a bit different from before but all the same rules still apply
+**Nota**: En macOS 10.15.4, Apple cambió el protocolo de depuración de boot.efi, por lo que verás todo un bastante más distinto a lo que era antes, aunque las mismas reglas siguen aplcando.
 
-## XNU/Kernel Handoff
+## Transferencia del XNU/Kernel
 
-Now that boot.efi has setup everything for us, we now get to watch the kernel do it's thing. This section is commonly referred as the [Rooting phase](https://developer.apple.com/library/archive/documentation/Darwin/Conceptual/KernelProgramming/booting/booting.html):
+Ahora que boot.efi tiene todo configurado para nosotros, debemos dejar que el kernel trabaje. Comúnmente se hace referencia a esta sección como la [Fase de rooting](https://developer.apple.com/library/archive/documentation/Darwin/Conceptual/KernelProgramming/booting/booting.html):
 
 ![](../images/troubleshooting/boot-md/2-kernel-start.png)
 
-This section is where SMBIOS data is verified, ACPI tables/Kexts are loaded and macOS tries to get everything in order. Failures here are generally a result of:
+Esta sección es en la que los datos de SMBIOS son verificados, las tablas ACPI/Kexts son cargados y macOS trata de ordenar todo. Los errores son comúnmente el resultado de:
 
-* Corrupted SSDTs
-* Corrupted kexts(or incorrectly setup under your config.plist -> Kernel -> Add)
-* Messed up memory map
+* SSDTs corruptos
+* Kexts corruptos (o establecidos incorrectamente en config.plist -> Kernel -> Add)
+* Mapa de memoria estropeado
 
-See here for more troubleshooting info:
+Dirígete aquí para obtener más información sobre distintos problemas a los que te puedes enfrentar:
 
-* [Kernel Panic `Cannot perform kext summary`](../troubleshooting/troubleshooting.md#kernel-panic-cannot-perform-kext-summary)
-* [Kernel Panic on `Invalid frame pointer`](../troubleshooting/troubleshooting.md#kernel-panic-on-invalid-frame-pointer)
+* [Kernel Panic `Cannot perform kext summary`](./extended/kernel-issues.md#kernel-panic-cannot-perform-kext-summary)
+* [Kernel Panic on `Invalid frame pointer`](./extended/kernel-issues.md#kernel-panic-on-invalid-frame-pointer)
 
 ![](../images/troubleshooting/boot-md/5-apfs-module.png)
 
-Now here we have `[ PCI configurations begin ]`, this section can be seen as a hardware test for our systems, kexts and SSDTs we injected, and where IOKit starts hardware probs to find devices to attach to.
+Aquí tenemos `[ PCI configurations begin ]`, esta sección puede ser vista como una prueba de hardware, kexts y SSDTs que inyectamos, y donde IOKit intenta encontrar dispositivos a los que adherirse.
 
-The main things that are tested here:
+Los aspectos principales que son puestos a prueba son los siguientes:
 
 * Embedded Controllers
-* Storage(NVMe, SATA, etc)
+* Almacenamiento(NVMe, SATA, etc)
 * PCI/e
 * NVRAM
 * RTC
-* PS2 and I2C
+* PS2 y I2C
 
 For more specific info on how to get around this area, see here:
 
-* [Stuck on `RTC...`, `PCI Configuration Begins`, `Previous Shutdown...`, `HPET`, `HID: Legacy...`](../troubleshooting/troubleshooting.md#stuck-on-rtc-pci-configuration-begins-previous-shutdown-hpet-hid-legacy)
+* [Trancado en `RTC...`, `PCI Configuration Begins`, `Previous Shutdown...`, `HPET`, `HID: Legacy...`](./extended/kernel-issues.md#trancado-en-rtc-pci-configuration-begins-previous-shutdown-hpet-hid-legacy)
 
 ![](../images/troubleshooting/boot-md/6-USB-setup.png)
 
-This is where the 15 port limit and USB mapping comes into play, and where the infamous "Waiting for Root Device" errors pops in, main things to check for:
+Aquí es donde entra en justo el límite de 15 puertos y el mapa de USBs entran en juego, y donde puede aparecer el famoso error "Waiting for Root Device". Las principales cosas a mirar son las siguientes:
 
 * ["Waiting for Root Device" or Prohibited Sign error](../troubleshooting/troubleshooting.md#waiting-for-root-device-or-prohibited-sign-error)
 
