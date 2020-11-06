@@ -4,13 +4,13 @@ Con macOS, hay numerosas limitaciones de hardware que debes tener en cuenta ante
 
 Las secciones principales a verificar son:
 
-* [CPU](#cpu-support)
-* [GPU](#gpu-support)
-* [Placa base](#motherboard-support)
-* [Almacenamiento](#storage-support)
-* [Internet cableado (Ethernet)](#wired-networking)
-* [Internet inalámbrico (WiFi)](#wireless-networking)
-* [Otros](#miscellaneous)
+* [CPU](#sporte-de-cpus)
+* [GPU](#soporte-de-gpus)
+* [Placa base](#soporte-de-placas-madre)
+* [Almacenamiento](#compatibilidad-de-almacenamiento)
+* [Internet cableado (Ethernet)](#conexion-a-internet-cableada)
+* [Internet inalámbrico (WiFi)](#conexion-a-internet-inalambrica)
+* [Otros](#otros)
 
 Para guías más detalladas en el tema, véase:
 
@@ -193,6 +193,8 @@ Una nota importante para las **Laptops con GPU dedicada**:
 | [Turing](https://en.wikipedia.org/wiki/Turing_(microarchitecture)) | N/A | N/A | No hay drivers disponibles |
 | [Ampere](https://en.wikipedia.org/wiki/Ampere_(microarchitecture)) | N/A | N/A | No hay drivers disponibles |
 
+:::
+
 ## Soporte de placas madre
 
 En su mayor parte, todas las placas madre son compatibles siempre que la CPU lo sea tambíen. Previamente, las placas B550 tenía problemas:
@@ -210,7 +212,7 @@ En su mayor parte, todas las unidades basadas en SATA son compatibles y la mayor
   * Otro caso similar fue con la SSD NVMe 970 EVO Plus de Samsung, pero esto fue corregido con una actualización de firmware. Puedes obtenerla via Windows usando la herramienta Samsung Magician o con una ISO booteable [aquí](https://www.samsung.com/semiconductor/minisite/ssd/download/tools/).
   * También para tener en cuenta, las computadoras portátiles que usan [Intel Optane](https://www.intel.com/content/www/us/en/architecture-and-technology/optane-memory.html) o [Micron 3D XPoint](https://www.micron.com/products/advanced-solutions/3d-xpoint-technology) para la aceleración de discos duros, no son compatibles con macOS. Sin embargo algunos usuarios han reportado éxito en Catalina incluso con soporte de lectura y escritura, pero recomendamos encarecidamente quitar la unidad para evitar posibles problemas de arranque.
 
-## Conexión a internet cableada (Ethernet)
+## Conexión a internet cableada
 
 Prácticamente todos los adaptadores de red con cable tienen algún tipo de soporte en macOS, ya sea por los controladores incorporados o por kexts hechos por la comunidad. Las principales excepciones son:
 
@@ -221,7 +223,7 @@ Prácticamente todos los adaptadores de red con cable tienen algún tipo de sopo
   * Hay soluciones alternativas para los chipsets [X520 y X540](https://www.tonymacx86.com/threads/how-to-build-your-own-imac-pro-successful-build-extended-guide.229353/)
 * NICs de servidores Mellanox y Qlogic
 
-## Conexión a internet inalámbrica (WiFi)
+## Conexión a internet inalámbrica
 
 La mayoría de las tarjetas WiFi que vienen con las laptops no son compatibles, ya que generalmente son Intel/Qualcomm. Si tienes suerte, es posible que tengas una tarjeta Atheros compatible, pero son compatibles hasta High Sierra.
 
