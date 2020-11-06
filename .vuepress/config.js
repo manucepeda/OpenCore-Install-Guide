@@ -176,8 +176,8 @@ module.exports = {
 
 		            ]
 				},
-                        ['/troubleshooting/debug', 'Debug'],
-                        ['/troubleshooting/boot', 'Boot'],
+                        ['/troubleshooting/debug', 'Depuración'],
+                        ['/troubleshooting/boot', 'Proceso de arranque'],
                     ]
                 },
                 {
