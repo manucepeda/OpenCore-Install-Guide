@@ -88,9 +88,9 @@ Aquí es donde entra en justo el límite de 15 puertos y el mapa de USBs entran 
 
 ![](../images/troubleshooting/boot-md/8-dsmos-arrived.png)
 
-This is where our FakeSMC/VirtualSMC come into the scene and do their magic, DSMOS itself is a kext that verifies if your system has an SMC and will request a key. If this key is missing, then DSMOS will not decrypt the rest of the binaries and you'll get stuck here. You may also get stuck at AppleACPICPU which is just the same error.
+Aquí es donde nuestro FakeSMC/VirtualSMC entra en juego y hace su magia. DSMOS (**D**on't **S**teal **M**ac**OS**) en sí es un kext que verifica que tu sistema tiene un SMC y pedirá una contraseña. Si esta no está presente, DSMOS no decriptará el resto de los binarios y te quedarás trancado ahí. También podrías quedarte trancado en AppleACPICPU, que es el mismo error.
 
-* [kextd stall[0]: AppleACPICPU](../troubleshooting/troubleshooting.md#kextd-stall0-appleacpicpu)
+* [kextd stall[0]: AppleACPICPU](./extended/kernel-issues.md#kextd-stall0-appleacpicpu)
 
 ```
 Your karma check for today:
@@ -103,25 +103,25 @@ Really, that's way uncool.
 (C) Apple Computer, Inc.
 ```
 
-Source: Dont Steal Mac OS X.kext
+Fuente: Dont Steal Mac OS X.kext
 
 ![](../images/troubleshooting/boot-md/9-audio.png)
 
-This is where Apple's audio driver comes in, and where AppleALC shines. Generally rare to see issues here but if you do, try disabling AppleALC and any other audio related kexts.
+Aquí es donde el driver de audio de Apple se carga, y donde AppleALC brilla. Generalmente es raro ver problemas aquí, pero si tienes algún problema aquí intenta deshabilitar AppleALC u otros kexts relacionados al audio.
 
 ![](../images/troubleshooting/boot-md/10-GPU.png)
 
-And here we get to the GPU driver initialization, and where WhateverGreen also does its magic. Generally errors here are due to the GPU and not WhateverGreen itself, main culprits:
+Aquí es cuando se inicializa el driver de la GPU, y donde WhateverGreen también hace su magia. Generalmente los errores aquí son debido a la GPU y no por WhateverGreen en sí. Los errores más comunes son los siguientes:
 
-* [Stuck on or near `IOConsoleUsers: gIOScreenLock...`](../troubleshooting/troubleshooting.md#stuck-on-or-near-ioconsolessers-gioscreenlock)
-* [Black screen after `IOConsoleUsers: gIOScreenLock...` on Navi](../troubleshooting/troubleshooting.md#black-screen-after-ioconsoleusers-gioscreenlock-on-navi)
+* [Trancado en o cerca de `IOConsoleUsers: gIOScreenLock...`](./extended/kernel-issues.md#trancado-en-o-cerca-de-ioconsolessers-gioscreenlock)
+* [Pantalla negra luego de `IOConsoleUsers: gIOScreenLock...` en Navi](./extended/kernel-issues.md#pantalla-negra-luego-de-ioconsoleusers-gioscreenlock-en-navi)
 
-## macOS Handoff
+## Transferencia a macOS
 
 ![](../images/troubleshooting/boot-md/11-boot.png)
 
-And you've finally got past all that verbose! If you're getting stuck at the Apple logo after all that verbose, then there's a couple things to check for:
+Al fin pasaste todo ese verbose! Si te estás quedando trancado en el logo de Apple luego de esto, hay algunas cosas que podrías mirar:
 
-* [macOS frozen right before login](../troubleshooting/troubleshooting.md#macos-frozen-right-before-login)
-* [Black screen after `IOConsoleUsers: gIOScreenLock...` on Navi](../troubleshooting/troubleshooting.md#black-screen-after-ioconsoleusers-gioscreenlock-on-navi)
-* [Frozen in the macOS installer after 30 seconds](../troubleshooting/troubleshooting.md#frozen-in-macos-installer-after-30-seconds)
+* [macOS trancado justo antes del inicio](./extended/kernel-issues.md#macos-trancado-justo-antes-del-inicio)
+* [Pantalla negra luego de `IOConsoleUsers: gIOScreenLock...` en Navi](./extended/kernel-issues.md#pantalla-negra-luego-de-ioconsoleusers-gioscreenlock-en-navi)
+* [Trancado en el instalador de macOS luego de 30 segundos](./extended/userspace-issues.md#trancado-en-el-instalador-de-macos-luego-de-30-segundos)
