@@ -119,14 +119,14 @@ Los complementos a continuación no son necesarios para bootear, y simplemente a
 
 ### Audio
 
-:::
 
 * [AppleALC](https://github.com/acidanthera/AppleALC/releases)
   * Usado para parchear AppleHDA, permitiendo el soporte de la mayoría de controladores de sonido a bordo
   * AMD 15h/16h pueden tener problemas con esto y los sistemas Ryzen/Threadripper rara vez tienen soporte de micrófono.
   * Requiere OS X 10.8 o más reciente
+
   
-::: details Legacy Audio Kext
+::: details Kexts de audio Legacy
 
 Para aquellos que planeen en arrancar 10.7 y más antiguo podrían querer optar por estos kexts en vez de AppleALC:
 
@@ -135,6 +135,7 @@ Para aquellos que planeen en arrancar 10.7 y más antiguo podrían querer optar 
   
 * [VoodooHDA-FAT](https://github.com/khronokernel/Legacy-Kexts/blob/master/FAT/Zip/VoodooHDA.kext.zip)
   * Similar al de arriba, pero este soporta kernels de 32 y 64 bits, por lo que es perfecto para arrancar OS X 10.4-5 y para CPUs de 32 bits
+
 
 :::
 
@@ -153,10 +154,11 @@ Ahora asumiremos que sabes qué tarjeta de ethernet tiene tu sistema, recuerda q
 * [AtherosE2200Ethernet](https://github.com/Mieze/AtherosE2200Ethernet/releases)
   * Necesario para NICs Atheros y Killer
   * Requiere OS X 10.8 o más nuevo
+  * Nota: Los modelos Atheros Killer E2500 en realidad están basados en Realtek, si tienes uno de estos por favor utiliza [RealtekRTL8111](https://github.com/Mieze/RTL8111_driver_for_OS_X/releases) en vez de este
 * [RealtekRTL8111](https://github.com/Mieze/RTL8111_driver_for_OS_X/releases)
   * Para el Ethernet Gigabit de Realtek
   * Requiere OS X 10.8-11(2.2.0), 10.12-13(v2.2.2), 10.14+(2.3.0)
-* [LucyRTL8125Ethernet](https://github.com/Mieze/LucyRTL8125Ethernet)
+* [LucyRTL8125Ethernet](https://www.insanelymac.com/forum/files/file/1004-lucyrtl8125ethernet/)
   * Para el Ethernet Realtek de 2.5Gb
 * Para las NICs i225-V de Intel, los parches se mencionan en la sección de "Device Properties" en la guía para Comet Lake de escritorio. No se requiere kext.
   * Requiere macOS 10.15 y posterior
@@ -165,15 +167,68 @@ Ahora asumiremos que sabes qué tarjeta de ethernet tiene tu sistema, recuerda q
 
 Relevante para instalaciones legacy de macOS o hardware antiguo.
 
-* [AppleIntele1000e](https://github.com/chris1111/AppleIntelE1000e)
+* [AppleIntele1000e](https://github.com/chris1111/AppleIntelE1000e/releases)
   * Principalmente relevante para controladores de ethernet Intel 10/100MBe 
   * Requiere 10.6 o más nuevo
 * [RealtekRTL8100](https://www.insanelymac.com/forum/files/file/259-realtekrtl8100-binary/)
   * Principalmente relevante para controladores de ethernet Realtek basados en 10/100MBe 
   * Requiere de macOS 10.12 o más nueva con la versión 2.0.0+
-* [BCM5722D](https://github.com/chris1111/BCM5722D)
+* [BCM5722D](https://github.com/chris1111/BCM5722D/releases)
   * Principalmente relevante para controladores de Etherenet Broadcom basados en BCM5722
   * Requiere de OS X 10.6 o más nuevo
+
+:::
+
+También ten en cuenta que ciertas NICs están soportadas nativamente en macOS:
+
+::: details Controladores de Ethernet nativos
+
+#### Series Aquantia
+
+```md
+# AppleEthernetAquantiaAqtion.kext
+pci1d6a,1    = Aquantia AQC107
+pci1d6a,d107 = Aquantia AQC107
+pci1d6a,7b1  = Aquantia AQC107
+pci1d6a,80b1 = Aquantia AQC107
+pci1d6a,87b1 = Aquantia AQC107
+pci1d6a,88b1 = Aquantia AQC107
+pci1d6a,89b1 = Aquantia AQC107
+pci1d6a,91b1 = Aquantia AQC107
+pci1d6a,92b1 = Aquantia AQC107
+pci1d6a,c0   = Aquantia AQC113
+pci1d6a,4c0  = Aquantia AQC113
+```
+
+**Nota**: Debido a algún firmware desactualizado enviado con muchas NICs Aquantia, podrías tener que actualizarlo en Windows/Linux para asegurarte de que es compatible con macOS
+#### Series Intel
+
+```md
+# AppleIntel8254XEthernet.kext
+pci8086,1096 = Intel 80003ES2LAN
+pci8086,100f = Intel 82545EM
+pci8086,105e = Intel 82571EB/82571GB
+
+# AppleIntelI210Ethernet.kext
+pci8086,1533 = Intel I210
+pci8086,15f2 = Intel I225LM (Added in macOS 10.15)
+
+# Intel82574L.kext
+pci8086,104b = Intel 82566DC
+pci8086,10f6 = Intel 82574L
+
+```
+
+#### Series Broadcom
+
+```md
+# AppleBCM5701Ethernet.kext
+pci14e4,1684 = Broadcom BCM5764M
+pci14e4,16b0 = Broadcom BCM57761
+pci14e4,16b4 = Broadcom BCM57765
+pci14e4,1682 = Broadcom BCM57762
+pci14e4,1686 = Broadcom BCM57766
+```
 
 :::
 
@@ -204,10 +259,10 @@ Relevante para instalaciones legacy de macOS o hardware antiguo.
 
 * [AirportItlwm](https://github.com/OpenIntelWireless/itlwm/releases)
   * Agrega soporte para una gran variedad de tarjetas de WiFi Intel y funciona nativamente gracias a la integración de IO80211Family
-  * Nota: Problemas de suspensión son comunes con este kext, requiere de macOS 10.15 o más reciente además de el arranque seguro de Apple para funcionar correctamente
+  * Requiere macOS 10.13 o posterior al igual que el arranque seguro de Apple para funcionar correctamente
 * [IntelBluetoothFirmware](https://github.com/OpenIntelWireless/IntelBluetoothFirmware/releases)
   * Agrega soporte de Bluetooth a macOS cuando es emparejado con una tarjeta inalámbrica Intel
-  * Al igual que con AirportItlwm, la suspensión se puede romper con este kext
+  * Requiere de macOS 10.13 o más nuevo
 
 ::: details Más información en la habilitación de AirportItlwm
 
@@ -217,6 +272,7 @@ Para habilitar el soporte de AirportItlwm con OpenCore, necesitarás:
   * Esto es discutido luego tanto en la guía y en la página de post instalación: [Arranque seguro de Apple](https://dortania.github.io/OpenCore-Post-Install/universal/security/applesecureboot.html)
 * Si no puedes habilitar SecureBootModel, puedes forzar la inyección de IO80211Family(**No recomendado**)
   * Configura lo siguiente debajo de `Kernel -> Force` en tu config.plist (discutido luego en la guía):
+    * Catalina and older need not concern
 
 ![](./images/ktext-md/force-io80211.png)
 
@@ -262,7 +318,7 @@ Sin embargo ProperTree hará esto por ti, asi que no debes preocuparte
     * MacPro6,1
     * MacPro7,1
     * iMacPro1,1
-* [CpuTscSync](https://github.com/lvs1974/CpuTscSync)
+* [CpuTscSync](https://github.com/lvs1974/CpuTscSync/releases)
   * Necesario para sincronizar el TSC en algunas de las placas madre de servidores y HEDT de Intel, sin este macOS puede ser extremadamente lento o incluso no booteable. 
 
 * [NVMeFix](https://github.com/acidanthera/NVMeFix/releases)
@@ -290,9 +346,6 @@ Para saber qué tipo de teclado y trackpad tienes, consulta el Administrador de 
     * VoodooI2CUPDDEngine - Implementa el soporte de drivers Touchbase.
 
 #### Otros
-
-* [NoTouchID](https://github.com/al3xtjames/NoTouchID/releases)
-  * Recomendado para SMBIOS de MacBook que incluyen un sensor TouchID para solucionar problemas de autenticación, generalmente las SMBIOS de 2016 en adelante requerirán esto
 
 Consulta [Kexts.md](https://github.com/acidanthera/OpenCorePkg/blob/master/Docs/Kexts.md) para obtener una lista completa de los kexts compatibles
 

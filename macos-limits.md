@@ -172,6 +172,7 @@ Una nota importante para las **Laptops con GPU dedicada**:
 | [Vega 10](https://en.wikipedia.org/wiki/Radeon_RX_Vega_series) | 10.12.6 | Actual | N/A |
 | [Vega 20](https://en.wikipedia.org/wiki/Radeon_RX_Vega_series) | 10.14.5 | Actual | N/A |
 | [Navi 10](https://en.wikipedia.org/wiki/Radeon_RX_5000_series) | 10.15.1 | Actual | Requiere `agdpmod=pikera` en los boot-args |
+| [Navi 20](https://en.wikipedia.org/wiki/Radeon_RX_6000_series) | 11.1 | ^^ | ^^ |
 
 :::
 

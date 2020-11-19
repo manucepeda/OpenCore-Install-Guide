@@ -74,6 +74,7 @@ Esta es una lista completa de todos los SMBIOS que Apple soportó en macOS con i
 * [iMac Pro](#imac-pro)
 * [Mac Pro](#mac-pro)
 * [Xserve](#xserve)
+* [Otras SMBIOS](#otras-smbios)
 
 Información sacada de ambas [EveryMac](https://everymac.com) y [OpenCorePkg](https://github.com/acidanthera/OpenCorePkg)
 
@@ -252,3 +253,31 @@ Información sacada de ambas [EveryMac](https://everymac.com) y [OpenCorePkg](ht
 | Xserve1,1      | Woodcrest    | Radeon X1300                  | Mac-F4208AC8           | Server 10.4.8 (8N1215) | Server 10.7.5 |
 | Xserve2,1      | Harpertown   | Radeon X1300                  | Mac-F42289C8           | Server 10.5 (9B2117) | Server 10.7.5 |
 | Xserve3,1      | Nehalem EP   | GeForce GT 120                | Mac-F223BEC8           | Server 10.5.6 | 10.11.6 |
+
+### Otras SMBIOS
+
+Todos los modelos mencionados abajo no están soportados por OpenCore pero son documentados aquí para facilitar su referencia
+
+#### Kit de transición de desarrolladores (Developer Transition Kit)
+
+| SMBIOS | Familia de CPU | Identificador de enclave seguro | SMBIOS de respaldo | Soporte inicial |
+| :--- | :--- | :--- | :--- | :--- |
+| DTK3,2 | A12X | J273 | iPad8,6 | 11.0.0 (20A5299w) |
+
+#### Mac Mini - Apple Silicon
+
+| SMBIOS | Familia de CPU | Identificador de enclave seguro | Soporte inicial |
+| :--- | :--- | :--- | :--- |
+| MacMini9,1 | M1 | J274 | 11.0.0 (20A2411) |
+
+#### MacBook Air - Apple Silicon
+
+| SMBIOS | Familia de CPU | Identificador de enclave seguro | Soporte inicial |
+| :--- | :--- | :--- | :--- |
+| MacBookAir10,1 | M1 | J313 | 11.0.0 (20A2411) |
+
+#### MacBook Pro - Apple Silicon
+
+| SMBIOS | Familia de CPU | Identificador de enclave seguro | Soporte inicial |
+| :--- | :--- | :--- | :--- |
+| MacBookPro17,1 | M1 | J293 | 11.0.0 (20A2411) |
