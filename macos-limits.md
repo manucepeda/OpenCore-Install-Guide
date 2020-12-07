@@ -90,7 +90,7 @@ Notas especiales:
 | [Conroe](https://en.wikipedia.org/wiki/Conroe_(microprocessor)), [Merom](https://en.wikipedia.org/wiki/Merom_(microprocessor)) | 10.4.7 | 10.11.6 | No SSE4 | 0x0006F2 |
 | [Penryn](https://en.wikipedia.org/wiki/Penryn_(microarchitecture)) | 10.4.8 | 10.13.6 | No SSE4.2 | 0x010676 |
 | [Nehalem](https://en.wikipedia.org/wiki/Nehalem_(microarchitecture)) | 10.5.6 | Actual | N/A | 0x0106A2 |
-| [Lynnfield](https://en.wikipedia.org/wiki/Lynnfield_(microprocessor)), [Clarksfield](https://en.wikipedia.org/wiki/Clarksfield_(microprocessor)) | 10.6.3 | Actual | Sin soporte de iGPU en 10.14+ | 0x0106E0 |
+| [Lynnfield](https://en.wikipedia.org/wiki/Lynnfield_(microprocessor)), [Clarksfield](https://en.wikipedia.org/wiki/Clarksfield_(microprocessor)) | 10.6.4 | Actual | Sin soporte de iGPU en 10.14+ | 0x0106E0 |
 | [Westmere, Clarkdale, Arrandale](https://en.wikipedia.org/wiki/Westmere_(microarchitecture)) | 10.6.4 | Actual | Sin soporte de iGPU en 10.14+ | 0x0206C0 |
 | [Sandy Bridge](https://en.wikipedia.org/wiki/Sandy_Bridge) | 10.6.7 | Actual | Sin soporte de iGPU en 10.14+ | 0x0206A0(M/H) |
 | [Ivy Bridge](https://en.wikipedia.org/wiki/Ivy_Bridge_(microarchitecture)) | 10.7.3 | Actual | Sin soporte de iGPU en 11+ | 0x0306A0(M/H/G) |

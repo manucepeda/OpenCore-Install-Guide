@@ -1,6 +1,6 @@
 # Depuración de OpenCore
 
-* Versión soportada: 0.6.3
+* Versión soportada: 0.6.4
 
 Necesitas descifrar por qué estas teniendo problemas? Bueno, llegaste al lugar correcto.
 
