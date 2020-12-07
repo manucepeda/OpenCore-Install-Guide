@@ -285,7 +285,7 @@ Para habilitar el soporte de AirportItlwm con OpenCore, necesitarás:
 * [BrcmPatchRAM](https://github.com/acidanthera/BrcmPatchRAM/releases)
   * Se utiliza para cargar firmware en el chipset Bluetooth Broadcom, requerido para todas las tarjetas que no sean Apple/Airport de Fenvi.
   * Debe ser emparejado con BrcmFirmwareData.kext
-    * BrcmPatchRAM3 para 10.14+ (debe estar acompañado de BrcmBluetoothInjector)
+    * BrcmPatchRAM3 para 10.15+ (debe estar acompañado de BrcmBluetoothInjector)
     * BrcmPatchRAM2 para 10.11-10.14
     * BrcmPatchRAM para 10.10 o anterior
 
