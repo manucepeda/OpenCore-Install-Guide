@@ -258,26 +258,38 @@ Información sacada de ambas [EveryMac](https://everymac.com) y [OpenCorePkg](ht
 
 Todos los modelos mencionados abajo no están soportados por OpenCore pero son documentados aquí para facilitar su referencia
 
+::: details Notas de Apple Silicon
+
+Información extra sobre las CPUs de Apple:
+
+* No dependen de ACPI o UEFI
+* No incluyen DeviceProperties en su firmware
+* Usan iPad8,6 para aplicaciones de iOS/iPadOS
+
+:::
+
+
 #### Kit de transición de desarrolladores (Developer Transition Kit)
 
-| SMBIOS | Familia de CPU | Identificador de enclave seguro | SMBIOS de respaldo | Soporte inicial |
+| SMBIOS | CPU Family | Secure Enclave Identifier | Initial Support |
 | :--- | :--- | :--- | :--- | :--- |
-| DTK3,2 | A12X | J273 | iPad8,6 | 11.0.0 (20A5299w) |
+| ADP2,1 | Intel Prescott | N/A | 10.4.1 (8B1025) |
+| DTK3,2 | Apple A12Z | J273 | 11.0.0 (20A5299w) |
 
 #### Mac Mini - Apple Silicon
 
 | SMBIOS | Familia de CPU | Identificador de enclave seguro | Soporte inicial |
 | :--- | :--- | :--- | :--- |
-| MacMini9,1 | M1 | J274 | 11.0.0 (20A2411) |
+| MacMini9,1 | Apple M1 | J274 | 11.0.0 (20A2411) |
 
 #### MacBook Air - Apple Silicon
 
 | SMBIOS | Familia de CPU | Identificador de enclave seguro | Soporte inicial |
 | :--- | :--- | :--- | :--- |
-| MacBookAir10,1 | M1 | J313 | 11.0.0 (20A2411) |
+| MacBookAir10,1 | Apple M1 | J313 | 11.0.0 (20A2411) |
 
 #### MacBook Pro - Apple Silicon
 
 | SMBIOS | Familia de CPU | Identificador de enclave seguro | Soporte inicial |
 | :--- | :--- | :--- | :--- |
-| MacBookPro17,1 | M1 | J293 | 11.0.0 (20A2411) |
+| MacBookPro17,1 | Apple M1 | J293 | 11.0.0 (20A2411) |

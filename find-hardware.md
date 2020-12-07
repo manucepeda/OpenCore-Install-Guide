@@ -165,7 +165,7 @@ dmesg |grep -i 'input'
 ### Codec de audio
 
 ```sh
-lspci | grep -i 'audio'
+aplay -l
 ```
 
 ### Modelo de controlador de red
