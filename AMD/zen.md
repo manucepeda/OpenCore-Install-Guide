@@ -1,4 +1,4 @@
-# Ryzen y Threadripper(17h)
+# Ryzen y Threadripper(17h y 19h)
 
 | Soporte | Versión |
 | :--- | :--- |
@@ -240,7 +240,7 @@ Aquí es cuando sucede la magia de los parches del kernel para AMD. Por favor te
 
 Parches del kernel:
 
-* [Ryzen/Threadripper(17h)](https://github.com/AMD-OSX/AMD_Vanilla/tree/opencore/17h) (10.13, 10.14, y 10.15)
+* [Ryzen/Threadripper(17h y 19h)](https://github.com/AMD-OSX/AMD_Vanilla/tree/opencore/17h_19h) (10.13, 10.14, y 10.15)
 
 Para juntarlos:
 
