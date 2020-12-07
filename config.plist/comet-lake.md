@@ -398,7 +398,7 @@ Security se explica por sí sola, **no te lo saltes**. Vamos a cambiar lo siguie
   * Habilita el reinicio autenticado para FileVault 2, por lo que no se requiere contraseña al reiniciar. Puede considerarse un riesgo de seguridad así que es opcional
 * **BlacklistAppleUpdate**: YES
   * Utilizado para bloquear actualizaciones del firmware como un nivel extra de protección ya que macOS Big Sur dejo de utilizar la variable `run-efi-updater`
-* **BootProtect**: Bootstrap
+* **BootProtect**: None
   * Permite el uso de Bootstrap.efi dentro de `EFI/OC/Bootstrap` en lugar de BOOTx64.efi. Útil para aquellos que desean arrancar con rEFInd o evitar sobrescribir BOOTx64.efi con Windows. El uso adecuado de estos quirks está cubierto aquí. [Usar Bootstrap.efi](https://inyextciones.github.io/OpenCore-Post-Install/multiboot/bootstrap.html#preparation)
 * **DmgLoading**: Signed
   * Asegura la carga únicamente de DMGs firmados
