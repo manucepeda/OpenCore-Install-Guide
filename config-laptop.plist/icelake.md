@@ -2,7 +2,7 @@
 
 | Support | Version |
 | :--- | :--- |
-| Supported OpenCore version | 0.6.3 |
+| Supported OpenCore version | 0.6.4 |
 | Initial macOS Support | macOS 10.15, Catalina |
 
 ## Starting Point
@@ -43,6 +43,7 @@ For us we'll need a couple of SSDTs to bring back functionality that Clover prov
 | **[SSDT-GPIO](https://github.com/dortania/Getting-Started-With-ACPI/blob/master/extra-files/decompiled/SSDT-GPI0.dsl)** | Creates a stub so VoodooI2C can connect, for those having troubles getting VoodooI2C working can try [SSDT-XOSI](https://github.com/dortania/Getting-Started-With-ACPI/blob/master/extra-files/compiled/SSDT-XOSI.aml) instead. Note that Intel NUCs do not need this |
 | **[SSDT-PNLF-CFL](https://dortania.github.io/Getting-Started-With-ACPI/)** | Fixes brightness control, see [Getting Started With ACPI Guide](https://dortania.github.io/Getting-Started-With-ACPI/) for more details. Note that Intel NUCs do not need this |
 | **[SSDT-AWAC](https://dortania.github.io/Getting-Started-With-ACPI/)** | This is the [300 series RTC patch](https://www.hackintosh-forum.de/forum/thread/39846-asrock-z390-taichi-ultimate/?pageNo=2), required for most B360, B365, H310, H370, Z390 and some Z370 boards which prevent systems from booting macOS. The alternative is [SSDT-RTC0](https://dortania.github.io/Getting-Started-With-ACPI/) for when AWAC SSDT is incompatible due to missing the Legacy RTC clock, to check whether you need it and which to use please see [Getting started with ACPI](https://dortania.github.io/Getting-Started-With-ACPI/) page. |
+| **[SSDT-RHUB](https://dortania.github.io/Getting-Started-With-ACPI/)** | Needed to fix Root-device errors on many Icelake laptops |
 
 Note that you **should not** add your generated `DSDT.aml` here, it is already in your firmware. So if present, remove the entry for it in your `config.plist` and under EFI/OC/ACPI.
 
@@ -98,6 +99,7 @@ Settings relating to boot.efi patching and firmware fixes, for us, we need to ch
 | EnableWriteUnprotector | NO |
 | ProtectUefiServices | YES |
 | RebuildAppleMemoryMap | YES |
+| SetupVirtualMap | NO |
 | SyncRuntimePermissions | YES |
 :::
 
@@ -110,13 +112,13 @@ Settings relating to boot.efi patching and firmware fixes, for us, we need to ch
 * **EnableWriteUnprotector**: NO
   * This quirk and RebuildAppleMemoryMap can commonly conflict, recommended to enable the latter on newer platforms and disable this entry.
   * However, due to issues with OEMs not using the latest EDKII builds you may find that the above combo will result in early boot failures. This is due to missing the `MEMORY_ATTRIBUTE_TABLE` and such we recommend disabling RebuildAppleMemoryMap and enabling EnableWriteUnprotector. More info on this is covered in the [troubleshooting section](/troubleshooting/extended/kernel-issues.md#stuck-on-eb-log-exitbs-start)
-* **ProtectUefiServices**: NO
+* **ProtectUefiServices**: YES
   * Protects UEFI services from being overridden by the firmware, mainly relevant for VMs, Icelake and Z390 systems'
   * If on Z390, **enable this quirk**
 * **RebuildAppleMemoryMap**: YES
   * Generates Memory Map compatible with macOS, can break on some laptop OEM firmwares so if you receive early boot failures disable this
-* **SetupVirtualMap**: YES
-  * Fixes SetVirtualAddresses calls to virtual addresses, shouldn't be needed on Skylake and newer. Some firmware like Gigabyte may still require it, and will kernel panic without this
+* **SetupVirtualMap**: NO
+  * Fixes SetVirtualAddresses calls to virtual addresses, can cause early kernel panics on Ice Lake machines
 * **SyncRuntimePermissions**: YES
   * Fixes alignment with MAT tables and required to boot Windows and Linux with MAT tables, also recommended for macOS. Mainly relevant for RebuildAppleMemoryMap users
 
@@ -388,6 +390,7 @@ Security is pretty self-explanatory, **do not skip**. We'll be changing the foll
 | :--- | :--- | :--- |
 | AllowNvramReset | YES | |
 | AllowSetDefault | YES | |
+| BlacklistAppleUpdate | YES | |
 | ScanPolicy | 0 | |
 | SecureBootModel | Default |  This is a word and is case-sensitive, set to `Disabled` if you do not want secure boot(ie. you require Nvidia's Web Drivers) |
 | Vault | Optional | This is a word, it is not optional to omit this setting. You will regret it if you don't set it to Optional, note that it is case-sensitive |
@@ -404,8 +407,10 @@ Security is pretty self-explanatory, **do not skip**. We'll be changing the foll
   * Used for netting personalized secure-boot identifiers, currently this quirk is unreliable due to a bug in the macOS installer so we highly encourage you to leave this as default.
 * **AuthRestart**: NO
   * Enables Authenticated restart for FileVault 2 so password is not required on reboot. Can be considered a security risk so optional
-* **BootProtect**: Bootstrap
-  * Allows the use of Bootstrap.efi inside EFI/OC/Bootstrap instead of BOOTx64.efi, useful for those wanting to either boot with rEFInd or avoid BOOTx64.efi overwrites from Windows. Proper use of this quirks is covered here: [Using Bootstrap.efi](https://dortania.github.io/OpenCore-Post-Install/multiboot/bootstrap.html#preparation)
+* **BlacklistAppleUpdate**: YES
+  * Used for blocking firmware updates, used as extra level of protection as macOS Big Sur no longer uses `run-efi-updater` variable
+* **BootProtect**: None
+  * Allows the use of Bootstrap.efi inside EFI/OC/Bootstrap instead of BOOTx64.efi, useful for those wanting to either boot with rEFInd or avoid BOOTx64.efi overwrites from Windows. Proper use of this quirks is covered here: [Using Bootstrap.efi](https://dortania.github.io/OpenCore-Post-Install/multiboot/bootstrap.html)
 * **DmgLoading**: Signed
   * Ensures only signed DMGs load
 * **ExposeSensitiveData**: `6`

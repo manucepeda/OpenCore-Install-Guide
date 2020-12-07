@@ -1,8 +1,8 @@
-# Ivy Bridge-E
+# Sandy and Ivy Bridge-E
 
 | Support | Version |
 | :--- | :--- |
-| Supported OpenCore version | 0.6.3 |
+| Supported OpenCore version | 0.6.4 |
 | Initial macOS Support | OS X 10.9, Mavericks |
 | Notes | Sandy Bridge-E also applies |
 
@@ -39,7 +39,7 @@ For us we'll need a couple of SSDTs to bring back functionality that Clover prov
 
 | Required_SSDTs | Description |
 | :--- | :--- |
-| **[SSDT-PLUG](https://dortania.github.io/Getting-Started-With-ACPI/)** | Allows for native CPU power management on Haswell and newer, see [Getting Started With ACPI Guide](https://dortania.github.io/Getting-Started-With-ACPI/) for more details. |
+| **[SSDT-PLUG](https://dortania.github.io/Getting-Started-With-ACPI/)** | Allows for native CPU power management on Ivy Bridge-E and newer, see [Getting Started With ACPI Guide](https://dortania.github.io/Getting-Started-With-ACPI/) for more details. **Not supported on Sandy Bridge-E** |
 | **[SSDT-EC](https://dortania.github.io/Getting-Started-With-ACPI/)** | Fixes the embedded controller, see [Getting Started With ACPI Guide](https://dortania.github.io/Getting-Started-With-ACPI/) for more details. |
 | **[SSDT-UNC](https://dortania.github.io/Getting-Started-With-ACPI/)** | Required for all Big Sur users to ensure their UNC devices are compatible, see [Getting Started With ACPI Guide](https://dortania.github.io/Getting-Started-With-ACPI/) for more details. |
 
@@ -188,7 +188,7 @@ Settings relating to the kernel, for us we'll be enabling the following:
 
 | Quirk | Enabled | Comment |
 | :--- | :--- | :--- |
-| AppleCpuPmCfgLock | NO | Need if running 10.10 or older and cannot disable `CFG-Lock` in the BIOS |
+| AppleCpuPmCfgLock | NO | Need if running 10.10 or older and cannot disable `CFG-Lock` in the BIOS, **also required for Sandy Bridge-E** |
 | AppleXcpmCfgLock | YES | Not needed if `CFG-Lock` is disabled in the BIOS |
 | AppleXcpmExtraMsrs | YES | |
 | DisableIOMapper | YES | Not needed if `VT-D` is disabled in the BIOS |
@@ -203,12 +203,11 @@ Settings relating to the kernel, for us we'll be enabling the following:
 
 * **AppleCpuPmCfgLock**: NO
   * Only needed when CFG-Lock can't be disabled in BIOS
-  * Only applicable for Ivy Bridge and older
+  * Only applicable for Sandy Bridge-E and older
     * Note: Broadwell and older require this when running 10.10 or older
 * **AppleXcpmCfgLock**: YES
   * Only needed when CFG-Lock can't be disabled in BIOS
-  * Only applicable for Haswell and newer
-    * Note: Ivy Bridge-E is also included as it's XCPM capable
+  * Only applicable for Ivy Bridge-E and newer
 * **AppleXcpmExtraMsrs**: YES
   * Disables multiple MSR access needed for unsupported CPUs like Pentiums and many Xeons. Required for Broadwell-E and lower
 * **CustomSMBIOSGuid**: NO
@@ -317,6 +316,7 @@ Security is pretty self-explanatory, **do not skip**. We'll be changing the foll
 | :--- | :--- | :--- |
 | AllowNvramReset | YES | |
 | AllowSetDefault | YES | |
+| BlacklistAppleUpdate | YES | |
 | ScanPolicy | 0 | |
 | SecureBootModel | Default |  This is a word and is case-sensitive, set to `Disabled` if you do not want secure boot(ie. you require Nvidia's Web Drivers) |
 | Vault | Optional | This is a word, it is not optional to omit this setting. You will regret it if you don't set it to Optional, note that it is case-sensitive |
@@ -333,8 +333,10 @@ Security is pretty self-explanatory, **do not skip**. We'll be changing the foll
   * Used for netting personalized secure-boot identifiers, currently this quirk is unreliable due to a bug in the macOS installer so we highly encourage you to leave this as default.
 * **AuthRestart**: NO
   * Enables Authenticated restart for FileVault 2 so password is not required on reboot. Can be considered a security risk so optional
-* **BootProtect**: Bootstrap
-  * Allows the use of Bootstrap.efi inside EFI/OC/Bootstrap instead of BOOTx64.efi, useful for those wanting to either boot with rEFInd or avoid BOOTx64.efi overwrites from Windows. Proper use of this quirks is covered here: [Using Bootstrap.efi](https://dortania.github.io/OpenCore-Post-Install/multiboot/bootstrap.html#preparation)
+* **BlacklistAppleUpdate**: YES
+  * Used for blocking firmware updates, used as extra level of protection as macOS Big Sur no longer uses `run-efi-updater` variable
+* **BootProtect**: None
+  * Allows the use of Bootstrap.efi inside EFI/OC/Bootstrap instead of BOOTx64.efi, useful for those wanting to either boot with rEFInd or avoid BOOTx64.efi overwrites from Windows. Proper use of this quirks is covered here: [Using Bootstrap.efi](https://dortania.github.io/OpenCore-Post-Install/multiboot/bootstrap.html)
 * **DmgLoading**: Signed
   * Ensures only signed DMGs load
 * **ExposeSensitiveData**: `6`
