@@ -74,7 +74,7 @@ Ahora viene la parte importante, seleccionar la ruta a seguir para configurar tu
 | Nombre clave | Series | Época |
 | :--- | :--- | :--- |
 | [Bulldozer/Jaguar](../AMD/fx.md) | [Es raro](https://es.wikipedia.org/wiki/Advanced_Micro_Devices) | [AMD era muy malo con los nombres en ese momento](https://es.wikipedia.org/wiki/Advanced_Micro_Devices) |
-| [Zen](../AMD/zen.md) | 1XXX, 2XXX, 3XXX | 2017-2020 |
+| [Zen](../AMD/zen.md) | 1XXX, 2XXX, 3XXX, 5XXX | 2017-2020 |
 
 * Nota: ~~Threadripper de 3ra generación (39XX) no están soportados. Sin embargo, los de 1ra y 2da generación si funcionan~~
   * La última BIOS y versión de OpenCore ha resuelto este problema, todas las plataformas Threadripper son soportadas actualmente.
