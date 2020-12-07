@@ -376,6 +376,7 @@ Security se explica por sí sola, **no te lo saltes**. Vamos a cambiar lo siguie
 | :--- | :--- | :--- |
 | AllowNvramReset | YES | |
 | AllowSetDefault | YES | |
+| BlacklistAppleUpdate | YES | |
 | ScanPolicy | 0 | |
 | SecureBootModel | Default |  Esta es una palabra la cual distingue entre mayúsculas y minúsculas, configúrala a `Disabled` si no quieres arranque seguro (por ejemplo en el caso de que requieras los Web Drivers de Nvidia) |
 | Vault | Optional | Esta es una palabra, no es opcional omitir esta configuración. Lo lamentarás si no lo configuras en `Optional`, ten en cuenta que distingue entre mayúsculas y minúsculas |
@@ -391,6 +392,8 @@ Security se explica por sí sola, **no te lo saltes**. Vamos a cambiar lo siguie
   * Usado para compensar identificadores de arranque seguro, actualmente este quirk es faltoso debido a un bug en el instalador de macOS así que te recomendamos que lo dejes como está por defecto.
 * **AuthRestart**: NO
   * Habilita el reinicio autenticado para FileVault 2, por lo que no se requiere contraseña al reiniciar. Puede considerarse un riesgo de seguridad así que es opcional
+* **BlacklistAppleUpdate**: YES
+  * Utilizado para bloquear actualizaciones del firmware como un nivel extra de protección ya que macOS Big Sur dejo de utilizar la variable `run-efi-updater`
 * **BootProtect**: Bootstrap
   * Permite el uso de Bootstrap.efi dentro de `EFI/OC/Bootstrap` en lugar de BOOTx64.efi. Útil para aquellos que desean arrancar con rEFInd o evitar sobrescribir BOOTx64.efi con Windows. El uso adecuado de estos quirks está cubierto aquí. [Usar Bootstrap.efi](https://inyextciones.github.io/OpenCore-Post-Install/multiboot/bootstrap.html#preparation)
 * **DmgLoading**: Signed
