@@ -273,7 +273,7 @@ Información extra sobre las CPUs de Apple:
 
 
 | SMBIOS | Año | Familia de CPU | Identificador de enclave seguro | Soporte inicial |
-| :--- | :--- | :--- | :--- | :--- | :--- |
+| :--- | :--- | :--- | :--- | :--- |
 | ADP2,1 | Mediados de 2005 | Intel Prescott | N/A | 10.4.1 (8B1025) |
 | ADP3,2 | Mediados de 2020 | Apple A12Z | J273 | 11.0.0 (20A5299w) |
 
