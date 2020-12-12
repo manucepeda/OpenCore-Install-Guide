@@ -17,10 +17,9 @@ Una vez que lo descargues, coloca la carpeta EFI en la raíz de tu partición EF
 
 **Nota:**
 
-* Usuarios de Windows: Esto ya estará en la partición `BOOT` de tu USB, el cual fue creado por MakeInstall
-  * * Los usuarios de macrecovery.py querrán colocar la carpeta EFI en la raíz de el USB que hiciste antes
-* Usuarios de linux: Esta es la partición `OPENCORE` creada anteriormente
-  * Cabe mencionar que el método 1 sólo crea una partición, mientras que el método dos crea dos particiones
+
+* **Usuarios de Windows:** Querrás colocar la carpeta EFI en la raíz de el USB que has creado anteirormente
+* **Usuarios de Linux:** Esta es la partición `OPENCORE` que creamos antes
 
 Ahora abramos nuestra carpeta EFI y veamos qué hay dentro:
 
