@@ -1,4 +1,3 @@
-
 # Creando el instalador en macOS
 
 * Versión soportada 0.6.4
@@ -11,7 +10,7 @@ Para comenzar, queremos obtener una copia de macOS, puedes omitir esto y dirigir
 
 * Este método te permite descargar macOS 10.13 y posterior, para 10.12 y anterior dirígete a [Descargando macOS: SO Legacy](#descargando-macos-so-legacy)
 
-Desde una computadora con macOS que cumple los requerimientos de la versión del SO que quieres instalar, vé directamente a el AppStore y descarga la versión de macOS que desees, y continúa en [**Configurando el instalador**](#setting-up-the-installer)
+Desde una computadora con macOS que cumple los requerimientos de la versión del SO que quieres instalar, vé directamente a el AppStore y descarga la versión de macOS que desees, y continúa en [**Configurando el instalador**](#configurando-el-instalador)
 
 Para las computadoras que necesiten una versión específica de macOS o que no tengan acceso a el AppStore para descargar la versión deseada, pueden usar la herramienta GibMacOS
 
@@ -27,7 +26,32 @@ Como puedes ver, obtenemos una lista de instaladores de macOS. Si necesitas vers
 
 Esto tomará un rato ya que estamos descargando el instalador completo de macOS (8gb+), así que recomendamos que leas el resto de la guía mientras esperas. 
 
-Una vez terminado, tendremos que correr el archivo `BuildmacOSInstallApp.command`:
+Una vez terminado, tendremos que extraer o construir el instalador:
+
+* [Extraer el insalador](#extrayendo-el-instalador)
+  * Para macOS 11+
+* [Construir el instalador](#construyendo-el-instalador)
+  * Para macOS 10.15 y anterior
+
+### Extrayendo el instalador
+
+En macOS 11 y posterior, ahora Apple empaqueta el instalador con el paquete InstallAssistant, quien estará ubicado en `gibMacOS/macOS Downloads/`:
+
+![](../images/extras/big-sur/readme/final-download.png)
+
+Corre el InstallAssistant.pkg y apunta a el disco del que estás arrancando, aquí es donde se pondrá la app para la instalación.
+
+![](../images/extras/big-sur/readme/install-pkg.png)
+
+Una vez que termine el proceso deberías encontrarla en tu carpeta de Aplicciones.
+
+![](../images/extras/big-sur/readme/done.png)
+
+Desde aquí dirígete a [Configurando el instalador](#configurando-el-instalador) para continuar con el proceso.
+
+### Construyendo el instalaor
+
+En macOS 10.15 y anterior el instalador será descargado en pedazos que deben ser ensamblados. Para eso querremos correr el `BuildmacOSInstallApp.command`:
 
 ![](../images/installer-guide/mac-install-md/gib-location.png)
 
@@ -40,6 +64,8 @@ Una vez que la operación haya terminado, sal de la herramienta, encontrarás el
 Mueve esta aplicación a la carpeta de Aplicaciones, esto nos será útil para la siguiente sección:
 
 ![](../images/installer-guide/mac-install-md/gib-done.png)
+
+Desde aquí dirígete a [Configurando el instalador](#configurando-el-instalador) para continuar con el proceso.
 
 ## Descargando macOS: SO Legacy
 
@@ -59,7 +85,7 @@ Para comenzar, dirígete a alguno de los siguientes links (información en ingl�
 
 En el paso 4, verás `InstallOS.dmg` para Sierra o `InstallMacOSX.dmg` para El Capitan y versiones anteriores. Descarga la versión que quieres y deberías obtener un archivo .pkg.
 
-Dependiendo de qué SO estés, puedes correr este script y dirigirte a [Setting up the installer](#configurando-el-instalador). Sin embargo, si recives este error:
+Dependiendo de qué SO estés, puedes correr este script y dirigirte a [Configurando el instalador](#configurando-el-instalador). Sin embargo, si recives este error:
 
 ![](../images/installer-guide/legacy-mac-install-md/unsupported.png)
 
@@ -141,24 +167,36 @@ Las instrucciones para correrlo son bastante simples, elige uno de los comandos 
 # Lion(10.7):
 ./macrecovery.py -b Mac-2E6FAB96566FE58C -m 00000000000F25Y00 download
 ./macrecovery.py -b Mac-C3EC7CD22292981F -m 00000000000F0HM00 download
+
 # Mountain Lion(10.8):
 ./macrecovery.py -b Mac-7DF2A3B5E5D671ED -m 00000000000F65100 download
+
 # Mavericks(10.9):
 ./macrecovery.py -b Mac-F60DEB81FF30ACF6 -m 00000000000FNN100 download
+
 # Yosemite(10.10):
 ./macrecovery.py -b Mac-E43C1C25D4880AD6 -m 00000000000GDVW00 download
+
 # El Capitan(10.11):
 ./macrecovery.py -b Mac-FFE5EF870D7BA81A -m 00000000000GQRX00 download
+
 # Sierra(10.12):
 ./macrecovery.py -b Mac-77F17D7DA9285301 -m 00000000000J0DX00 download
+
 # High Sierra(10.13)
 ./macrecovery.py -b Mac-7BA5B2D9E42DDD94 -m 00000000000J80300 download
 ./macrecovery.py -b Mac-BE088AF8C5EB4FA2 -m 00000000000J80300 download
+
 # Mojave(10.14)
 ./macrecovery.py -b Mac-7BA5B2DFE22DDD8C -m 00000000000KXPG00 download
+
+# Catalina(10.15)
+./macrecovery.py -b Mac-27AD2F918AE68F61 -m 00000000000K7GF00 download
+
 # Versión más reciente
-# Ej. Catalina(10.15)
-./macrecovery.py -b Mac-E43C1C25D4880AD6 -m 00000000000000000 download
+# Es decir Big Sur (11)
+./macrecovery.py -b Mac-E43C1C25D4880AD6 -m 00000000000000000 -os latest download
+
 ```
 
 Desde aquí, corre uno de estos comandos en la terminal y una vez que terminen recibirás una salida similar a esta:
