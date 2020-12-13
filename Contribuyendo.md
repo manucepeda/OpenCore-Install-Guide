@@ -84,6 +84,7 @@ Traducciones conocidas actualmente:
 * [InyextcionES](https://github.com/InyextcionES/OpenCore-Install-Guide)(Español)
 * [macOS86](https://macos86.gitbook.io/guida-opencore/)(Italiano, ya no se mantiene)
 * [Technopat](https://www.technopat.net/sosyal/konu/opencore-ile-macos-kurulum-rehberi.963661/)(Turco)
+* [ThrRip](https://github.com/ThrRip/OpenCore-Install-Guide)(Chino)
 
 Ten en cuenta que estas traducciones están sujetas a las preferencias de los autores, los cambios de traducción y los errores humanos. Por favor, ten esto en cuenta al leer dado que ya no son guías oficiales de Dortania.
 

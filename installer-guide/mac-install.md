@@ -299,7 +299,7 @@ Ahora formatearemos el USB para prepararlo para el instalador de macOS y OpenCor
 Luego de esto, corre el comando `createinstallmedia`, proveído por [Apple](https://support.apple.com/en-us/HT201372), Ten en cuenta que el comando está hecho para USBs formateados con el nombre `MyVolume`:
 
 ```
-sudo /Applications/Install\ macOS\ Catalina.app/Contents/Resources/createinstallmedia --volume /Volumes/MyVolume
+sudo /Applications/Install\ macOS\ Big\ Sur.app/Contents/Resources/createinstallmedia --volume /Volumes/MyVolume
 ```
 
 Esto tomará un tiempo así que si quieres ve a buscar un café o continúa leyendo la guía (en realidad no deberías estar siguiendo la guía paso a paso sin haberla leído antes)
@@ -311,16 +311,24 @@ También puedes reemplazar la ruta de el comando `createinstallmedia` con la rut
 Extraído de la propia página de Apple: [Cómo crear un instalador de arranque para macOS](https://support.apple.com/es-es/HT201372)
 
 ```sh
+# Catalina
+sudo /Applications/Install\ macOS\ Catalina.app/Contents/Resources/createinstallmedia --volume /Volumes/MyVolume
+
 # Mojave
 sudo /Applications/Install\ macOS\ Mojave.app/Contents/Resources/createinstallmedia --volume /Volumes/MyVolume
+
 # High Sierra
 sudo /Applications/Install\ macOS\ High\ Sierra.app/Contents/Resources/createinstallmedia --volume /Volumes/MyVolume
+
 # Sierra
 sudo /Applications/Install\ macOS\ Sierra.app/Contents/Resources/createinstallmedia --volume /Volumes/MyVolume
+
 # El Capitan
 sudo /Applications/Install\ OS\ X\ El\ Capitan.app/Contents/Resources/createinstallmedia --volume /Volumes/MyVolume --applicationpath /Applications/Install\ OS\ X\ El\ Capitan.app
+
 # Yosemite
 sudo /Applications/Install\ OS\ X\ Yosemite.app/Contents/Resources/createinstallmedia --volume /Volumes/MyVolume --applicationpath /Applications/Install\ OS\ X\ Yosemite.app
+
 # Mavericks
 sudo /Applications/Install\ OS\ X\ Mavericks.app/Contents/Resources/createinstallmedia --volume /Volumes/MyVolume --applicationpath /Applications/Install\ OS\ X\ Mavericks.app --nointeraction
 ```
