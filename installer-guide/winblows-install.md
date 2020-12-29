@@ -13,6 +13,8 @@ Para comenzar necesitarás lo siguiente:
 
 Descargar instaladores es muy fácil, sólo descarga una copia de [OpenCorePkg](https://github.com/acidanthera/OpenCorePkg/releases) y dirígete a `/Utilities/macrecovery/`. Luego copia la ruta de la carpeta macrecovery:
 
+* Nota: El macrecovery.py de 0.6.4 y anterior está roto, por lo que tendrás que descargar una copia del ["master" de OpenCorePkg](https://github.com/acidanthera/opencorepkg) y utilizar la versión de macrecovery ubicada en Utilities/macrecovery/.
+
 ![](../images/installer-guide/winblows-install-md/file-path.png)
 
 Desde aquí querrás abrir una ventana de Símbolo del Sistema (cmd) y utilizar `cd` para llegar a la carpeta macrecovery de la que copiamos la ruta:

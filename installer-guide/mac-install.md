@@ -159,6 +159,8 @@ Este método nos permite descargar versiones legacy de macOS incluyendo 10.7 has
 
 Para comenzar, querrás usar macrecovery.py, herramienta que ya viene incluida en el [OpenCorePkg](https://github.com/acidanthera/OpenCorePkg/releases):
 
+* Nota: El macrecovery.py de 0.6.4 y anterior está roto, por lo que tendrás que descargar una copia del ["master" de OpenCorePkg](https://github.com/acidanthera/opencorepkg) y utilizar la versión de macrecovery ubicada en Utilities/macrecovery/.
+
 ![](../images/installer-guide/legacy-mac-install-md/macrecovery.png)
 
 Las instrucciones para correrlo son bastante simples, elige uno de los comandos de abajo dependiendo de qué SO quieres descargar:
@@ -239,17 +241,17 @@ Ten en cuenta que estas imágenes requieren de que tengas una cuenta de desarrol
 
 * [OS X 10.6.0 Golden Master(10a432)](https://download.developer.apple.com/Mac_OS_X/mac_os_x_version_10.6_snow_leopard_build_10a432/mac_os_x_v10.6_build_10a432_user_dvd.dmg)
 
-### Restoring the drive
+### Restaurando el disco
 
 Ahora viene la parte divertida, primero querrás abrir el DMG que descargaste y montarlo. Luego abre Disk Utility y formatea tu disco como macOS Extended (HFS+) con un mapa de particiones GUID:
 
-![Formatting the USB](../images/installer-guide/mac-install-md/format-usb.png)
+![Formateando el USB](../images/installer-guide/mac-install-md/format-usb.png)
 
 Luego tenemos dos opciones a seguir:
 
 * [Una restauración ASR](#asr)(**A**pple **S**oftware **R**estore)
   * Basada en la terminal, funciona mejor con el SIP habilitado
-* [Disk Utility Restore](#disk-utility)
+* [Restauración utilizando Disk Utility](#disk-utility)
   * Puede requerir del SIP deshabilitado en SOs más recientes
 
 #### ASR
