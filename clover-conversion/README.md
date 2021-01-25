@@ -1,6 +1,6 @@
 # Converting from Clover to OpenCore
 
-* Supported version: 0.6.3
+* Supported version: 0.6.5
 
 So you see the new fancy OpenCore bootloader and just dying to try it out, well you've come to the right place! Many things in Clover have feature parity with OpenCore but many do not, here we'll be going over what you can bring over and what you cannot.
 
@@ -69,6 +69,8 @@ In you config.plist:
 
 And on your initial boot of OpenCore, select `Reset NVRAM` boot option. This will wipe everything and reboot the system when finished.
 
+* Note: Thinkpad laptops are known to be semi-bricked after an NVRAM reset in OpenCore, we recommend resetting NVRAM by updating the BIOS on these machines.
+
 ## Optional: Avoiding SMBIOS injection into other OSes
 
 By default OpenCore will inject SMBIOS data into all OSes, the reason for this is 2 parts:
@@ -76,7 +78,7 @@ By default OpenCore will inject SMBIOS data into all OSes, the reason for this i
 * This allows for proper multiboot support like with [BootCamp](https://dortania.github.io/OpenCore-Post-Install/multiboot/bootcamp.html)
 * Avoids edge cases where info is injected several times, commonly seen with Clover
 
-However, there are quirks in OpenCore that allow for SMBIOS injection to be macOS limited by patching where macOS reads SMBIOS info from. These quirks can break in the future and so we only recommend this option in the event of certain software breaking in other OSes. For best stability, please disable avoid
+However, there are quirks in OpenCore that allow for SMBIOS injection to be macOS limited by patching where macOS reads SMBIOS info from. These quirks can break in the future and so we only recommend this option in the event of certain software breaking in other OSes. For best stability, please avoid
 
 To enable macOS-only SMBIOS injection:
 
