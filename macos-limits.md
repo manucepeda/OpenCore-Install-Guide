@@ -90,8 +90,8 @@ Notas especiales:
 | [Conroe](https://en.wikipedia.org/wiki/Conroe_(microprocessor)), [Merom](https://en.wikipedia.org/wiki/Merom_(microprocessor)) | 10.4.7 | 10.11.6 | No SSE4 | 0x0006F2 |
 | [Penryn](https://en.wikipedia.org/wiki/Penryn_(microarchitecture)) | 10.4.8 | 10.13.6 | No SSE4.2 | 0x010676 |
 | [Nehalem](https://en.wikipedia.org/wiki/Nehalem_(microarchitecture)) | 10.5.6 | Actual | N/A | 0x0106A2 |
-| [Lynnfield](https://en.wikipedia.org/wiki/Lynnfield_(microprocessor)), [Clarksfield](https://en.wikipedia.org/wiki/Clarksfield_(microprocessor)) | 10.6.4 | Actual | Sin soporte de iGPU en 10.14+ | 0x0106E0 |
-| [Westmere, Clarkdale, Arrandale](https://en.wikipedia.org/wiki/Westmere_(microarchitecture)) | 10.6.4 | Actual | Sin soporte de iGPU en 10.14+ | 0x0206C0 |
+| [Lynnfield](https://en.wikipedia.org/wiki/Lynnfield_(microprocessor)), [Clarksfield](https://en.wikipedia.org/wiki/Clarksfield_(microprocessor)) | 10.6.5 | Actual | Sin soporte de iGPU en 10.14+ | 0x0106E0 |
+| [Westmere, Clarkdale, Arrandale](https://en.wikipedia.org/wiki/Westmere_(microarchitecture)) | 10.6.5 | Actual | Sin soporte de iGPU en 10.14+ | 0x0206C0 |
 | [Sandy Bridge](https://en.wikipedia.org/wiki/Sandy_Bridge) | 10.6.7 | Actual | Sin soporte de iGPU en 10.14+ | 0x0206A0(M/H) |
 | [Ivy Bridge](https://en.wikipedia.org/wiki/Ivy_Bridge_(microarchitecture)) | 10.7.3 | Actual | Sin soporte de iGPU en 11+ | 0x0306A0(M/H/G) |
 | [Ivy Bridge-E5](https://en.wikipedia.org/wiki/Ivy_Bridge_(microarchitecture)) | 10.9.2 | Actual | N/A | 0x0306E0 |
@@ -143,7 +143,7 @@ Una nota importante para las **Laptops con GPU dedicada**:
 | :--- | :--- | :--- | :--- |
 | [GMA de 3ra gen](https://en.wikipedia.org/wiki/List_of_Intel_graphics_processing_units#Third_generation) | 10.4.1 | 10.7.5 | Requiere de un kernel de 32 bits |
 | [GMA de 4ta gen](https://en.wikipedia.org/wiki/List_of_Intel_graphics_processing_units#Gen4) | 10.5.0 | 10.7.5 | Requiere de un kernel de 32 bits |
-| [Arrendale (HD Graphics)](https://en.wikipedia.org/wiki/List_of_Intel_graphics_processing_units#Gen5) | 10.6.4 | 10.13.6 | N/A |
+| [Arrendale (HD Graphics)](https://en.wikipedia.org/wiki/List_of_Intel_graphics_processing_units#Gen5) | 10.6.5 | 10.13.6 | N/A |
 | [Sandy Bridge (HD 3000)](https://en.wikipedia.org/wiki/List_of_Intel_graphics_processing_units#Gen6) | 10.6.7 | 10.13.6 | N/A |
 | [Ivy Bridge (HD 4000)](https://en.wikipedia.org/wiki/List_of_Intel_graphics_processing_units#Gen7) | 10.7.3 | 10.15.7 | N/A |
 | [Haswell (HD 4XXX, 5XXX)](https://en.wikipedia.org/wiki/List_of_Intel_graphics_processing_units#Gen7) | 10.8.5 | Actual | N/A |

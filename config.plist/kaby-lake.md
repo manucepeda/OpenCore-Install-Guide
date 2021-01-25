@@ -2,7 +2,7 @@
 
 | Soporte | Versión |
 | :--- | :--- |
-| Versión de OpenCore Soportada | 0.6.4 |
+| Versión de OpenCore Soportada | 0.6.5 |
 | Soporte inicial de macOS | macOS 10.12, Sierra |
 
 ## Punto de partida
@@ -633,8 +633,6 @@ En relación con los quirks con el entorno UEFI, cambiaremos lo siguiente:
 
 ::: details Información más detallada
 
-* **DeduplicateBootOrder**: YES
-  * Solicita la reserva de algunas variables prefijadas de arranque de `OC_VENDOR_VARIABLE_GUID` a `EFI_GLOBAL_VARIABLE_GUID`. Se utiliza para arreglar las opciones de arranque.
 
 * **RequestBootVarRouting**: YES
   * Redirige AptioMemoryFix desde `EFI_GLOBAL_VARIABLE_GUID` a `OC_VENDOR_VARIABLE_GUID`. Necesario para cuando el firmware intenta eliminar las entradas de arranque y se recomienda que esté habilitado en todos los sistemas para la instalación correcta de las actualizaciones, el funcionamiento del panel de control del disco de inicio, etc.

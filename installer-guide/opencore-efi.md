@@ -1,6 +1,6 @@
 # Agregando los archivos base de OpenCore
 
-* Versión soportada: 0.6.4
+* Versión soportada: 0.6.5
 
 Para configurar la estructura de carpetas de OpenCore, debes tomar la carpeta EFI que se encuentra en los [lanzamientos de OpenCore](https://github.com/acidanthera/OpenCorePkg/releases/). Ten en cuenta que estarán en las carpetas IA32 o X64, la primera para Firmwares de 32 bits y la última para Firmwares de 64 bits:
 

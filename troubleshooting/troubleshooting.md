@@ -1,6 +1,6 @@
 # Solución de problemas
 
-* Versión soportada: 0.6.4
+* Versión soportada: 0.6.5
 
 Esta sección es para aquellos que tienen problemas al iniciar OpenCore, macOS o que tienen problemas dentro de macOS. Si estás confundido acerca de dónde exactamente en el proceso de arranque de macOS estás atascado, leer la página [Proceso de arranque de macOS](../troubleshooting/boot.md) puede ayudar a aclarar tus dudas.
 

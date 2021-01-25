@@ -2,7 +2,7 @@
 
 | Soporte | Versión |
 | :--- | :--- |
-| Versión de OpenCore Soportada | 0.6.4 |
+| Versión de OpenCore Soportada | 0.6.5 |
 | Soporte inicial de macOS | OS X 10.7, Lion |
 | Notas | Las iGPUs de Ivy Bridge sólo son compatibles oficialmente hasta macOS 10.15 |
 
@@ -673,8 +673,6 @@ En relación con los quirks con el entorno UEFI, cambiaremos lo siguiente:
 
 ::: details Información más detallada
 
-* **DeduplicateBootOrder**: YES
-  * Solicita la reserva de algunas variables prefijadas de arranque de `OC_VENDOR_VARIABLE_GUID` a `EFI_GLOBAL_VARIABLE_GUID`. Se utiliza para arreglar las opciones de arranque.
 
 * **IgnoreInvalidFlexRatio**: YES
   * Solución para cuando MSR\_FLEX \_RATIO (0x194) no se puede deshabilitar en la BIOS, requerido para todos los sistemas basados antes que Skylake.

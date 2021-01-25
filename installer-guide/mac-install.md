@@ -1,6 +1,6 @@
 # Creando el instalador en macOS
 
-* Versión soportada 0.6.4
+* Versión soportada 0.6.5
 
 Si bien no necesitas una nueva instalación de macOS para usar OpenCore, algunos usuarios prefieren tener una nueva instalación con sus actualizaciones del gestor de arranque.
 
@@ -159,7 +159,7 @@ Este método nos permite descargar versiones legacy de macOS incluyendo 10.7 has
 
 Para comenzar, querrás usar macrecovery.py, herramienta que ya viene incluida en el [OpenCorePkg](https://github.com/acidanthera/OpenCorePkg/releases):
 
-* Nota: El macrecovery.py de 0.6.4 y anterior está roto, por lo que tendrás que descargar una copia del ["master" de OpenCorePkg](https://github.com/acidanthera/opencorepkg) y utilizar la versión de macrecovery ubicada en Utilities/macrecovery/.
+* Nota: El macrecovery.py de 0.6.5 y anterior está roto, por lo que tendrás que descargar una copia del ["master" de OpenCorePkg](https://github.com/acidanthera/opencorepkg) y utilizar la versión de macrecovery ubicada en Utilities/macrecovery/.
 
 ![](../images/installer-guide/legacy-mac-install-md/macrecovery.png)
 

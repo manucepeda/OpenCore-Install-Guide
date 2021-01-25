@@ -1,6 +1,6 @@
 # Creando el instalador en Linux
 
-* Versión soportada: 0.6.4
+* Versión soportada: 0.6.5
 
 Si bien no necesitas una nueva instalación de macOS para usar OpenCore, algunos usuarios prefieren tener una nueva instalación con sus actualizaciones del gestor de arranque.
 
@@ -9,7 +9,7 @@ Para comenzar necesitarás lo siguiente:
 * Un USB de 4GB
 * [macrecovery.py](https://github.com/acidanthera/OpenCorePkg/releases)
 
-* Nota: El macrecovery.py de 0.6.4 y anterior está roto, por lo que tendrás que descargar una copia del ["master" de OpenCorePkg](https://github.com/acidanthera/opencorepkg) y utilizar la versión de macrecovery ubicada en Utilities/macrecovery/.
+* Nota: El macrecovery.py de 0.6.5 y anterior está roto, por lo que tendrás que descargar una copia del ["master" de OpenCorePkg](https://github.com/acidanthera/opencorepkg) y utilizar la versión de macrecovery ubicada en Utilities/macrecovery/.
 
 ## Descargando macOS
 
