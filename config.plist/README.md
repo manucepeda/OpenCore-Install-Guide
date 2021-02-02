@@ -2,7 +2,7 @@
 
 Ahora que tenemos todos nuestros Kexts (.kext), SSDTs (.aml) y drivers del firmware (.efi), tu USB debería comenzar a verse así:
 
-![](../images/config/config-universal/almost-done.png)
+![Carpeta EFI populada](../images/installer-guide/opencore-efi-md/populated-efi.png)
 
 * **Nota**: Tu USB **va a verse distinto**, el sistema de cada uno tendrá requisitos diferentes.
 
@@ -47,6 +47,10 @@ Una vez hecho esto, verás tus SSDT, Kexts y Drivers de firmware incluidos en tu
 ![](../images/config/config-universal/after-snapshot.png)
 
 Si deseas limpiar un poco el archivo, puedes eliminar las entradas `# WARNING`. Sin embargo si las dejas esto no causará problemas, así que depende tu preferencia personal.
+
+* **Nota:** Si ves un una ventana emergente que dice "Disable the following kexts with Duplicate CFBundleIdentifiers?", presiona "Yes". Esto es para asegurar que no tengas kexts duplicados siendo inyectados, ya que algunos kexts podrían tener algunos plugins iguales (Por ejemplo, VoodooInput se encuentra en la carpeta plugins de ambos VoodooPS2 y VoodooI2C)
+
+![](../images/config/config-universal/duplicate.png)
 
 ## Seleccionando tu plataforma
 

@@ -1,6 +1,6 @@
 # Recolectando archivos
 
-* Versión soportada: 0.6.5
+* Versión soportada: 0.6.6
 
 Esta sección es para obtener otros archivos necesarios para arrancar macOS, esperamos que conozcas bien tu hardware  antes de comenzar y que hayas hecho un hackintosh antes, ya que no entraremos en detalle aquí. 
 
@@ -38,13 +38,14 @@ Además de lo anterior, si tu hardware no es compatible con UEFI (2011 y anterio
 
 * [OpenUsbKbDxe.efi](https://github.com/acidanthera/OpenCorePkg/releases)
   * Se utiliza para el menú de selección de OpenCore en **sistemas legacy que ejecutan DuetPkg**, [no recomendado e incluso dañino en UEFI (Ivy Bridge y más reciente)](https://applelife.ru/threads/opencore-obsuzhdenie-i-ustanovka.2944066/page-176#post-856653)
+
 * [HfsPlusLegacy.efi](https://github.com/acidanthera/OcBinaryData/blob/master/Drivers/HfsPlusLegacy.efi)
   * Variante legacy de HfsPlus, utilizada para sistemas que carecen de soporte de instrucción RDRAND. Esto es generalmente visto en Sandy Bridge y anterior (al igual que Ivy Bridge de gama baja, como i3 y Celerons) 
   
-* [PartitionDxe](https://github.com/acidanthera/OcBinaryData/blob/master/Drivers/PartitionDxe.efi)
-  * Requerido para bootear recuperación de 10.7 hasta 10.9
-  * Para Sandy Bridge y anterior (al igual que Ivy Bridge de gama baja, como i3 y Celerons), querrás usar [PartitionDxeLegacy](https://github.com/acidanthera/OcBinaryData/blob/master/Drivers/PartitionDxeLegacy.efi), debido a la falta de instrucción RDRAND
-  * No es necesario para OS X 10.10, Yosemite, y posterior
+* [OpenPartitionDxe](https://github.com/acidanthera/OpenCorePkg/releases)
+  * Este archivo está incluido en OpenCorePkg en EFI/OC/Drivers
+	    * Nota: Usuarios de OpenDuet (es decir, sin UEFI) tendrán este driver incorporado, por lo que no lo requieren.
+    * No es necesario para OS X 10.10, Yosemite, y posterior
 
 Estos archivos irán en tu carpeta Drivers en tu EFI:
 
@@ -54,8 +55,6 @@ Para aquellos que tengan CPUs de 32 bits, querrás agarrar estos drivers tambié
 
 * [HfsPlus32](https://github.com/acidanthera/OcBinaryData/blob/master/Drivers/HfsPlus32.efi)
   * Alternativa a HfsPlusLegacy pero para CPUs de 32 bits, no lo mezcles con otros drivers HFS .efi
-* [PartitionDxe32](https://github.com/acidanthera/OcBinaryData/blob/master/Drivers/PartitionDxe32.efi)
-  * Alternativa a PartitionDxeLegacy pero para CPUs de 32 bits, no lo mezcles con otros drivers PartitionDxe .efi 
 
 :::
 

@@ -18,7 +18,7 @@ Antes de comenzar a hacer un sistema basado en OpenCore, debemos repasar algunas
 4. _**[CRUCIAL]**_ Una computadora que es compatible, como se ve en la sección de _**Compatibilidad**_ .
    * [Página de limitaciones de hardwarwe](/macos-limits.md)
 5. _**[CRUCIAL]**_ Un USB con un mínimo de:
-   * 12GB si usarás macOS para crear el USB
+   * 16GB si usarás macOS para crear el USB
    * 4GB si usarás Windows o Linux para crear el USB
 6. _**[CRUCIAL]**_ Una **conección a Ethernet** (No adaptadores WiFi, y los adaptadores USB de Ethernet pueden o no funcionar dependiendo del soporte de macOS). Debes saber el modelo de tu tarjeta LAN.
    * Debes tener ya sea un puerto de Ethernet físico, o un adaptador/"dongle" compatible con macOS. En el caso de que tengas una [tarjeta WiFi compatible](https://dortania.github.io/Wireless-Buyers-Guide/), puedes usarla.

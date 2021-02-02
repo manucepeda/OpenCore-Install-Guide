@@ -1,6 +1,6 @@
 # Problemas con OpenCore
 
-* Versión soportada: 0.6.5
+* Versión soportada: 0.6.6
 
 * [Trancado en `no vault provided!`](#trancado-en-no-vault-provided)
 * [Trancado en `OC: Invalid Vault mode`](#trancado-en-oc-invalid-vault-mode)

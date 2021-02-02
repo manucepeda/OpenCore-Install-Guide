@@ -61,7 +61,7 @@ Requerimientos de Firmware:
 * OS X 10.4.1 hasta 10.4.7 requiere EFI32(como la versión IA32(32-bit) de OpenCore)
   * OS X 10.4.8 hasta 10.7.5 soportan ambos EFI32 y EFI64
 * OS X 10.8 y posterior requieren EFI64(es decir una versión de OpenCore X64(64-bit))
-* OS X 10.7 hasta 10.9 requiere PartitionDxe.efi para arrancar desde la partición de recuperación (recovery en inglés)
+* OS X 10.7 hasta 10.9 requiere OpenPartitionDxe.efi para arrancar desde la partición de recuperación (recovery en inglés)
 
 Requerimientos del Kernel:
 

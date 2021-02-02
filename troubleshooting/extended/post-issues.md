@@ -1,6 +1,6 @@
 # Problemas de post instalación
 
-* Versión soportada: 0.6.5
+* Versión soportada: 0.6.6
 
 * [iMessage y Siri roto](#imessage-y-siri-roto)
 * [No funciona el Audio](#no-funciona-el-audio)

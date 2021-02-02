@@ -2,7 +2,7 @@
 
 | Soporte | Versión |
 | :--- | :--- |
-| Versión de OpenCore soportada | 0.6.5 |
+| Versión de OpenCore soportada | 0.6.6 |
 | Soporte inicial de macOS | macOS 10.13, High Sierra |
 
 ## Punto de partida
@@ -253,29 +253,44 @@ Ajustes relacionados a el kernel, en nuestro caso habilitaremos lo siguiente:
 
 * **AppleCpuPmCfgLock**: NO
   * Solo es necesario cuando CFG-Lock no se puede deshabilitar en BIOS, la contraparte de Clover sería AppleIntelCPUPM. Los usuarios de AMD pueden ignorar esto.
+
 * **AppleXcpmCfgLock**: NO
   * Solo es necesario cuando CFG-Lock no se puede deshabilitar en BIOS, la contraparte de Clover sería KernelPM. Los usuarios de AMD pueden ignorar esto.
+
 * **AppleXcpmExtraMsrs**: NO
-  * Deshabilita múltiples accesos MSR necesarios para ciertas CPUs no soportadas como Pentiums y Xeons
+  * Deshabilita múltiples accesos MSR necesarios para ciertas CPUs no soportadas como Pentiums y Xeons.
+
 * **CustomSMBIOSGuid**: NO
   * Hace parches de GUID para el modo `Custom` de UpdateSMBIOSMode. Usualmente relevante para laptops Dell
-  * La habilitación de este quirk con el modo `Custom` de UpdateSMBIOSMode también puede deshabilitar la inyección de SMBIOS en sistemas operativos que no son de Apple, aunque no recomendamos esto ya que rompe la compatibilildad con BootCamp. Úsalo bajo tu propio riesgo; debe ser utilizado en conjunto con `PlatformInfo -> UpdateSMBIOSMode -> Custom`
+  * La habilitación de este quirk con el modo `Custom` de UpdateSMBIOSMode también puede deshabilitar la inyección de SMBIOS en sistemas operativos que no son de Apple, aunque no recomendamos esto ya que rompe la compatibilildad con BootCamp. Úsalo bajo tu propio riesgo; debe ser utilizado en conjunto con `PlatformInfo -> UpdateSMBIOSMode -> Custom`.
+
 * **DisableIoMapper**: NO
   * AMD no soporta DMAR o VT-D, por lo que es irrelevante.
+
 * **DisableLinkeditJettison**: YES
   * Permite que Lilu y otros tengan rendimiento más estable sin el quirk `keepsyms=1`
+
 * **DisableRtcChecksum**: NO
-  * Impide que AppleRTC escriba en la suma de comprobación primaria (0x58-0x59), necesaria para los usuarios que reciben el reinicio del BIOS o son enviados al modo seguro después del reinicio/apagado
+  * Impide que AppleRTC escriba en la suma de comprobación primaria (0x58-0x59), necesaria para los usuarios que reciben el reinicio del BIOS o son enviados al modo seguro después del reinicio/apagado.
+
 * **ExtendBTFeatureFlags** NO
-  * Útil para aquellos que tengan problemas con continuity con tarjetas que no sean de Apple/Fenvi
+  * Útil para aquellos que tengan problemas con continuity con tarjetas que no sean de Apple/Fenvi.
+
 * **LapicKernelPanic**: NO
-  * Inhabilita el kernel panic en la interrupción del kernel de AP, generalmente necesaria para los sistemas HP. El equivalente de Clover es `Kernel LAPIC`
+  * Inhabilita el kernel panic en la interrupción del kernel de AP, generalmente necesaria para los sistemas HP. El equivalente de Clover es `Kernel LAPIC`.
+
 * **LegacyCommpage**: NO
-  * Resuelve el requerimiento de SSS3 para CPUS de 64 bits en macOS, por lo que es principalmente relevanete para CPUs como Pentium 4 de 64 bits (como Prescott)
+  * Resuelve el requerimiento de SSS3 para CPUS de 64 bits en macOS, por lo que es principalmente relevanete para CPUs como Pentium 4 de 64 bits (como Prescott).
+
 * **PanicNoKextDump**: YES
-  * Permite leer los registros de kernel panics cuando éstos ocurren
+  * Permite leer los registros de kernel panics cuando éstos ocurren.
+
 * **PowerTimeoutKernelPanic**: YES
   * Ayuda a solucionar kernel panics relacionados con los cambios de energía con los drivers de Apple en macOS Catalina, especialmente con audio digital.
+
+* **SetApfsTrimTimeout**: `-1`
+  * Establece el tiempo de espera en microsegundos para el sistema de archivos APFS en SSDs, únicamente aplicable para macOS 10.14 y posterior con SSDs problemáticas.
+
 * **XhciPortLimit**: YES
   * Este es en realidad el parche de límite de 15 puertos, no confíes en él, ya que no es una solución garantizada para reparar USBs. Una mejor solución para AMD puede ser encontrada aquí: [USB Mapping para AMD](https://inyextciones.github.io/OpenCore-Post-Install/usb/)
 
@@ -370,25 +385,32 @@ Security se explica por sí sola, **no te lo saltes**. Vamos a cambiar lo siguie
 
 * **AllowNvramReset**: YES
   * Permite restablecer NVRAM tanto en el selector de arranque como al presionar `Cmd+Opt+P+R`
+
 * **AllowSetDefault**: YES
   * Permite que `CTRL+Enter` y `CTRL+Index` configuren el dispositivo de arranque predeterminado en el selector
+
 * **ApECID**: 0
   * Usado para compensar identificadores de arranque seguro, actualmente este quirk es faltoso debido a un bug en el instalador de macOS así que te recomendamos que lo dejes como está por defecto.
+
 * **AuthRestart**: NO
   * Habilita el reinicio autenticado para FileVault 2, por lo que no se requiere contraseña al reiniciar. Puede considerarse un riesgo de seguridad así que es opcional
+
 * **BlacklistAppleUpdate**: YES
   * Utilizado para bloquear actualizaciones del firmware como un nivel extra de protección ya que macOS Big Sur dejo de utilizar la variable `run-efi-updater`
-* **BootProtect**: None
-  * Permite el uso de Bootstrap.efi dentro de `EFI/OC/Bootstrap` en lugar de BOOTx64.efi. Útil para aquellos que desean arrancar con rEFInd o evitar sobrescribir BOOTx64.efi con Windows. El uso adecuado de estos quirks está cubierto aquí. [Usar Bootstrap.efi](https://inyextciones.github.io/OpenCore-Post-Install/multiboot/bootstrap.html#preparation)
+
 * **DmgLoading**: Signed
   * Asegura la carga únicamente de DMGs firmados
+
 * **ExposeSensitiveData**: `6`
   * Muestra más información de depuración, requiere la versión de depuración de OpenCore
+
 * **Vault**: `Optional`
   * No trataremos el Vaulting, por lo que podemos ignorar esto, ten en cuenta que **no podrás bootear si esto está configurado en `Secure`**
   * Esta es una palabra, no es opcional omitir esta configuración. Lo lamentarás si no lo configuras en `Optional`, ten en cuenta que distingue entre mayúsculas y minúsculas
+
 * **ScanPolicy**: `0`
   * `0` te permite ver todas las unidades disponibles, consulta la sección [Seguridad](https://dortania.github.io/OpenCore-Post-Install/universal/security.html) para obtener más detalles. **No arrancará dispositivos USB con este ajuste predeterminado**
+  
 * **SecureBootModel**: Default
   * Habilita la funcionalidad del arranque seguro de Apple en macOS, por favor refiérete a [Seguridad](https://inyextciones.github.io/OpenCore-Post-Install/universal/security.html) para más información.
    * Nota: Los usuarios pueden encontrar fallas de arranque cuando actualizen OpenCore en un sistema que ya contenga una instalación. Para resolver esto, dirígete aquí: [Trancado en OCB: LoadImage failed - Security Violation](/troubleshooting/extended/kernel-issues.md#trancado-en-ocb-loadimage-failed-security-violation)
@@ -571,14 +593,17 @@ Configuramos Generic -> ROM a una ROM de Apple (extraída de una Mac real), la d
 * **AdviseWindows**: NO
   * Se usa cuando la partición EFI no es la primera en la unidad de Windows
 
-* **SystemMemoryStatus**: Auto
-  * Establece si la memoria está soldada o no en la información del SMBIOS, esto es puramente cosmético, por lo que recomendamos "Auto"
+* **MaxBIOSVersion**: NO
+  * Establece la versión de la BIOS a la máxima para prevenir actualizaciones de firmware en Big Sur y posterior. Esto es principalmente aplicable para Macs genuinas. 
 
 * **ProcessorType**: `0`
   * Ponlo en `0` para la detección automática del tipo de procesador. Sin embargo, este valor puede ser cambiado si lo deseas. Mira [AppleSmBios.h](https://github.com/acidanthera/OpenCorePkg/blob/master/Include/Apple/IndustryStandard/AppleSmBios.h) para ver valores posibles.
 
 * **SpoofVendor**: YES
   * Intercambia el campo del proveedor por Acidanthera. Generalmente no es seguro usar Apple como proveedor.
+
+* **SystemMemoryStatus**: Auto
+  * Establece si la memoria está soldada o no en la información del SMBIOS, esto es puramente cosmético, por lo que recomendamos "Auto"
 
 * **UpdateDataHub**: YES
   * Actualiza campos de Data Hub
@@ -651,6 +676,10 @@ En relación con los quirks con el entorno UEFI, cambiaremos lo siguiente:
 
 * **RequestBootVarRouting**: YES
   * Redirige AptioMemoryFix desde `EFI_GLOBAL_VARIABLE_GUID` a `OC_VENDOR_VARIABLE_GUID`. Necesario para cuando el firmware intenta eliminar las entradas de arranque y se recomienda que esté habilitado en todos los sistemas para la instalación correcta de las actualizaciones, el funcionamiento del panel de control del disco de inicio, etc.
+
+* **DisableSecurityPolicy**: NO
+  * Deshabilita la Política de Seguridad de la Plataforma (Platform Security Policy) en el firmware, recomendado para firmwares con errores donde la deshabilitación del arranque seguro no permite la carga de drivers en firmwares de terceros.
+  * Si tienes un dispositivo Microsoft Surface , te recomendamos que habilites esta opción.
 
 * **UnblockFsConnect**: NO
   * Algunos firmwares bloquean a las llamadas "partition handles" abriéndolas en modo de controlador, lo que hace que los protocolos del sistema de archivos no puedan instalarse. Principalmente relevante para sistemas HP cuando no se ven discos enumerados

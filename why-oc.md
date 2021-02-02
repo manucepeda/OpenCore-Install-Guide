@@ -1,7 +1,7 @@
 
 # ¿Por qué OpenCore encima de Clover y otros?
 
-* Versión soportada 0.6.5
+* Versión soportada 0.6.6
 
 Esta sección es un breve resumen de por qué la comunidad ha estado haciendo la transición a OpenCore. Aquellos que solo quieren una máquina con macOS pueden omitir esta página.
 
