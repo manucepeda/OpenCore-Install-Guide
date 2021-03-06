@@ -559,12 +559,14 @@ Vuelve a escribir a la fuerza las variables de NVRAM. Ten en cuenta que `Add` **
 
 Para configurar la información del SMBIOS, usaremos la aplicación [GenSMBIOS](https://github.com/corpnewt/GenSMBIOS) hecha por [CorpNewt](https://github.com/corpnewt/).
 
-Para este ejemplo elegiremos el SMBIOS iMacPro1,1, pero otras SMBIOS pueden jugar mejor que otras con ciertas GPUs:
+Para este ejemplo elegiremos el SMBIOS iMacPro1,1, pero otras SMBIOS pueden funcionar mejor que otras con ciertas GPUs:
 
-* iMacPro1,1: AMD RX Polaris y Vega
-* MacPro7,1: AMD RX Polaris, Vega y Navi(Ten en cuenta que MacPro7,1 también es exclusiva de Catalina)
-* MacPro6,1: AMD R5/R7/R9 y anterior
+* iMacPro1,1: AMD RX Polaris y posterior
+* MacPro7,1: AMD RX Polaris y posterior
+  * Ten en cuenta que MacPro7,1 es exclusiva para macOS 10.15, Catalina y posterior
+* MacPro6,1: AMD R5/R7/R9 y más viejos
 * iMac14,2: Nvidia Kepler y posterior
+  * Nota: iMac14,2 es soportada desde 10.8 a 10.15, así que para macOS 11 y posterior por favor usa MacPro7,1
 
 Ejecuta GenSMBIOS, elije la opción 1 para descargar MacSerial y la Opción 3 para seleccionar la SMBIOS que deseas. Esto nos dará una salida **similar** a la siguiente:
 
