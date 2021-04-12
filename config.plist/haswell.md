@@ -2,7 +2,7 @@
 
 | Soporte | Versión |
 | :--- | :--- |
-| Versión de OpenCore Soportada | 0.6.6 |
+| Versión de OpenCore Soportada | 0.6.8 |
 | Soporte inicial de macOS | OS X 10.8, Mountain Lion |
 
 ## Punto de partida
@@ -77,10 +77,14 @@ Configuraciones relacionadas con parches del boot.efi y correcciones de firmware
 
 * **AvoidRuntimeDefrag**: YES
   * Corrige runtime services de UEFI como fecha, hora, NVRAM, control de energía, etc.
+* **EnableSafeModeSlide**: YES
+  * Habilita las variables de Slide en el arranque seguro
 * **EnableWriteUnprotector**: YES
   * Necesario para eliminar la protección contra escritura del registro CR0.
 * **SetupVirtualMap**: YES
   * Corrige las llamadas de `SetVirtualAddresses` a `virtual addresses`, requerido para resolver kernel panics tempranos en placas madre Gigabyte
+* **ProvideCustomSlide**: YES
+  * Usado para el cálculo de la variable Slide. Sin embargo la necesidad de este es determinada por el mensaje `OCABC: Only N/256 slide values are usable!` en tu registro de depuración. Si aparece el mensaje `OCABC: All slides are usable! You can disable ProvideCustomSlide!` en tu registro, puedes deshabilitar `ProvideCustomSlide`.
   
 :::
 

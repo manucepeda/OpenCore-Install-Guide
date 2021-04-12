@@ -1,6 +1,6 @@
 # Proceso de arranque
 
-* Versión soportada: 0.6.6
+* Versión soportada: 0.6.8
 
 A la hora de solucionar los problemas de tu hackintosh, puede llegar a ser dificil entender *dónde* te estás quedando trancado ya que la palabra(s) en la que estás trancado puede no llegar a tener un resultado que te sirva en Google. Por más que esta página no solucionará todos tus problemas, seguramente te ayude a entender mejor dónde te estás quedando trancado en el proceso de arranque de macOS.
 

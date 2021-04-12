@@ -1,7 +1,7 @@
 
 # ¿Por qué OpenCore encima de Clover y otros?
 
-* Versión soportada 0.6.6
+* Versión soportada 0.6.8
 
 Esta sección es un breve resumen de por qué la comunidad ha estado haciendo la transición a OpenCore. Aquellos que solo quieren una máquina con macOS pueden omitir esta página.
 
@@ -161,7 +161,7 @@ OpenCore funciona en la misma manera que cualquier otro bootloader, por lo que r
 
 Si hablamos de hackintoshing, podemos decir que se encuenta en un "área gris" legal, principalmente porque si bien esto no es ilegal, estamos infringiendo el EULA (El acuerdo de licencia). La razón por la que no es ilegal es la siguiente:
 
-* Estamos descargando macOS [directamente desde los servidores de Apple](https://github.com/corpnewt/gibMacOS/blob/master/gibMacOS.command#L84)
+* Estamos descargando macOS [directamente desde los servidores de Apple](https://github.com/acidanthera/OpenCorePkg/blob/0.6.8/Utilities/macrecovery/macrecovery.py#L125)
 * Estamos haciendo esto como una organización sin fines de lucro para la enseñanza y uso personal
   * Las personas que planean en usar su Hackintosh para el trabajo o venderla deberían echarle un vistazo al [Caso Pystar](https://en.wikipedia.org/wiki/Psystar_Corporation) y sus leyes regionales
 

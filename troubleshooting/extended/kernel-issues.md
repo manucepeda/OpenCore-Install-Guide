@@ -1,6 +1,6 @@
 # Problemas del kernel
 
-* Versión soportada: 0.6.6
+* Versión soportada: 0.6.8
 
 Aquí se cubre todo lo que puede pasar luego de que seleccionas a macOS en el menú de OpenCore hasta justo antes de que aparezca el logo de Apple y cargue la GUI
 
@@ -27,6 +27,7 @@ Aquí se cubre todo lo que puede pasar luego de que seleccionas a macOS en el me
 * [`kextd stall[0]: AppleACPICPU`](#kextd-stall0-appleacpicpu)
 * [Kernel Panic en AppleIntelI210Ethernet](appleinteli210ethernet)
 * [Kernel panic en "Wrong CD Clock Frequency" con laptops Icelake](#kernel-panic-en-wrong-cd-clock-frequency-con-laptops-icelake)
+* [Kernel Panic `AppleACPIPlatform` en 10.13](#kernel-panic-appleacpiplatform-en-10-13)
 
 ## Trancado en `[EB|#LOG:EXITBS:START]`
 
@@ -470,3 +471,9 @@ Si tienes una placa madre Comet lake con el NIC i225-V, es posible que experimen
 :::
 
 Para resolver este kernel panic asegúrate de tener `-igfxcdc` en tus boot-args.
+
+## Kernel Panic `AppleACPIPlatform` en 10.13
+
+ ![](../../images/troubleshooting/troubleshooting-md/KA5UOGV.png)
+
+ En macOS 10.13, el SO es mucho más estricto con tablas ACPI, [específicamente un bug con cómo eran manejados los "headers"](https://alextjam.es/debugging-appleacpiplatform/). Para resolver este kernel panic asegúrate de habilitar `NormalizeHeaders` en ACPI -> Quirks en tu config.plist

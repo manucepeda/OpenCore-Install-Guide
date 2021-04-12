@@ -1,6 +1,6 @@
 # Otros problemas misceláneos
 
-* Versión soportada: 0.6.6
+* Versión soportada: 0.6.8
 
 * [No puedes correr `acpidump.efi`](#no-puedes-correr-acpidumpefi)
 * [Arreglando SSDTTime: `Could not locate or download iasl!`](#arreglando-ssdttime-could-not-locate-or-download-iasl)

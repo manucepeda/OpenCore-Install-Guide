@@ -2,7 +2,7 @@
 
 | Soporte | Versión |
 | :--- | :--- |
-| Versión de OpenCore Soportada | 0.6.6 |
+| Versión de OpenCore Soportada | 0.6.8 |
 | Soporte inicial de macOS | macOS 10.15, Catalina |
 
 ## Punto de partida
@@ -92,19 +92,22 @@ Configuraciones relacionadas a el parcheo de boot.efi y arreglos en el firmware.
 
 * **AvoidRuntimeDefrag**: YES
   * Corrige runtime services de UEFI como fecha, hora, NVRAM, control de energía, etc.
+* **EnableSafeModeSlide**: YES
+  * Habilita las variables de Slide en el arranque seguro
 * **DevirtualiseMmio**: YES
   * Reduce la huella de memoria robada, amplía las opciones para los valores `slide = N` y es muy útil para solucionar problemas de asignación de memoria. Requiere de `ProtectUefiServices` en Z490
 * **EnableWriteUnprotector**: NO
   * Este quirk y RebuildAppleMemoryMap pueden entrar en conflicto, recomendamos habilitar este último en plataformas más nuevas y deshabilitar esta entrada.  
   * Sin embargo, debido a problemas de distintos fabricantes que no usan las versiones más nuevas de EDKII podrías encontrar que el combo de arriba cause que tengas fallas en tempranas en el arranque. Esto es debido a la falta de `MEMORY_ATTRIBUTE_TABLE`, por lo que recomendamos que deshabilites RebuildAppleMemoryMap y habilites EnableWriteUnprotector. Más información sobre esto será cubierta en la [sección de solución de problemas](/troubleshooting/troubleshooting.md#trancado-en-eb-log-exitbs-start)
-
 * **ProtectUefiServices**: YES
   * Protege servicios UEFI de ser sobreescritos por el firmware, requerido por Z490
 * **RebuildAppleMemoryMap**: YES
   * Genera un mapa de memoria compatible con macOS, puede romperse en algunos firmwares de laptops de OEMs, así que si recives fallas en el arranque temprando deshabilita esto.
-* **SetupVirtualMap**: YES
+* **SetupVirtualMap**: NO
   * Corrige las llamadas de `SetVirtualAddresses` a `virtual addresses`, no tendría que ser necesario en Skylake y posterior. Algunos firmwares como Gigabyte podrían requerirlo, y pueden causar un kernel panic sin esto. 
   * **Nota**: Placas madre Z490 ASUS, Gigabyte y AsRock Z490 no arrancarán con esto habilitado
+* **ProvideCustomSlide**: YES
+  * Usado para el cálculo de la variable Slide. Sin embargo la necesidad de este es determinada por el mensaje `OCABC: Only N/256 slide values are usable!` en tu registro de depuración. Si aparece el mensaje `OCABC: All slides are usable! You can disable ProvideCustomSlide!` en tu registro, puedes deshabilitar `ProvideCustomSlide`.
 * **SyncRuntimePermissions**: YES
   * Soluciona la alineación con las tablas MAT y es necesario para iniciar Windows y Linux estas, también recomendado para macOS. Principalmente relevante para Skylake y posterior
 
@@ -143,16 +146,23 @@ También agregamos 2 propiedades más, `framebuffer-patch-enable` y `framebuffer
 
 :::
 
-::: tip PciRoot(0x0)/Pci(0x1C,0x4)/Pci(0x0,0x0)
+::: Arreglando controladores I225-V
 
 Esta entrada se relaciona con el controlador i225-V 2.5GBe de Intel que se encuentra en las placas Comet Lake de gama alta, lo que haremos aquí es engañar al controlador i225LM de Apple para que admita nuestro controlador de red i225-V:
 
-| Key | Type | Value |
-| :--- | :--- | :--- |
-| device-id | Data | F2150000 |
+ | Key | Type | Value |
+ | :--- | :--- | :--- |
+ | Base | String | __Z18e1000_set_mac_typeP8e1000_hw |
+ | Comment | String | I225-V patch |
+ | Enabled | Boolean | True |
+ | Find | Data | `F2150000` |
+ | Identifier | String | com.apple.driver.AppleIntelI210Ethernet |
+ | MinKernel | String | 19.0.0 |
+ | Replace | Data | `F3150000` |
 
-**Nota**: Si tu placa no Si su placa no vino con el NIC i225 de Intel, no hay razón para agregar esta entrada.
-**Nota 2**: Si tienes un kernel panic del kext i210, el PciRoot de tu Ethernet seguramente sea `PciRoot(0x0)/Pci(0x1C,0x4)/Pci(0x0,0x0)`
+* **Nota**: Si tu placa no Si su placa no vino con el NIC i225 de Intel, no hay razón para agregar esta entrada.
+* **Note 2**: Deja todas los otros valores con sus valores predeterminados
+:::
 
 :::
 

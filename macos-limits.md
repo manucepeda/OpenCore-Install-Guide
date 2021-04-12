@@ -99,10 +99,11 @@ Notas especiales:
 | [Broadwell](https://en.wikipedia.org/wiki/Broadwell_(microarchitecture)) | 10.10.0 | Actual | N/A | 0x0306D4(U/Y) |
 | [Skylake](https://en.wikipedia.org/wiki/Skylake_(microarchitecture)) | 10.11.0 | Actual | N/A | 0x0506e3(H/S) 0x0406E3(U/Y) |
 | [Kaby Lake](https://en.wikipedia.org/wiki/Kaby_Lake) | 10.12.4 | Actual | N/A | 0x0906E9(H/S/G) 0x0806E9(U/Y) |
-| [Coffee Lake](https://en.wikipedia.org/wiki/Coffee_Lake) | 10.12.6 | Actual | iGPU supported added in 10.13.6 | 0x0906EA(S/H/E) 0x0806EA(U)|
+| [Coffee Lake](https://en.wikipedia.org/wiki/Coffee_Lake) | 10.12.6 | Actual | sopporte de igpu fue añadido en 10.13.6 | 0x0906EA(S/H/E) 0x0806EA(U)|
 | [Amber](https://en.wikipedia.org/wiki/Kaby_Lake#List_of_8th_generation_Amber_Lake_Y_processors), [Whiskey](https://en.wikipedia.org/wiki/Whiskey_Lake_(microarchitecture)), [Comet Lake](https://en.wikipedia.org/wiki/Comet_Lake_(microprocessor)) | 10.14.1 | Actual | N/A | 0x0806E0(U/Y) |
 | [Comet Lake](https://en.wikipedia.org/wiki/Comet_Lake_(microprocessor)) | 10.15.4 | Actual | N/A | 0x0906E0(S/H)|
 | [Ice Lake](https://en.wikipedia.org/wiki/Ice_Lake_(microprocessor)) | 10.15.4 | Actual | N/A | 0x0706E5(U) |
+| [Rocket Lake](https://en.wikipedia.org/wiki/Rocket_Lake) | ^^ | ^^ | Requiere CPUID de Comet Lake | 0x0A0671 |
 
 :::
 
@@ -172,7 +173,7 @@ Una nota importante para las **Laptops con GPU dedicada**:
 | [Vega 10](https://en.wikipedia.org/wiki/Radeon_RX_Vega_series) | 10.12.6 | Actual | N/A |
 | [Vega 20](https://en.wikipedia.org/wiki/Radeon_RX_Vega_series) | 10.14.5 | Actual | N/A |
 | [Navi 10](https://en.wikipedia.org/wiki/Radeon_RX_5000_series) | 10.15.1 | Actual | Requiere `agdpmod=pikera` en los boot-args |
-| [Navi 20](https://en.wikipedia.org/wiki/Radeon_RX_6000_series) | 11.1 | ^^ | ^^ |
+| [Navi 20](https://en.wikipedia.org/wiki/Radeon_RX_6000_series) | <span style="color:red"> N/A </span> | <span style="color:red"> N/A </span> | <span style="color:red"> Los drivers actuales no funcionan </span> |
 
 :::
 
@@ -213,6 +214,9 @@ En su mayor parte, todas las unidades basadas en SATA son compatibles y la mayor
   * Otro caso similar fue con la SSD NVMe 970 EVO Plus de Samsung, pero esto fue corregido con una actualización de firmware. Puedes obtenerla via Windows usando la herramienta Samsung Magician o con una ISO booteable [aquí](https://www.samsung.com/semiconductor/minisite/ssd/download/tools/).
   * También para tener en cuenta, las computadoras portátiles que usan [Intel Optane](https://www.intel.com/content/www/us/en/architecture-and-technology/optane-memory.html) o [Micron 3D XPoint](https://www.micron.com/products/advanced-solutions/3d-xpoint-technology) para la aceleración de discos duros, no son compatibles con macOS. Sin embargo algunos usuarios han reportado éxito en Catalina incluso con soporte de lectura y escritura, pero recomendamos encarecidamente quitar la unidad para evitar posibles problemas de arranque.
 
+  * **Intel 600p**
+   * Por más que es posible arrancar desde estos, por favor ten en cuenta que este modelo puede causar muchos problemas. [Any fix for Intel 600p NVMe Drive? #1286](https://github.com/acidanthera/bugtracker/issues/1286)
+
 ## Conexión a internet cableada
 
 Prácticamente todos los adaptadores de red con cable tienen algún tipo de soporte en macOS, ya sea por los controladores incorporados o por kexts hechos por la comunidad. Las principales excepciones son:
@@ -245,3 +249,5 @@ La mejor opción es tener una tarjeta Broadcom compatible; consulta la [Guía de
   * En el caso de los hackintosh, la compatibilidad con Thunderbolt todavía es dudosa en macOS, aún más con los controladores Alpine Ridge, que son los que tienen la mayoría de las laptops actuales. Han habido intentos de mantener el controlador encendido, lo que permite que funcionen Thunderbolt y USB-C, pero esto trae como consecuencia "kernel panics" y/o la pérdida de USB-C después de suspender la laptop. Si deseas utilizar el lado USB-C del puerto y poder suspender tu hack, debes enchufarlo en el arranque y mantenerlo enchufado.
   * Nota: Esto no se aplica solo a los puertos USB-C, solo a los puertos combinados Thunderbolt 3 y USB-C.
   * Deshabilitar Thunderbolt en la BIOS también resolverá esto.
+
+* Nota: El wifi de Intel está soportado pero no de forma oficial (es un driver de terceros) en macOS. Mira la [Guía de compradores de Wifi](https://dortania.github.io/Wireless-Buyers-Guide/) para obtener más información.

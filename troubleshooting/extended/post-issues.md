@@ -1,6 +1,6 @@
 # Problemas de post instalación
 
-* Versión soportada: 0.6.6
+* Versión soportada: 0.6.8
 
 * [iMessage y Siri roto](#imessage-y-siri-roto)
 * [No funciona el Audio](#no-funciona-el-audio)
@@ -187,6 +187,10 @@ Curiosamente, macOS ha bloqueado el control del audio digital. Para recuperar al
 ## Deshabilitando el SIP
 
 SIP o propiamente conocida como Protección de Integridad del Sistema, es una tecnología de seguridad que intenta evitar que cualquier software malicioso y el usuario dañen el sistema operativo. Introducido por primera vez con OS X El Capitan, el SIP ha crecido con el tiempo para controlar más y más cosas en macOS, incluida la limitación de ediciones a archivos restringidos y la carga de kexts de terceros con `kextload` (OpenCore no se ve afectado porque los kexts se inyectan en el arranque). Para resolver esto, Apple ha proporcionado numerosas opciones de configuración en la variable NVRAM `csr-active-config` que se puede configurar en el entorno de recuperación macOS o con la sección NVRAM de OpenCore (esta última se discutirá a continuación).
+
+* <span style="color:red">ADVERTENCIA:</span> Deshabilitar el SIP puede romper aspectos como las actualizaciones de software en macOS 11, Big Sur, y posterior. Por favor ten cuidado y sólo deshabilita los valores especificos que necesitas en vez de deshabilitar todos los valores para prevenir estos problemas. 
+   * Habilitar `CSR_ALLOW_UNAUTHENTICATED_ROOT` y `CSR_ALLOW_APPLE_INTERNAL` son opciones comunes que pueden romper las actualizaciones de software.
+
 
 Puedes elegir entre varios valores para habilitar/deshabilitar ciertas "flags" del SIP. Algunas herramientas útiles para ayudarte con esto son [CsrDecode](https://github.com/corpnewt/CsrDecode) y [csrstat](https://github.com/JayBrown/csrstat-NG). Los valores comúnes son los siguientes:
 

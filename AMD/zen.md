@@ -2,7 +2,7 @@
 
 | Soporte | Versión |
 | :--- | :--- |
-| Versión de OpenCore soportada | 0.6.6 |
+| Versión de OpenCore soportada | 0.6.8 |
 | Soporte inicial de macOS | macOS 10.13, High Sierra |
 
 ## Punto de partida
@@ -88,6 +88,8 @@ Configuraciones relacionadas a el parcheo de boot.efi y arreglos en el firmware.
 
 * **AvoidRuntimeDefrag**: YES
   * Corrige runtime services de UEFI como fecha, hora, NVRAM, control de energía, etc.
+* **EnableSafeModeSlide**: YES
+  * Habilita las variables de Slide en el arranque seguro
 * **EnableWriteUnprotector**: NO
   * Este quirk y RebuildAppleMemoryMap pueden entrar en conflicto, recomendamos habilitar este último en plataformas más nuevas y deshabilitar esta entrada.
   * Sin embargo, debido a problemas de distintos fabricantes que no usan las versiones más nuevas de EDKII podrías encontrar que el combo de arriba cause que tengas fallas en tempranas en el arranque. Esto es debido a la falta de `MEMORY_ATTRIBUTE_TABLE`, por lo que recomendamos que deshabilites RebuildAppleMemoryMap y habilites EnableWriteUnprotector. Más información sobre esto será cubierta en la [sección de solución de problemas](/troubleshooting/troubleshooting.md#trancado-en-eb-log-exitbs-start)
@@ -96,6 +98,8 @@ Configuraciones relacionadas a el parcheo de boot.efi y arreglos en el firmware.
 * **SetupVirtualMap**: YES
   * Corrige las llamadas de `SetVirtualAddresses` a `virtual addresses`
   * Las placas B550, A520 y TRx40 deben deshabilitar este quirk
+* **ProvideCustomSlide**: YES
+  * Usado para el cálculo de la variable Slide. Sin embargo la necesidad de este es determinada por el mensaje `OCABC: Only N/256 slide values are usable!` en tu registro de depuración. Si aparece el mensaje `OCABC: All slides are usable! You can disable ProvideCustomSlide!` en tu registro, puedes deshabilitar `ProvideCustomSlide`.
 * **SyncRuntimePermissions**: YES
   * Soluciona la alineación con las tablas MAT y es necesario para iniciar Windows y Linux estas, también recomendado para macOS. Principalmente relevante para Skylake y posterior
 :::

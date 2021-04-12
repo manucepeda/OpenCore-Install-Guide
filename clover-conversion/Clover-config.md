@@ -1,6 +1,6 @@
 # Converting common properties from Clover to OpenCore
 
-* Supported version: 0.6.6
+* Supported version: 0.6.8
 
 So this little(well not so little as I reread this...) page is for users who are having issues migrating from Clover to OpenCore as some of their legacy quirks are required or the Configuration.pdf isn't well suited for laptop users.  
 
@@ -212,7 +212,8 @@ path/to/gfxutil -f HDEF
 
 * Inject: `DeviceProperties -> Add -> PciRoot... -> layout-id`
 * AFGLowPowerState: `DeviceProperties -> Add -> PciRoot... -> AFGLowPowerState -> <01000000>`
-* ResetHDA: [JackFix](https://github.com/fewtarius/jackfix)(well to be specific it's `jackfix.sh`)
+* ResetHDA: `UEFI -> Audio -> ResetTrafficClass`
+  * Optionally there's also AppleALC's `alctsel=1` boot-arg or [JackFix](https://github.com/fewtarius/jackfix)
 
 **Add Properties**:
 
@@ -269,9 +270,13 @@ device_type: XHCI
 * `AAPL,current-in-sleep`
 * `built-in`
 
+**ForceHPET**:
+
+* `UEFI -> Quirks -> ActivateHpetSupport`
+
 # Disable Drivers
 
-Just don't add your drivers to `UEFI -> Drivers`
+Just don't add your drivers to `UEFI -> Drivers`, alternatively add `#` in-front of the driver in your config.plist for OpenCore to skip it.
 
 # Gui
 
@@ -387,7 +392,7 @@ For others like InjectAti, see the [Sample.dsl](https://github.com/acidanthera/W
 
 **DellSMBIOSPatch**:
 
-An odd quirk for Dell systems running APTIO V(or just Skylake, Slice doesn't really know either)
+An odd quirk for Dell systems running APTIO V
 
 * `Kernel -> Quirks -> CustomSMBIOSGuid -> YES`
 * `PlatformInfo -> UpdateSMBIOSMode -> Custom`
@@ -414,7 +419,7 @@ An odd quirk for Dell systems running APTIO V(or just Skylake, Slice doesn't rea
 
 * `Kernel -> Quirks -> AppleXcpmExtraMsrs -> YES`
 
-For an extensive list of patches, please compare [OpenCore's `CommonPatches.c`](https://github.com/acidanthera/OpenCorePkg/blob/master/Library/OcAppleKernelLib/CommonPatches.c) with [Clover's kernel_patcher.c](https://github.com/CloverHackyColor/CloverBootloader/blob/master/rEFIt_UEFI/Platform/kernel_patcher.cpp). Some patches are not transferred over so if you're having issues this is the section to check, example is converting the [`KernelIvyBridgeXCPM()`](https://github.com/CloverHackyColor/CloverBootloader/blob/master/rEFIt_UEFI/Platform/kernel_patcher.cpp#L1466-L1565) to OpenCore:
+For an extensive list of patches, please compare [OpenCore's `CommonPatches.c`](https://github.com/acidanthera/OpenCorePkg/blob/master/Library/OcAppleKernelLib/CommonPatches.c) with [Clover's kernel_patcher.c](https://github.com/CloverHackyColor/CloverBootloader/blob/master/rEFIt_UEFI/Platform/kernel_patcher.cpp). Some patches are not transferred over so if you're having issues this is the section to check, example is converting the [`KernelIvyBridgeXCPM()`](https://github.com/CloverHackyColor/CloverBootloader/tree/1a02f530db91fdfa6880295b6a8b3f096c29e7cc/rEFIt_UEFI/Platform/kernel_patcher.cpp#L1617-L1719) to OpenCore:
 
 ```
 Base: _xcpm_bootstrap
@@ -424,7 +429,7 @@ Enabled: YES
 Find: 8D43C43C22
 Identifier: kernel
 Limit: 0
-Mask: FFFF00FF
+Mask: FFFF00FFFF
 MinKernel: 19.
 MaxKernel: 19.99.99
 Replace: 8D43C63C22

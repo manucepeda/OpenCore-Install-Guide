@@ -2,7 +2,7 @@
 
 | Support | Version |
 | :--- | :--- |
-| Supported OpenCore version | 0.6.6 |
+| Supported OpenCore version | 0.6.8 |
 | Initial macOS Support | OS X 10.10, Yosemite |
 
 ## Starting Point
@@ -95,8 +95,12 @@ Settings relating to boot.efi patching and firmware fixes, for us, we leave it a
 
 * **AvoidRuntimeDefrag**: YES
   * Fixes UEFI runtime services like date, time, NVRAM, power control, etc
+* **EnableSafeModeSlide**: YES
+  * Enables slide variables to be used in safe mode.
 * **EnableWriteUnprotector**: YES
   * Needed to remove write protection from CR0 register.
+* **ProvideCustomSlide**: YES
+  * Used for Slide variable calculation. However the necessity of this quirk is determined by `OCABC: Only N/256 slide values are usable!` message in the debug log. If the message `OCABC: All slides are usable! You can disable ProvideCustomSlide!` is present in your log, you can disable `ProvideCustomSlide`.
 * **SetupVirtualMap**: YES
   * Fixes SetVirtualAddresses calls to virtual addresses, required for Gigabyte boards to resolve early kernel panics
   

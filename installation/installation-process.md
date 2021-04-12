@@ -3,7 +3,7 @@
 Ahora que has terminado de configurar OpenCore, finalmente puedes iniciar, lo más importante a tener en cuenta:
 
 * Habilitea la configuración de BIOS óptima para macOS
-* Lee la [guía de Multiboot](https://hackintosh-multiboot.gitbook.io/hackintosh-multiboot/)
+* Lee la [guía de Multiboot](https://dortania.github.io/OpenCore-Multiboot/)
   * Principalmente relevante para aquellos que tienen un solo disco para múltiples sistemas operativos
 * Una copia de la [página de solución de problemas](../troubleshooting/troubleshooting.md)
 * Lee el [proceso de arranque de macOS](../troubleshooting/boot.md)

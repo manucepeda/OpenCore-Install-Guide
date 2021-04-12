@@ -2,7 +2,7 @@
 
 | Soporte | Versión |
 | :--- | :--- |
-| Versión de OpenCore Soportada | 0.6.6 |
+| Versión de OpenCore Soportada | 0.6.8 |
 | Soporte inicial de macOS | macOS 10.13, High Sierra |
 
 ## Punto de partida
@@ -88,6 +88,8 @@ Configuraciones relacionadas a el parcheo de boot.efi y arreglos en el firmware.
 
 * **AvoidRuntimeDefrag**: YES
   * Corrige runtime services de UEFI como fecha, hora, NVRAM, control de energía, etc.
+* **EnableSafeModeSlide**: YES
+  * Habilita las variables de Slide en el arranque seguro
 * **DevirtualiseMmio**: YES
   * Reduce la huella de memoria robada, amplía las opciones para los valores `slide = N` y es muy útil para solucionar problemas de asignación de memoria en Z390. Requiere de `ProtectUefiServices` en IceLake y Z390 Coffee Lake
 * **EnableWriteUnprotector**: NO
@@ -100,6 +102,8 @@ Configuraciones relacionadas a el parcheo de boot.efi y arreglos en el firmware.
   * Genera un mapa de memoria compatible con macOS, puede romperse en algunos firmwares de laptops de OEMs, así que si recives fallas en el arranque temprando deshabilita esto.
 * **SetupVirtualMap**: YES
   * Corrige las llamadas de `SetVirtualAddresses` a `virtual addresses`
+* **ProvideCustomSlide**: YES
+  * Usado para el cálculo de la variable Slide. Sin embargo la necesidad de este es determinada por el mensaje `OCABC: Only N/256 slide values are usable!` en tu registro de depuración. Si aparece el mensaje `OCABC: All slides are usable! You can disable ProvideCustomSlide!` en tu registro, puedes deshabilitar `ProvideCustomSlide`.
 * **SyncRuntimePermissions**: YES
   * Soluciona la alineación con las tablas MAT y es necesario para iniciar Windows y Linux estas, también recomendado para macOS. Principalmente relevante para Skylake y posterior
 
