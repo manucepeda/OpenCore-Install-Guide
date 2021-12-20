@@ -33,7 +33,7 @@
    },
    "license": "CC-BY-NC-SA-4.0",
    "devDependencies": {
-      "@vuepress/plugin-back-to-top": "^1.8.2",
+      "@vuepress/plugin-back-to-top": "^1.8.3",
       "markdown-it-multimd-table": "^4.0.3",
       "markdown-link-check": "^3.8.7",
       "markdownlint-cli": "^0.27.1",
